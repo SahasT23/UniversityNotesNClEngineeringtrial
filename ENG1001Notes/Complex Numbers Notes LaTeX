@@ -1,0 +1,538 @@
+
+\documentclass[a4paper,12pt]{article}
+
+%----------------------------------------------------------------------------------------
+%	FONT
+%----------------------------------------------------------------------------------------
+
+% % fontspec allows you to use TTF/OTF fonts directly
+% \usepackage{fontspec}
+% \defaultfontfeatures{Ligatures=TeX}
+
+% % modified for ShareLaTeX use
+% \setmainfont[
+% SmallCapsFont = Fontin-SmallCaps.otf,
+% BoldFont = Fontin-Bold.otf,
+% ItalicFont = Fontin-Italic.otf
+% ]
+% {Fontin.otf}
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES
+%----------------------------------------------------------------------------------------
+\usepackage{url}
+\usepackage{parskip} 	
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+%other packages for formatting
+\RequirePackage{color}
+\RequirePackage{graphicx}
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage[scale=0.9]{geometry}
+
+%tabularx environment
+\usepackage{tabularx}
+\usepackage{enumitem}
+
+% centered version of 'X' col. type
+\newcolumntype{C}{>{\centering\arraybackslash}X} 
+
+%to prevent spillover of tabular into next pages
+\usepackage{supertabular}
+\usepackage{tabularx}
+\newlength{\fullcollw}
+\setlength{\fullcollw}{0.47\textwidth}
+
+%custom \section
+\usepackage{titlesec}				
+\usepackage{multicol}
+\usepackage{multirow}
+
+%http://stefano.italians.nl/archives/26
+\titleformat{\section}{\large\scshape\raggedright}{}{0em}{}[\titlerule]
+\titlespacing{\section}{0pt}{10pt}{10pt}
+
+%for publications
+\usepackage[style=authoryear,sorting=ynt, maxbibnames=2]{biblatex}
+
+%Setup hyperref package, and colours for links
+\usepackage[unicode, draft=false]{hyperref}
+\definecolor{linkcolour}{rgb}{0,0.2,0.6}
+\hypersetup{colorlinks,breaklinks,urlcolor=linkcolour,linkcolor=linkcolour}
+\addbibresource{citations.bib}
+\setlength\bibitemsep{1em}
+
+%for social icons
+\usepackage{fontawesome5}
+
+%debug page outer frames
+%\usepackage{showframe}
+
+%----------------------------------------------------------------------------------------
+%	BEGIN DOCUMENT
+%----------------------------------------------------------------------------------------
+\begin{document}
+
+% non-numbered pages
+\pagestyle{empty} 
+
+%----------------------------------------------------------------------------------------
+%	TITLE
+%----------------------------------------------------------------------------------------
+
+% \begin{tabularx}{\linewidth}{ @{}X X@{} }
+% \huge{Your Name}\vspace{2pt} & \hfill \emoji{incoming-envelope} email@email.com \\
+% \raisebox{-0.05\height}\faGithub\ username \ | \
+% \raisebox{-0.00\height}\faLinkedin\ username \ | \ \raisebox{-0.05\height}\faGlobe \ mysite.com  & \hfill \emoji{calling} number
+% \end{tabularx}
+
+%----------------------------------------------------------------------------------------
+% OVERVIEW
+%----------------------------------------------------------------------------------------
+\section{\huge\textbf{Complex Numbers \& Applications}}
+\section{Definitions}
+\begin{itemize}
+    \item \textbf{Complex Numbers}: A complex number is of the form \( z = a + bi \), where \( a \) and \( b \) are real numbers, and \( i \) is the imaginary unit with the property \( i^2 = -1 \).
+    \item \textbf{Real Numbers}: A real number is a value that represents a quantity along a continuous line. Real numbers can be positive, negative, or zero, and they include all the rational and irrational numbers.
+    \item \textbf{Imaginary Numbers}: An imaginary number is a number of the form \( bi \), where \( b \) is a real number and \( i \) is the imaginary unit with the property \( i^2 = -1 \). Imaginary numbers are a subset of complex numbers where the real part is zero.
+    \item \textbf{Modulus}: The modulus of a complex number \( z = a + bi \) is denoted by \( |z| \) and is given by \( |z| = \sqrt{a^2 + b^2} \).
+    \item \textbf{Argument}: The argument of a complex number \( z = a + bi \), denoted by \( \arg(z) \), is the angle \( \theta \) between the positive real axis and the line representing the complex number in the complex plane, measured in the counter-clockwise direction.
+    \item \textbf{Conjugate}: The conjugate of a complex number \( z = a + bi \) is denoted by \( \overline{z} \) and is given by \( \overline{z} = a - bi \).
+    \item \textbf{Cartesian Form}: The Cartesian form of a complex number is expressed as \( z = a + bi \), where \( a \) and \( b \) are real numbers.
+    \item \textbf{Exponential Form}: The exponential form of a complex number uses Euler's formula and is given by \( z = re^{i\theta} \), where \( r = |z| \) is the modulus and \( \theta = \arg(z) \) is the argument.
+
+\end{itemize}
+
+%----------------------------------------------------------------------------------------
+%	COMPLEX NUMBERS EXAMPLES AND METHODS
+%----------------------------------------------------------------------------------------
+\section{Complex number examples and methods}
+ \begin{itemize}
+    \item \text{Explanation of the method first, and then with examples}
+    \item \textbf{Addition}
+    \begin{itemize}
+        \item \textbf{Real Numbers}: \( a + b \)
+        \item \textbf{Imaginary Numbers}: \( bi + ci = (b + c)i \)
+        \item \textbf{Complex Numbers}: \( (a + bi) + (c + di) = (a + c) + (b + d)i \)
+    \end{itemize}
+    
+    \item \textbf{Subtraction}
+    \begin{itemize}
+        \item \textbf{Real Numbers}: \( a - b \)
+        \item \textbf{Imaginary Numbers}: \( bi - ci = (b - c)i \)
+        \item \textbf{Complex Numbers}: \( (a + bi) - (c + di) = (a - c) + (b - d)i \)
+    \end{itemize}
+    
+    \item \textbf{Division}
+    \begin{itemize}
+        \item \textbf{Real Numbers}: \( \frac{a}{b}, \quad b \neq 0 \)
+        \item \textbf{Imaginary Numbers}: \( \frac{bi}{ci} = \frac{b}{c}, \quad c \neq 0 \)
+        \item \textbf{Complex Numbers (Think of this like rationalising a denominator from GCSEs and A-Level)}: 
+        \[
+        \frac{a + bi}{c + di} = \frac{(a + bi)(c - di)}{(c + di)(c - di)} = \frac{(ac + bd) + (bc - ad)i}{c^2 + d^2}, \quad c + di \neq 0
+        \]
+    \end{itemize}
+
+    \section{Examples with numbers}
+    
+        \item \textbf{Addition}
+    \begin{itemize}
+        \item \textbf{Real Numbers}: \( 3 + 5 = 8 \)
+        \item \textbf{Imaginary Numbers}: \( 2i + 3i = (2 + 3)i = 5i \)
+        \item \textbf{Complex Numbers}: \( (2 + 3i) + (4 + 5i) = (2 + 4) + (3 + 5)i = 6 + 8i \)
+    \end{itemize}
+    
+    \item \textbf{Subtraction}
+    \begin{itemize}
+        \item \textbf{Real Numbers}: \( 7 - 2 = 5 \)
+        \item \textbf{Imaginary Numbers}: \( 6i - 4i = (6 - 4)i = 2i \)
+        \item \textbf{Complex Numbers}: \( (5 + 7i) - (3 + 2i) = (5 - 3) + (7 - 2)i = 2 + 5i \)
+    \end{itemize}
+    
+    \item \textbf{Division}
+    \begin{itemize}
+        \item \textbf{Real Numbers}: \( \frac{10}{2} = 5 \)
+        \item \textbf{Imaginary Numbers}: \( \frac{6i}{3i} = \frac{6}{3} = 2 \)
+        \item \textbf{Complex Numbers}: 
+        \[
+        \frac{2 + 3i}{1 + 4i} = \frac{(2 + 3i)(1 - 4i)}{(1 + 4i)(1 - 4i)} = \frac{2 - 8i + 3i + 12}{1 + 16} = \frac{14 - 5i}{17} = \frac{14}{17} - \frac{5}{17}i
+        \]
+    \end{itemize}
+        \item \textbf{Modulus}
+    \begin{itemize}
+        \item The modulus of a complex number \( z = a + bi \) is given by
+        \[
+        |z| = \sqrt{a^2 + b^2}
+        \]
+        \item Example: For \( z = 3 + 4i \),
+        \[
+        |z| = \sqrt{3^2 + 4^2} = \sqrt{9 + 16} = \sqrt{25} = 5
+        \]
+    \end{itemize}
+    
+    \item \textbf{Argument}
+    \begin{itemize}
+        \item The argument of a complex number \( z = a + bi \) is the angle \( \theta \) such that \( \tan \theta = \frac{b}{a} \). It is usually denoted as \( \arg(z) \).
+        \item The correct quadrant for \( \theta \) must be determined:
+        \begin{itemize}
+            \item If \( a > 0 \) and \( b \geq 0 \), then \( \theta = \tan^{-1}\left(\frac{b}{a}\right) \)
+            \item If \( a > 0 \) and \( b < 0 \), then \( \theta = \tan^{-1}\left(\frac{b}{a}\right) \)
+            \item If \( a < 0 \), then \( \theta = \tan^{-1}\left(\frac{b}{a}\right) + \pi \)
+            \item If \( a = 0 \) and \( b > 0 \), then \( \theta = \frac{\pi}{2} \)
+            \item If \( a = 0 \) and \( b < 0 \), then \( \theta = -\frac{\pi}{2} \)
+        \end{itemize}
+        \item Example: For \( z = 1 + i \),
+        \[
+        \theta = \tan^{-1}\left(\frac{1}{1}\right) = \tan^{-1}(1) = \frac{\pi}{4}
+        \]
+    \end{itemize}
+    
+    \item \textbf{Conjugate}
+    \begin{itemize}
+        \item The conjugate of a complex number \( z = a + bi \) is given by
+        \[
+        \overline{z} = a - bi
+        \]
+        \item Example: For \( z = 3 + 4i \),
+        \[
+        \overline{z} = 3 - 4i
+        \]
+    \end{itemize}
+    
+    \item \textbf{Cartesian to Modulus-Argument Form}
+    \begin{itemize}
+        \item A complex number \( z = a + bi \) can be converted to modulus-argument form \( z = r(\cos \theta + i \sin \theta) \), where
+        \[
+        r = |z| = \sqrt{a^2 + b^2} \quad \text{and} \quad \theta = \arg(z)
+        \]
+        \item Example: For \( z = 1 + i \),
+        \[
+        r = \sqrt{1^2 + 1^2} = \sqrt{2}, \quad \theta = \frac{\pi}{4}
+        \]
+        \[
+        z = \sqrt{2} \left(\cos \frac{\pi}{4} + i \sin \frac{\pi}{4}\right)
+        \]
+    \end{itemize}
+    
+    \item \textbf{Modulus-Argument to Cartesian Form}
+    \begin{itemize}
+        \item A complex number in modulus-argument form \( z = r(\cos \theta + i \sin \theta) \) can be converted to Cartesian form \( z = a + bi \), where
+        \[
+        a = r \cos \theta \quad \text{and} \quad b = r \sin \theta
+        \]
+        \item Example: For \( z = 2 \left(\cos \frac{\pi}{3} + i \sin \frac{\pi}{3}\right) \),
+        \[
+        a = 2 \cos \frac{\pi}{3} = 2 \times \frac{1}{2} = 1
+        \]
+        \[
+        b = 2 \sin \frac{\pi}{3} = 2 \times \frac{\sqrt{3}}{2} = \sqrt{3}
+        \]
+        \[
+        z = 1 + \sqrt{3}i
+        \]
+    \end{itemize}
+    
+    \item \textbf{Modulus-Argument to Exponential Form}
+    \begin{itemize}
+        \item A complex number in modulus-argument form \( z = r(\cos \theta + i \sin \theta) \) can be converted to exponential form \( z = re^{i\theta} \) using Euler's formula.
+        \item Example: For \( z = \sqrt{2} \left(\cos \frac{\pi}{4} + i \sin \frac{\pi}{4}\right) \),
+        \[
+        z = \sqrt{2} e^{i\frac{\pi}{4}}
+        \]
+    \end{itemize}
+    
+    \item \textbf{Exponential to Modulus-Argument Form}
+    \begin{itemize}
+        \item A complex number in exponential form \( z = re^{i\theta} \) can be converted to modulus-argument form \( z = r(\cos \theta + i \sin \theta) \) using Euler's formula.
+        \item Example: For \( z = 2e^{i\frac{\pi}{6}} \),
+        \[
+        z = 2 \left(\cos \frac{\pi}{6} + i \sin \frac{\pi}{6}\right)
+        \]
+        \[
+        z = 2 \left(\frac{\sqrt{3}}{2} + i \frac{1}{2}\right) = \sqrt{3} + i
+        \]
+    \end{itemize}
+
+
+\subsection*{Vector form with examples}
+(Will not be asked, but it is another way of understanding and representing complex numbers.)\\
+A complex number \( z = a + bi \) can be represented as a vector in the complex plane. The vector form of a complex number is written as:
+
+\[
+\mathbf{z} = \begin{pmatrix}
+a \\
+b
+\end{pmatrix}
+\]
+
+Here, \( a \) is the real part and \( b \) is the imaginary part of the complex number.
+
+\subsection*{Addition and Subtraction}
+
+Addition and subtraction of complex numbers in vector form can be done component-wise.
+
+\begin{itemize}
+    \item \textbf{Addition}: If \( z_1 = a_1 + b_1i \) and \( z_2 = a_2 + b_2i \), then
+    \[
+    \mathbf{z}_1 + \mathbf{z}_2 = \begin{pmatrix}
+    a_1 \\
+    b_1
+    \end{pmatrix} + \begin{pmatrix}
+    a_2 \\
+    b_2
+    \end{pmatrix} = \begin{pmatrix}
+    a_1 + a_2 \\
+    b_1 + b_2
+    \end{pmatrix}
+    \]
+    \item \textbf{Subtraction}: If \( z_1 = a_1 + b_1i \) and \( z_2 = a_2 + b_2i \), then
+    \[
+    \mathbf{z}_1 - \mathbf{z}_2 = \begin{pmatrix}
+    a_1 \\
+    b_1
+    \end{pmatrix} - \begin{pmatrix}
+    a_2 \\
+    b_2
+    \end{pmatrix} = \begin{pmatrix}
+    a_1 - a_2 \\
+    b_1 - b_2
+    \end{pmatrix}
+    \]
+\end{itemize}
+
+Example: Let \( z_1 = 3 + 4i \) and \( z_2 = 1 + 2i \).
+
+Addition:
+\[
+\mathbf{z}_1 + \mathbf{z}_2 = \begin{pmatrix}
+3 \\
+4
+\end{pmatrix} + \begin{pmatrix}
+1 \\
+2
+\end{pmatrix} = \begin{pmatrix}
+4 \\
+6
+\end{pmatrix}
+\]
+
+Subtraction:
+\[
+\mathbf{z}_1 - \mathbf{z}_2 = \begin{pmatrix}
+3 \\
+4
+\end{pmatrix} - \begin{pmatrix}
+1 \\
+2
+\end{pmatrix} = \begin{pmatrix}
+2 \\
+2
+\end{pmatrix}
+\]
+
+\subsection*{Scalar Multiplication}
+
+Scalar multiplication involves multiplying each component of the vector by the scalar.
+
+\[
+c \cdot \mathbf{z} = c \cdot \begin{pmatrix}
+a \\
+b
+\end{pmatrix} = \begin{pmatrix}
+ca \\
+cb
+\end{pmatrix}
+\]
+
+Example: Let \( z = 2 + 3i \) and \( c = 2 \).
+
+\[
+2 \cdot \mathbf{z} = 2 \cdot \begin{pmatrix}
+2 \\
+3
+\end{pmatrix} = \begin{pmatrix}
+4 \\
+6
+\end{pmatrix}
+\]
+
+\subsection*{Multiplication of Complex Numbers}
+
+Multiplication of complex numbers in vector form is more involved. If \( z_1 = a + bi \) and \( z_2 = c + di \), the product is given by:
+
+\[
+z_1 z_2 = (a + bi)(c + di) = (ac - bd) + (ad + bc)i
+\]
+
+In vector form, this corresponds to:
+
+\[
+\mathbf{z}_1 \cdot \mathbf{z}_2 = \begin{pmatrix}
+a \\
+b
+\end{pmatrix} \cdot \begin{pmatrix}
+c \\
+d
+\end{pmatrix} = \begin{pmatrix}
+ac - bd \\
+ad + bc
+\end{pmatrix}
+\]
+
+Example: Let \( z_1 = 1 + 2i \) and \( z_2 = 3 + 4i \).
+
+\[
+z_1 z_2 = (1 + 2i)(3 + 4i) = (1 \cdot 3 - 2 \cdot 4) + (1 \cdot 4 + 2 \cdot 3)i = (3 - 8) + (4 + 6)i = -5 + 10i
+\]
+
+In vector form:
+
+\[
+\mathbf{z}_1 \cdot \mathbf{z}_2 = \begin{pmatrix}
+1 \\
+2
+\end{pmatrix} \cdot \begin{pmatrix}
+3 \\
+4
+\end{pmatrix} = \begin{pmatrix}
+1 \cdot 3 - 2 \cdot 4 \\
+1 \cdot 4 + 2 \cdot 3
+\end{pmatrix} = \begin{pmatrix}
+-5 \\
+10
+\end{pmatrix}
+\]
+
+\subsection*{Division of Complex Numbers}
+
+Division of complex numbers in vector form is also more involved. If \( z_1 = a + bi \) and \( z_2 = c + di \), the division is given by:
+
+\[
+\frac{z_1}{z_2} = \frac{(a + bi)(c - di)}{c^2 + d^2} = \frac{(ac + bd) + (bc - ad)i}{c^2 + d^2}
+\]
+
+In vector form, this corresponds to:
+
+\[
+\frac{\mathbf{z}_1}{\mathbf{z}_2} = \frac{1}{c^2 + d^2} \begin{pmatrix}
+ac + bd \\
+bc - ad
+\end{pmatrix}
+\]
+
+Example: Let \( z_1 = 5 + 6i \) and \( z_2 = 3 + 4i \).
+
+\[
+\frac{z_1}{z_2} = \frac{(5 + 6i)(3 - 4i)}{3^2 + 4^2} = \frac{(15 + 24) + (-20 + 18)i}{9 + 16} = \frac{39 - 2i}{25} = \frac{39}{25} - \frac{2}{25}i
+\]
+
+In vector form:
+
+\[
+\frac{\mathbf{z}_1}{\mathbf{z}_2} = \frac{1}{25} \begin{pmatrix}
+39 \\
+-2
+\end{pmatrix} = \begin{pmatrix}
+\frac{39}{25} \\
+-\frac{2}{25}
+\end{pmatrix}
+\]
+
+\end{itemize}
+%----------------------------------------------------------------------------------------
+%	EDUCATION
+%----------------------------------------------------------------------------------------
+\section{Finding Roots of a complex number }
+
+\subsection*{Square Roots}
+
+To find the square roots of a complex number \( z = a + bi \):
+
+1. Convert \( z \) to polar form: \( z = re^{i\theta} \).
+2. The square roots are given by:
+   \[
+   \sqrt{z} = \sqrt{r} e^{i\frac{\theta + 2k\pi}{2}}, \quad k = 0, 1
+   \]
+
+Example: Find the square roots of \( z = 3 + 4i \).
+
+1. Convert to polar form:
+   \[
+   r = |z| = \sqrt{3^2 + 4^2} = \sqrt{25} = 5
+   \]
+   \[
+   \theta = \arg(z) = \tan^{-1}\left(\frac{4}{3}\right)
+   \]
+   Thus, \( z = 5 e^{i\theta} \).
+
+2. Find the square roots:
+   \[
+   \sqrt{z} = \sqrt{5} e^{i\frac{\theta}{2}}, \quad \sqrt{5} e^{i\frac{\theta + 2\pi}{2}}
+   \]
+
+Therefore, the square roots are:
+   \[
+   \sqrt{5} e^{i\frac{\theta}{2}}, \quad \sqrt{5} e^{i\left(\frac{\theta}{2} + \pi\right)}
+   \]
+
+\subsection*{Cube Roots}
+
+To find the cube roots of a complex number \( z = a + bi \):
+
+1. Convert \( z \) to polar form: \( z = re^{i\theta} \).
+2. The cube roots are given by:
+   \[
+   \sqrt[3]{z} = \sqrt[3]{r} e^{i\frac{\theta + 2k\pi}{3}}, \quad k = 0, 1, 2
+   \]
+
+Example: Find the cube roots of \( z = 8 \).
+
+1. Convert to polar form:
+   \[
+   r = |z| = 8, \quad \theta = 0
+   \]
+   Thus, \( z = 8 e^{i \cdot 0} \).
+
+2. Find the cube roots:
+   \[
+   \sqrt[3]{z} = 2 e^{i\frac{0}{3}}, \quad 2 e^{i\frac{2\pi}{3}}, \quad 2 e^{i\frac{4\pi}{3}}
+   \]
+
+Therefore, the cube roots are:
+   \[
+   2, \quad 2 e^{i\frac{2\pi}{3}}, \quad 2 e^{i\frac{4\pi}{3}}
+   \]
+
+\subsection*{Fourth Roots}
+
+To find the fourth roots of a complex number \( z = a + bi \):
+
+1. Convert \( z \) to polar form: \( z = re^{i\theta} \).
+2. The fourth roots are given by:
+   \[
+   \sqrt[4]{z} = \sqrt[4]{r} e^{i\frac{\theta + 2k\pi}{4}}, \quad k = 0, 1, 2, 3
+   \]
+
+Example: Find the fourth roots of \( z = 16 \).
+
+1. Convert to polar form:
+   \[
+   r = |z| = 16, \quad \theta = 0
+   \]
+   Thus, \( z = 16 e^{i \cdot 0} \).
+
+2. Find the fourth roots:
+   \[
+   \sqrt[4]{z} = 2 e^{i\frac{0}{4}}, \quad 2 e^{i\frac{2\pi}{4}}, \quad 2 e^{i\frac{4\pi}{4}}, \quad 2 e^{i\frac{6\pi}{4}}
+   \]
+
+Therefore, the fourth roots are:
+   \[
+   2, \quad 2 e^{i\frac{\pi}{2}}, \quad 2 e^{i\pi}, \quad 2 e^{i\frac{3\pi}{2}}
+   \]
+
+\section{Conclusion}
+To conclude, you will need to know how to add, subtract, divide and find the roots of complex numbers. This topic is important as a lot of the imaginary number notation will be used in ENG1003 and ENG1004 in first year.
+\end{document}
+
