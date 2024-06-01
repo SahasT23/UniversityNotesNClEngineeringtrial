@@ -1,0 +1,910 @@
+% article class because we want to fully customize the page and not use a cv template
+\documentclass[a4paper,12pt]{article}
+
+%----------------------------------------------------------------------------------------
+%	FONT
+%----------------------------------------------------------------------------------------
+
+% % fontspec allows you to use TTF/OTF fonts directly
+% \usepackage{fontspec}
+% \defaultfontfeatures{Ligatures=TeX}
+
+% % modified for ShareLaTeX use
+% \setmainfont[
+% SmallCapsFont = Fontin-SmallCaps.otf,
+% BoldFont = Fontin-Bold.otf,
+% ItalicFont = Fontin-Italic.otf
+% ]
+% {Fontin.otf}
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES
+%----------------------------------------------------------------------------------------
+\usepackage{url}
+\usepackage{parskip} 	
+\usepackage{amsmath} % for matrices and maths environments
+\usepackage{fixltx2e}
+
+%other packages for formatting
+\RequirePackage{color}
+\RequirePackage{graphicx}
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage[scale=0.9]{geometry}
+
+%tabularx environment
+\usepackage{tabularx}
+
+%for lists within experience section
+\usepackage{enumitem}
+
+% centered version of 'X' col. type
+\newcolumntype{C}{>{\centering\arraybackslash}X} 
+
+%to prevent spillover of tabular into next pages
+\usepackage{supertabular}
+\usepackage{tabularx}
+\newlength{\fullcollw}
+\setlength{\fullcollw}{0.47\textwidth}
+
+%custom \section
+\usepackage{titlesec}				
+\usepackage{multicol}
+\usepackage{multirow}
+
+%CV Sections inspired by: 
+%http://stefano.italians.nl/archives/26
+\titleformat{\section}{\large\scshape\raggedright}{}{0em}{}[\titlerule]
+\titlespacing{\section}{0pt}{10pt}{10pt}
+
+%for publications
+\usepackage[style=authoryear,sorting=ynt, maxbibnames=2]{biblatex}
+
+%Setup hyperref package, and colours for links
+\usepackage[unicode, draft=false]{hyperref}
+\definecolor{linkcolour}{rgb}{0,0.2,0.6}
+\hypersetup{colorlinks,breaklinks,urlcolor=linkcolour,linkcolor=linkcolour}
+\addbibresource{citations.bib}
+\setlength\bibitemsep{1em}
+
+%for social icons
+\usepackage{fontawesome5}
+
+%debug page outer frames
+%\usepackage{showframe}
+
+%----------------------------------------------------------------------------------------
+%	BEGIN DOCUMENT
+%----------------------------------------------------------------------------------------
+\begin{document}
+
+% non-numbered pages
+\pagestyle{empty} 
+
+%----------------------------------------------------------------------------------------
+%	TITLE
+%----------------------------------------------------------------------------------------
+%----------------------------------------------------------------------------------------
+% OVERVIEW
+%----------------------------------------------------------------------------------------
+\section{\huge\textbf{Matrices \& Vectors Notes}}
+This set of notes will cover all of the matrices and vectors content that you will be taught in ENG1001.
+%----------------------------------------------------------------------------------------
+%	SKILLS
+%----------------------------------------------------------------------------------------
+\section{Key Vectors and Matrices Definitions}
+\begin{tabularx}{\linewidth}{@{}l X@{}}
+\textbf{Matrix}: &  \normalsize{A matrix is a rectangular array of numbers, or symbols representing numbers or other quantities.}
+\\
+\textbf{Order/Dimensions}: &  \normalsize{An order of a matrix is used to determine if addition, subtraction and multiplication can happen. The order of a matrix can be defined as \textbf{(R x C)} or Rows multiplied with Columns. }\\
+\textbf{Transpose}: &  \normalsize{The transpose of a matrix is another matrix with rows and columns swapped from the original,
+and hence the number of rows and columns is also swapped.}\\  
+\textbf{Determinant}: &  \normalsize{A determinant is the scalar value of a matrix that can be compared to the size or orientation of the matrix.}\\
+% If you wanted to know, you would have done a maths degree instead
+\textbf{Singular Matrix}: &  \normalsize{This is a square matrix whose determinant is 0, so an inverse cannot be found, likewise a non-singular matrix can have an inverse as the determinant isn't equal to 0.}\\
+\end{tabularx}
+%----------------------------------------------------------------------------------------
+%	Start
+%----------------------------------------------------------------------------------------
+\section{Matrix Examples \& Elements}
+If we use a capital letter A for a matrix, then we use the letter a for the elements (entries) of the
+matrix. Then a\textsubscript{ij} gives the element in row i and column j.
+Here’s some more examples of matrices of various shapes and sizes, with descriptions (we can also use square brackets for matrices):
+\newline{a $2 \times 3$ rectangular matrix:}
+\[
+\begin{pmatrix}
+2 & 5 & -1 \\
+0 & 3 & 2
+\end{pmatrix}
+\]
+\newline{a $2 \times 2$ square matrix, which is also a zero matrix (all entries zero):}
+\[
+\begin{pmatrix}
+0 & 0 \\
+0 & 0
+\end{pmatrix}
+\]
+\newline{a $3 \times 3$ diagonal matrix.}
+\[
+\begin{pmatrix}
+2 & 0 & 0 \\
+0 & 3 & 0 \\
+0 & 0 & 4
+\end{pmatrix}
+\]
+
+Upper triangular matrix:
+\[
+\begin{bmatrix}
+1 & 2 & 3 \\
+0 & 4 & 5 \\
+0 & 0 & 6 \\
+\end{bmatrix}
+\]
+
+Lower triangular matrix:
+\[
+\begin{bmatrix}
+1 & 0 & 0 \\
+4 & 5 & 0 \\
+7 & 8 & 9 \\
+\end{bmatrix}
+\]
+
+Identity matrix:
+\[
+\begin{bmatrix}
+1 & 0 & 0 \\
+0 & 1 & 0 \\
+0 & 0 & 1 \\
+\end{bmatrix}
+\]
+
+%--------------------------------------------------------------------------------------
+% Projects
+%--------------------------------------------------------------------------------------
+\section{Matrix Methods, Uses and Properties}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Finding the transpose:}\\
+    We can find the transpose of a matrix, which is just the same matrix but columns and rows are swapped around.
+    Original matrix:
+    \[
+    A =
+    \begin{bmatrix}
+    a_{1,1} & a_{1,2} \\
+    a_{2,1} & a_{2,2} \\
+    a_{3,1} & a_{3,2} \\
+    \end{bmatrix}   
+    \]
+
+    Transpose of the matrix:    
+    \[
+    A^T =
+    \begin{bmatrix}
+    a_{1,1} & a_{2,1} & a_{3,1} \\
+    a_{1,2} & a_{2,2} & a_{3,2} \\
+    \end{bmatrix}
+    \]
+    \item \textbf{Finding the determinant for 2x2 and 3x3}\\ 
+    Original matrix:
+    \[
+    A =
+    \begin{pmatrix}
+    a & b \\
+    c & d \\
+    \end{pmatrix}
+    \]
+
+    Determinant of the matrix:
+    \[
+    \det(A) = ad - bc
+    \]
+
+    For a 3x3 matrix:
+    Let $A = \begin{pmatrix} a & b & c \\ d & e & f \\ g & h & i \end{pmatrix}$ be a 3x3 matrix.
+
+    \[
+    \det(A) = 
+    \begin{vmatrix} 
+    a & b & c \\ 
+    d & e & f \\ 
+    g & h & i 
+    \end{vmatrix} 
+    = a(ei - fh) - b(di - fg) + c(dh - eg)
+\]
+    \item \textbf{Matrix addition, subtraction and multiplication}
+    
+    Let $A = \begin{bmatrix} a & b \\ c & d \end{bmatrix}$ and $B = \begin{bmatrix} e & f \\ g & h \end{bmatrix}$ be two 2x2 matrices.
+
+    Their sum $A + B$ is given by:  
+    \[
+    A + B = \begin{bmatrix} a & b \\ c & d \end{bmatrix} + \begin{bmatrix} e & f \\ g & h \end{bmatrix} = \begin{bmatrix} a+e & b+f \\ c+g & d+h \end{bmatrix}
+    \]
+    
+    Their difference $A - B$ is given by:
+    \[
+    A - B = \begin{bmatrix} a & b \\ c & d \end{bmatrix} - \begin{bmatrix} e & f \\ g & h \end{bmatrix} = \begin{bmatrix} a-e & b-f \\ c-g & d-h \end{bmatrix}
+    \]
+
+    Their product $A \times B$ is given by:
+    \[
+    A \times B = \begin{bmatrix} a & b \\ c & d \end{bmatrix} \times \begin{bmatrix} e & f \\ g & h \end{bmatrix} = \begin{bmatrix} ae+bg & af+bh \\ ce+dg & cf+dh \end{bmatrix}
+    \] 
+
+
+
+\item \textbf{Inverse matrix derivation} 
+
+To find the inverse of a \(2 \times 2\) matrix, consider a general matrix \( \mathbf{A} \) given by:
+\[
+\mathbf{A} = \begin{pmatrix}
+a & b \\
+c & d
+\end{pmatrix}
+\]
+
+The inverse of \( \mathbf{A} \), denoted as \( \mathbf{A}^{-1} \), exists if and only if the determinant of \( \mathbf{A} \), denoted as \( \det(\mathbf{A}) \), is non-zero. The determinant of \( \mathbf{A} \) is calculated as:
+\[
+\det(\mathbf{A}) = ad - bc
+\]
+
+If \( \det(\mathbf{A}) \neq 0 \), the inverse of \( \mathbf{A} \) is given by:
+\[
+\mathbf{A}^{-1} = \frac{1}{\det(\mathbf{A})} \begin{pmatrix}
+d & -b \\
+-c & a
+\end{pmatrix}
+\]
+
+To derive this result, we seek a matrix \( \mathbf{A}^{-1} = \begin{pmatrix}
+w & x \\
+y & z
+\end{pmatrix} \) such that:
+\[
+\mathbf{A} \mathbf{A}^{-1} = \mathbf{I}
+\]
+
+This implies:
+\[
+\begin{pmatrix}
+a & b \\
+c & d
+\end{pmatrix}
+\begin{pmatrix}
+w & x \\
+y & z
+\end{pmatrix}
+=
+\begin{pmatrix}
+1 & 0 \\
+0 & 1
+\end{pmatrix}
+\]
+
+Performing the matrix multiplication on the left-hand side, we get:
+\[
+\begin{pmatrix}
+aw + by & ax + bz \\
+cw + dy & cx + dz
+\end{pmatrix}
+=
+\begin{pmatrix}
+1 & 0 \\
+0 & 1
+\end{pmatrix}
+\]
+
+This gives us a system of equations:
+\[
+\begin{cases}
+aw + by = 1 \\
+ax + bz = 0 \\
+cw + dy = 0 \\
+cx + dz = 1
+\end{cases}
+\]
+
+Solving these equations, we first express \( w \) and \( y \) in terms of \( a, b, c, d \):
+\[
+\begin{cases}
+aw + by = 1 \\
+cw + dy = 0
+\end{cases}
+\]
+
+From \( cw + dy = 0 \):
+\[
+w = -\frac{d}{c} y
+\]
+
+Substitute \( w \) into \( aw + by = 1 \):
+\[
+a\left( -\frac{d}{c} y \right) + by = 1
+\]
+\[
+-\frac{ad}{c} y + by = 1
+\]
+\[
+y \left( b - \frac{ad}{c} \right) = 1
+\]
+\[
+y \left( \frac{bc - ad}{c} \right) = 1
+\]
+\[
+y = \frac{c}{bc - ad} = -\frac{c}{ad - bc}
+\]
+
+Similarly, we solve for \( w \):
+\[
+w = -\frac{d}{c} y = -\frac{d}{c} \left( -\frac{c}{ad - bc} \right) = \frac{d}{ad - bc}
+\]
+
+Next, express \( x \) and \( z \) in terms of \( a, b, c, d \):
+\[
+\begin{cases}
+ax + bz = 0 \\
+cx + dz = 1
+\end{cases}
+\]
+
+From \( ax + bz = 0 \):
+\[
+x = -\frac{b}{a} z
+\]
+
+Substitute \( x \) into \( cx + dz = 1 \):
+\[
+c \left( -\frac{b}{a} z \right) + dz = 1
+\]
+\[
+-\frac{bc}{a} z + dz = 1
+\]
+\[
+z \left( d - \frac{bc}{a} \right) = 1
+\]
+\[
+z \left( \frac{ad - bc}{a} \right) = 1
+\]
+\[
+z = \frac{a}{ad - bc}
+\]
+
+Similarly, we solve for \( x \):
+\[
+x = -\frac{b}{a} z = -\frac{b}{a} \left( \frac{a}{ad - bc} \right) = -\frac{b}{ad - bc}
+\]
+
+Therefore, the inverse matrix \( \mathbf{A}^{-1} \) is:
+\[
+\mathbf{A}^{-1} = \frac{1}{ad - bc} \begin{pmatrix}
+d & -b \\
+-c & a
+\end{pmatrix}
+\]
+    
+    \item \textbf{Identity matrix and inverse proof}
+    Identity matrices can be quite useful, even if they don't look like it.
+
+    
+Let $I$ be the identity matrix of size $n \times n$. For any matrix $A$ of size $n \times m$, the product $IA$ will be equal to $A$.
+
+Proof:
+    \begin{align}    
+    A = \begin{pmatrix} a_{11} & a_{12} & \dots & a_{1m} \\ a_{21} & a_{22} & \dots & a_{2m} \\ \vdots & \vdots & \ddots & \vdots \\ a_{n1} & a_{n2} & \dots & a_{nm} \end{pmatrix}
+    \end{align}
+    
+Then, the product $IA$ is:
+
+\[
+IA = \begin{pmatrix} 1 & 0 & \dots & 0 \\ 0 & 1 & \dots & 0 \\ \vdots & \vdots & \ddots & \vdots \\ 0 & 0 & \dots & 1 \end{pmatrix} \begin{pmatrix} a_{11} & a_{12} & \dots & a_{1m} \\ a_{21} & a_{22} & \dots & a_{2m} \\ \vdots & \vdots & \ddots & \vdots \\ a_{n1} & a_{n2} & \dots & a_{nm} \end{pmatrix}
+\]
+
+Using matrix multiplication, we obtain:
+
+\[
+IA = \begin{pmatrix} a_{11} & a_{12} & \dots & a_{1m} \\ a_{21} & a_{22} & \dots & a_{2m} \\ \vdots & \vdots & \ddots & \vdots \\ a_{n1} & a_{n2} & \dots & a_{nm} \end{pmatrix} = A
+\]
+
+\item \textbf{Examples of inverses and with simultaneous equations}
+
+Consider the system of simultaneous linear equations:
+\[
+\begin{cases}
+2x + 3y = 5 \\
+4x + 6y = 8
+\end{cases}
+\]
+
+We can represent this system in matrix form as:
+\[
+\mathbf{A}\mathbf{x} = \mathbf{b}
+\]
+where
+\[
+\mathbf{A} = \begin{pmatrix}
+2 & 3 \\
+4 & 6
+\end{pmatrix}, \quad
+\mathbf{x} = \begin{pmatrix}
+x \\
+y
+\end{pmatrix}, \quad
+\mathbf{b} = \begin{pmatrix}
+5 \\
+8
+\end{pmatrix}
+\]
+
+To solve for \( \mathbf{x} \), we need to find the inverse of \( \mathbf{A} \), denoted as \( \mathbf{A}^{-1} \). The inverse of \( \mathbf{A} \) is given by:
+\[
+\mathbf{A}^{-1} = \frac{1}{\det(\mathbf{A})} \begin{pmatrix}
+6 & -3 \\
+-4 & 2
+\end{pmatrix}
+\]
+where the determinant \( \det(\mathbf{A}) \) is:
+\[
+\det(\mathbf{A}) = 2 \cdot 6 - 3 \cdot 4 = 12 - 12 = 0
+\]
+
+Since the determinant is zero, the matrix \( \mathbf{A} \) is not invertible, and the system does not have a unique solution. Therefore, we need to analyze the system further to find if it has no solution or infinitely many solutions.
+
+Let's rewrite the original equations:
+\[
+\begin{cases}
+2x + 3y = 5 \\
+4x + 6y = 8
+\end{cases}
+\]
+
+Notice that the second equation is simply twice the first equation. This implies that the two equations are not independent and represent the same line. Therefore, the system has infinitely many solutions along the line \(2x + 3y = 5\).
+
+For example, we can express \( y \) in terms of \( x \):
+\[
+y = \frac{5 - 2x}{3}
+\]
+
+Thus, the solutions to the system are all pairs \((x, y)\) that satisfy the equation \(2x + 3y = 5\).
+
+    \end{itemize}
+    
+\section{Vectors: Explanation, Definitions and Usages}
+\begin{tabularx}{\linewidth}{@{}l X@{}}
+\textbf{Vector}: &  \normalsize{A vector is anything with a magnitude and a direction.}\\
+\textbf{Modulus}: &  \normalsize{You can think of a modulus as the positive distance from zero on a number line.}\\
+\textbf{Unit Vector}: & \normalsize{This is a special vector with a magnitude or modulus of one}\\
+\textbf{Dot product}: & \normalsize{This is a scalar value derived from two vectors a.b = \(|a|.|b|\)\( \cos\theta \)}\\
+\textbf{Vector Component}: & \normalsize{This is when you have to find a horizontal or vertical component of a force and display it as a vector (Mostly useful for Mechanics/Statics)}\\
+\textbf{Cross/Vector Product}: & \normalsize{The cross product, also known as the vector product, is an operation that takes two vectors in three-dimensional space and produces another vector that is perpendicular to both of the original vectors.}
+
+\end{tabularx}
+
+\begin{itemize}[leftmargin=*]
+\item \textbf{Example of a 2D and 3D vector:}
+
+\[
+\begin{array}{cc}
+\text{2D Vector} & \text{3D Vector} \\
+\begin{pmatrix}
+x \\
+y
+\end{pmatrix}
+&
+\begin{pmatrix}
+x \\
+y \\
+z
+\end{pmatrix}
+\end{array}
+\]
+
+\item \textbf{Modulus calculation of a 2D and 3D vector:}\\
+
+For a 2D vector \(\mathbf{a} = \begin{pmatrix} a_1 \\ a_2 \end{pmatrix}\):
+
+\[
+|\mathbf{a}| = \sqrt{a_1^2 + a_2^2}
+\]
+
+For a 3D vector \(\mathbf{b} = \begin{pmatrix} b_1 \\ b_2 \\ b_3 \end{pmatrix}\):
+
+\[
+|\mathbf{b}| = \sqrt{b_1^2 + b_2^2 + b_3^2}
+\]
+
+\item \textbf{Dot Product Calculation Example with 3D Vectors:}
+\[
+\mathbf{a} = \begin{pmatrix} a_1 \\ a_2 \\ a_3 \end{pmatrix}
+\quad \text{and} \quad
+\mathbf{b} = \begin{pmatrix} b_1 \\ b_2 \\ b_3 \end{pmatrix},
+\]
+
+the dot product \(\mathbf{a} \cdot \mathbf{b}\) is calculated as follows:
+\[
+\mathbf{a} \cdot \mathbf{b} = a_1 b_1 + a_2 b_2 + a_3 b_3.
+\]
+
+For example, if
+\[
+\mathbf{a} = \begin{pmatrix} 2 \\ 3 \\ 4 \end{pmatrix}
+\quad \text{and} \quad
+\mathbf{b} = \begin{pmatrix} 1 \\ 0 \\ -1 \end{pmatrix},
+\]
+
+then the dot product is:
+\[
+\mathbf{a} \cdot \mathbf{b} = 2 \cdot 1 + 3 \cdot 0 + 4 \cdot (-1) = 2 + 0 - 4 = -2.
+\]
+
+Therefore, the dot product of \(\mathbf{a}\) and \(\mathbf{b}\) is \(-2\).
+
+\item \textbf{Angle Between Two Vectors Example:}
+\[
+\mathbf{a} = \begin{pmatrix} a_1 \\ a_2 \\ a_3 \end{pmatrix}
+\quad \text{and} \quad
+\mathbf{b} = \begin{pmatrix} b_1 \\ b_2 \\ b_3 \end{pmatrix},
+\]
+
+the angle \(\theta\) (in radians) between the two vectors can be found using the dot product formula:
+\[
+\mathbf{a} \cdot \mathbf{b} = |\mathbf{a}||\mathbf{b}| \cos \theta,
+\]
+where \( |\mathbf{a} |\) and \(| \mathbf{b} |\) are the magnitudes of vectors \(\mathbf{a}\) and \(\mathbf{b}\), respectively.
+
+First, calculate the dot product \(\mathbf{a} \cdot \mathbf{b}\):
+\[
+\mathbf{a} \cdot \mathbf{b} = a_1 b_1 + a_2 b_2 + a_3 b_3.
+\]
+
+Next, calculate the magnitudes of \(\mathbf{a}\) and \(\mathbf{b}\):
+\[
+|\mathbf{a}| = \sqrt{a_1^2 + a_2^2 + a_3^2}
+\quad \text{and} \quad
+|\mathbf{b}| = \sqrt{b_1^2 + b_2^2 + b_3^2}.
+\]
+
+Then, the cosine of the angle \(\theta\) is given by:
+\[
+\cos \theta = \frac{\mathbf{a} \cdot \mathbf{b}}{|\mathbf{a}| | \mathbf{b}|}.
+\]
+
+Finally, the angle \(\theta\) can be found using the inverse cosine function:
+\[
+\theta = \cos^{-1} \left( \frac{\mathbf{a} \cdot \mathbf{b}}{| \mathbf{a}| |\mathbf{b}|} \right).
+\]
+
+\item \textbf{Finding The Angle Between Two Vectors Example:}
+\[
+\mathbf{a} = \begin{pmatrix} 2 \\ 3 \\ 4 \end{pmatrix}
+\quad \text{and} \quad
+\mathbf{b} = \begin{pmatrix} 1 \\ 0 \\ -1 \end{pmatrix},
+\]
+
+then the dot product is:
+\[
+\mathbf{a} \cdot \mathbf{b} = 2 \cdot 1 + 3 \cdot 0 + 4 \cdot (-1) = 2 + 0 - 4 = -2.
+\]
+
+The magnitudes of \(\mathbf{a}\) and \(\mathbf{b}\) are:
+\[
+|\mathbf{a}| = \sqrt{2^2 + 3^2 + 4^2} = \sqrt{4 + 9 + 16} = \sqrt{29},
+\]
+\[
+|\mathbf{b}| = \sqrt{1^2 + 0^2 + (-1)^2} = \sqrt{1 + 0 + 1} = \sqrt{2}.
+\]
+
+Therefore, the cosine of the angle \(\theta\) is:
+\[
+\cos \theta = \frac{-2}{\sqrt{29} \cdot \sqrt{2}} = \frac{-2}{\sqrt{58}} = -\frac{2}{\sqrt{58}}.
+\]
+
+Thus, the angle \(\theta\) is:
+\[
+\theta = \cos^{-1} \left( -\frac{2}{\sqrt{58}} \right).
+\]
+
+\section*{Properties of the Cross Product}
+
+Given vectors \(\mathbf{a}\), \(\mathbf{b}\), and \(\mathbf{c}\) in \(\mathbb{R}^3\), and scalar \(k\), the cross product \(\mathbf{a} \times \mathbf{b}\) has the following properties:
+
+\item \textbf{1. Anticommutativity}
+\[
+\mathbf{a} \times \mathbf{b} = - (\mathbf{b} \times \mathbf{a})
+\]
+
+\item \textbf{2. Distributivity}
+\[
+\mathbf{a} \times (\mathbf{b} + \mathbf{c}) = \mathbf{a} \times \mathbf{b} + \mathbf{a} \times \mathbf{c}
+\]
+
+\item \textbf{3. Scalar Multiplication}
+\[
+(k \mathbf{a}) \times \mathbf{b} = k (\mathbf{a} \times \mathbf{b})
+\]
+\[
+\mathbf{a} \times (k \mathbf{b}) = k (\mathbf{a} \times \mathbf{b})
+\]
+
+\item \textbf{4. Zero Vector}
+\[
+\mathbf{a} \times \mathbf{a} = \mathbf{0}
+\]
+
+\item \textbf{5. Orthogonality}
+\[
+\mathbf{a} \times \mathbf{b} \text{ is orthogonal to both } \mathbf{a} \text{ and } \mathbf{b}
+\]
+
+\item \textbf{6. Magnitude}
+\[
+\|\mathbf{a} \times \mathbf{b}\| = \|\mathbf{a}\| \|\mathbf{b}\| \sin \theta
+\]
+where \(\theta\) is the angle between \(\mathbf{a}\) and \(\mathbf{b}\).
+
+\item \textbf{7. Jacobi Identity}
+\[
+\mathbf{a} \times (\mathbf{b} \times \mathbf{c}) + \mathbf{b} \times (\mathbf{c} \times \mathbf{a}) + \mathbf{c} \times (\mathbf{a} \times \mathbf{b}) = \mathbf{0}
+\]
+
+\subsection*{Examples of the properties}
+
+\subsubsection*{Anticommutativity}
+\[
+\mathbf{a} = \begin{pmatrix} 1 \\ 2 \\ 3 \end{pmatrix}, \quad \mathbf{b} = \begin{pmatrix} 4 \\ 5 \\ 6 \end{pmatrix}
+\]
+\[
+\mathbf{a} \times \mathbf{b} = \begin{pmatrix} 1 \\ 2 \\ 3 \end{pmatrix} \times \begin{pmatrix} 4 \\ 5 \\ 6 \end{pmatrix} = \begin{pmatrix} -3 \\ 6 \\ -3 \end{pmatrix}
+\]
+\[
+\mathbf{b} \times \mathbf{a} = \begin{pmatrix} 4 \\ 5 \\ 6 \end{pmatrix} \times \begin{pmatrix} 1 \\ 2 \\ 3 \end{pmatrix} = \begin{pmatrix} 3 \\ -6 \\ 3 \end{pmatrix}
+\]
+\[
+\mathbf{a} \times \mathbf{b} = - (\mathbf{b} \times \mathbf{a})
+\]
+
+\subsubsection*{Distributivity}
+\[
+\mathbf{a} = \begin{pmatrix} 1 \\ 2 \\ 3 \end{pmatrix}, \quad \mathbf{b} = \begin{pmatrix} 4 \\ 5 \\ 6 \end{pmatrix}, \quad \mathbf{c} = \begin{pmatrix} 7 \\ 8 \\ 9 \end{pmatrix}
+\]
+\[
+\mathbf{a} \times (\mathbf{b} + \mathbf{c}) = \begin{pmatrix} 1 \\ 2 \\ 3 \end{pmatrix} \times \begin{pmatrix} 11 \\ 13 \\ 15 \end{pmatrix} = \begin{pmatrix} -6 \\ 12 \\ -6 \end{pmatrix}
+\]
+\[
+\mathbf{a} \times \mathbf{b} = \begin{pmatrix} 1 \\ 2 \\ 3 \end{pmatrix} \times \begin{pmatrix} 4 \\ 5 \\ 6 \end{pmatrix} = \begin{pmatrix} -3 \\ 6 \\ -3 \end{pmatrix}
+\]
+\[
+\mathbf{a} \times \mathbf{c} = \begin{pmatrix} 1 \\ 2 \\ 3 \end{pmatrix} \times \begin{pmatrix} 7 \\ 8 \\ 9 \end{pmatrix} = \begin{pmatrix} -3 \\ 6 \\ -3 \end{pmatrix}
+\]
+\[
+\mathbf{a} \times \mathbf{b} + \mathbf{a} \times \mathbf{c} = \begin{pmatrix} -3 \\ 6 \\ -3 \end{pmatrix} + \begin{pmatrix} -3 \\ 6 \\ -3 \end{pmatrix} = \begin{pmatrix} -6 \\ 12 \\ -6 \end{pmatrix}
+\]
+\[
+\mathbf{a} \times (\mathbf{b} + \mathbf{c}) = \mathbf{a} \times \mathbf{b} + \mathbf{a} \times \mathbf{c}
+\]
+
+\subsubsection*{Scalar Multiplication}
+\[
+k = 2, \quad \mathbf{a} = \begin{pmatrix} 1 \\ 2 \\ 3 \end{pmatrix}, \quad \mathbf{b} = \begin{pmatrix} 4 \\ 5 \\ 6 \end{pmatrix}
+\]
+\[
+(k \mathbf{a}) \times \mathbf{b} = \begin{pmatrix} 2 \\ 4 \\ 6 \end{pmatrix} \times \begin{pmatrix} 4 \\ 5 \\ 6 \end{pmatrix} = \begin{pmatrix} -6 \\ 12 \\ -6 \end{pmatrix} \times 2 = 2 \times (\mathbf{a} \times \mathbf{b})
+\]
+
+\subsubsection*{Zero Vector}
+\[
+\mathbf{a} = \begin{pmatrix} 1 \\ 2 \\ 3 \end{pmatrix}
+\]
+\[
+\mathbf{a} \times \mathbf{a} = \begin{pmatrix} 1 \\ 2 \\ 3 \end{pmatrix} \times \begin{pmatrix} 1 \\ 2 \\ 3 \end{pmatrix} = \mathbf{0}
+\]
+
+\subsubsection*{Orthogonality}
+\[
+\mathbf{a} = \begin{pmatrix} 1 \\ 0 \\ 0 \end{pmatrix}, \quad \mathbf{b} = \begin{pmatrix} 0 \\ 1 \\ 0 \end{pmatrix}
+\]
+\[
+\mathbf{a} \times \mathbf{b} = \begin{pmatrix} 1 \\ 0 \\ 0 \end{pmatrix} \times \begin{pmatrix} 0 \\ 1 \\ 0 \end{pmatrix} = \begin{pmatrix} 0 \\ 0 \\ 1 \end{pmatrix}
+\]
+\[
+\mathbf{a} \cdot (\mathbf{a} \times \mathbf{b}) = \begin{pmatrix} 1 \\ 0 \\ 0 \end{pmatrix} \cdot \begin{pmatrix} 0 \\ 0 \\ 1 \end{pmatrix} = 0
+\]
+\[
+\mathbf{b} \cdot (\mathbf{a} \times \mathbf{b}) = \begin{pmatrix} 0 \\ 1 \\ 0 \end{pmatrix} \cdot \begin{pmatrix} 0 \\ 0 \\ 1 \end{pmatrix} = 0
+\]
+
+\subsubsection*{Magnitude}
+\[
+\mathbf{a} = \begin{pmatrix} 3 \\ -3 \\ 1 \end{pmatrix}, \quad \mathbf{b} = \begin{pmatrix} 4 \\ 9 \\ 2 \end{pmatrix}
+\]
+\[
+\|\mathbf{a}\| = \sqrt{3^2 + (-3)^2 + 1^2} = \sqrt{9 + 9 + 1} = \sqrt{19}
+\]
+\[
+\|\mathbf{b}\| = \sqrt{4^2 + 9^2 + 2^2} = \sqrt{16 + 81 + 4} = \sqrt{101}
+\]
+\[
+\|\mathbf{a} \times \mathbf{b}\| = \sqrt{(-21)^2 + (-10)^2 + (39)^2} = \sqrt{441 + 100 + 1521} = \sqrt{2062}
+\]
+\[
+\|\mathbf{a}\| \|\mathbf{b}\| \sin \theta = \sqrt{19} \cdot \sqrt{101} \cdot \sin \theta = \sqrt{2062} \cdot \sin \theta
+\]
+
+\subsubsection*{Jacobi Identity}
+\[
+\mathbf{a} = \begin{pmatrix} 1 \\ 2 \\ 3 \end{pmatrix}, \quad \mathbf{b} = \begin{pmatrix} 4 \\ 5 \\ 6 \end{pmatrix}, \quad \mathbf{c} = \begin{pmatrix} 7 \\ 8 \\ 9 \end{pmatrix}
+\]
+\[
+\mathbf{a} \times (\mathbf{b} \times \mathbf{c}) + \mathbf{b} \times (\mathbf{c} \times \mathbf{a}) + \mathbf{c} \times (\mathbf{a} \times \mathbf{b}) = \mathbf{0}
+\]
+
+\item \textbf{Vector Product (Cross Product)}
+
+Given two vectors:
+\[
+\mathbf{a} = \begin{pmatrix} a_1 \\ a_2 \\ a_3 \end{pmatrix}
+\quad \text{and} \quad
+\mathbf{b} = \begin{pmatrix} b_1 \\ b_2 \\ b_3 \end{pmatrix},
+\]
+
+the vector product \(\mathbf{a} \times \mathbf{b}\) is calculated as follows:
+
+\[
+\mathbf{a} \times \mathbf{b} = \begin{vmatrix}
+\mathbf{i} & \mathbf{j} & \mathbf{k} \\
+a_1 & a_2 & a_3 \\
+b_1 & b_2 & b_3
+\end{vmatrix},
+\]
+
+where \(\mathbf{i}\), \(\mathbf{j}\), and \(\mathbf{k}\) are the unit vectors in the \(x\)-, \(y\)-, and \(z\)-directions, respectively.
+
+This determinant expands to:
+\[
+\mathbf{a} \times \mathbf{b} = \mathbf{i}(a_2 b_3 - a_3 b_2) - \mathbf{j}(a_1 b_3 - a_3 b_1) + \mathbf{k}(a_1 b_2 - a_2 b_1).
+\]
+
+Here is an example of the vector product:
+
+For example, if
+\[
+\mathbf{a} = \begin{pmatrix} 1 \\ 2 \\ 3 \end{pmatrix}
+\quad \text{and} \quad
+\mathbf{b} = \begin{pmatrix} 4 \\ 5 \\ 6 \end{pmatrix},
+\]
+
+then the vector product is:
+\[
+\mathbf{a} \times \mathbf{b} = \begin{vmatrix}
+\mathbf{i} & \mathbf{j} & \mathbf{k} \\
+1 & 2 & 3 \\
+4 & 5 & 6
+\end{vmatrix}.
+\]
+
+Expanding this determinant, we get:
+\[
+\mathbf{a} \times \mathbf{b} = \mathbf{i}(2 \cdot 6 - 3 \cdot 5) - \mathbf{j}(1 \cdot 6 - 3 \cdot 4) + \mathbf{k}(1 \cdot 5 - 2 \cdot 4).
+\]
+
+Simplifying, we find:
+\[
+\mathbf{a} \times \mathbf{b} = \mathbf{i}(12 - 15) - \mathbf{j}(6 - 12) + \mathbf{k}(5 - 8).
+\]
+\[
+\mathbf{a} \times \mathbf{b} = \mathbf{i}(-3) - \mathbf{j}(-6) + \mathbf{k}(-3).
+\]
+\[
+\mathbf{a} \times \mathbf{b} = -3\mathbf{i} + 6\mathbf{j} - 3\mathbf{k}.
+\]
+
+Therefore, the vector product \(\mathbf{a} \times \mathbf{b}\) is:
+\[
+\mathbf{a} \times \mathbf{b} = \begin{pmatrix} -3 \\ 6 \\ -3 \end{pmatrix}.
+\]
+
+
+Given a position vector \(\mathbf{r}(t)\) as a function of time \(t\):
+\[
+\mathbf{r}(t) = \begin{pmatrix} x(t) \\ y(t) \\ z(t) \end{pmatrix},
+\]
+we can find the velocity, acceleration, and speed as follows:
+\section{Vector Calculus}
+\subsection*{Velocity}
+
+The velocity vector \(\mathbf{v}(t)\) is the first derivative of the position vector with respect to time:
+\[
+\mathbf{v}(t) = \frac{d\mathbf{r}(t)}{dt} = \begin{pmatrix} \frac{dx(t)}{dt} \\ \frac{dy(t)}{dt} \\ \frac{dz(t)}{dt} \end{pmatrix} = \begin{pmatrix} x'(t) \\ y'(t) \\ z'(t) \end{pmatrix}.
+\]
+
+\subsection*{Acceleration}
+
+The acceleration vector \(\mathbf{a}(t)\) is the first derivative of the velocity vector with respect to time, or the second derivative of the position vector with respect to time:
+\[
+\mathbf{a}(t) = \frac{d\mathbf{v}(t)}{dt} = \frac{d^2\mathbf{r}(t)}{dt^2} = \begin{pmatrix} \frac{d^2x(t)}{dt^2} \\ \frac{d^2y(t)}{dt^2} \\ \frac{d^2z(t)}{dt^2} \end{pmatrix} = \begin{pmatrix} x''(t) \\ y''(t) \\ z''(t) \end{pmatrix}.
+\]
+
+\subsection*{Speed}
+
+The speed \(s(t)\) is the magnitude of the velocity vector:
+\[
+s(t) = \|\mathbf{v}(t)\| = \left\| \begin{pmatrix} x'(t) \\ y'(t) \\ z'(t) \end{pmatrix} \right\| = \sqrt{(x'(t))^2 + (y'(t))^2 + (z'(t))^2}.
+\]
+
+\subsection*{Examples of Differentiation}
+
+Consider a position vector given by:
+\[
+\mathbf{r}(t) = \begin{pmatrix} t^2 \\ \sin(t) \\ \cos(t) \end{pmatrix}.
+\]
+
+\subsubsection*{Velocity}
+
+The velocity vector is:
+\[
+\mathbf{v}(t) = \frac{d}{dt} \begin{pmatrix} t^2 \\ \sin(t) \\ \cos(t) \end{pmatrix} = \begin{pmatrix} 2t \\ \cos(t) \\ -\sin(t) \end{pmatrix}.
+\]
+
+\subsubsection*{Acceleration}
+
+The acceleration vector is:
+\[
+\mathbf{a}(t) = \frac{d}{dt} \begin{pmatrix} 2t \\ \cos(t) \\ -\sin(t) \end{pmatrix} = \begin{pmatrix} 2 \\ -\sin(t) \\ -\cos(t) \end{pmatrix}.
+\]
+
+\subsubsection*{Speed}
+
+The speed is:
+\[
+s(t) = \|\mathbf{v}(t)\| = \sqrt{(2t)^2 + (\cos(t))^2 + (-\sin(t))^2} = \sqrt{4t^2 + \cos^2(t) + \sin^2(t)} = \sqrt{4t^2 + 1}.
+\]
+
+\subsection{Velocity, Speed and Acceleration through Calculus}
+
+In vector calculus, speed, velocity, and acceleration are fundamental concepts that describe the motion of a particle. These quantities are linked by differentiation.\\
+
+
+Let \(\mathbf{r}(t)\) be the position vector of a particle at time \(t\). Then:
+
+    \item \textbf{Velocity} \(\mathbf{v}(t)\) is the first derivative of the position vector with respect to time:
+    \[
+    \mathbf{v}(t) = \frac{d\mathbf{r}}{dt}.
+    \]
+    \item \textbf{Acceleration} \(\mathbf{a}(t)\) is the first derivative of the velocity vector with respect to time, or the second derivative of the position vector with respect to time:
+    \[
+    \mathbf{a}(t) = \frac{d\mathbf{v}}{dt} = \frac{d^2\mathbf{r}}{dt^2}.
+    \]
+    \item \textbf{Speed} is the magnitude of the velocity vector:
+    \[
+    \text{Speed} = |\mathbf{v}(t)| = \sqrt{\left(\frac{dx}{dt}\right)^2 + \left(\frac{dy}{dt}\right)^2 + \left(\frac{dz}{dt}\right)^2}.
+    \]
+
+\subsection{3D Example}
+
+Consider a particle moving in three-dimensional space, described by the position vector:
+\[
+\mathbf{r}(t) = \begin{pmatrix} 3t^2 \\ 4t \\ t^2 \end{pmatrix}.
+\]
+
+\subsection*{Velocity}
+
+The velocity vector \(\mathbf{v}(t)\) is obtained by differentiating \(\mathbf{r}(t)\) with respect to time \(t\):
+\[
+\mathbf{v}(t) = \frac{d\mathbf{r}}{dt} = \frac{d}{dt} \begin{pmatrix} 3t^2 \\ 4t \\ t^2 \end{pmatrix} = \begin{pmatrix} 6t \\ 4 \\ 2t \end{pmatrix}.
+\]
+
+\subsection*{Acceleration}
+
+The acceleration vector \(\mathbf{a}(t)\) is obtained by differentiating \(\mathbf{v}(t)\) with respect to time \(t\):
+\[
+\mathbf{a}(t) = \frac{d\mathbf{v}}{dt} = \frac{d}{dt} \begin{pmatrix} 6t \\ 4 \\ 2t \end{pmatrix} = \begin{pmatrix} 6 \\ 0 \\ 2 \end{pmatrix}.
+\]
+
+\subsection*{Speed}
+
+The speed of the particle is the magnitude of the velocity vector:
+\[
+\text{Speed} = |\mathbf{v}(t)| = \sqrt{(6t)^2 + 4^2 + (2t)^2} = \sqrt{36t^2 + 16 + 4t^2} = \sqrt{40t^2 + 16} = 2\sqrt{10t^2 + 4}.
+\]
+
+\end{itemize}
+\end{document}
