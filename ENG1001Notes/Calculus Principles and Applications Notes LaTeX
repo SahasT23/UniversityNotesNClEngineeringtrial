@@ -1,0 +1,663 @@
+\documentclass[a4paper,12pt]{article}
+
+%----------------------------------------------------------------------------------------
+%	FONT
+%----------------------------------------------------------------------------------------
+
+% % fontspec allows you to use TTF/OTF fonts directly
+% \usepackage{fontspec}
+% \defaultfontfeatures{Ligatures=TeX}
+
+% % modified for ShareLaTeX use
+% \setmainfont[
+% SmallCapsFont = Fontin-SmallCaps.otf,
+% BoldFont = Fontin-Bold.otf,
+% ItalicFont = Fontin-Italic.otf
+% ]
+% {Fontin.otf}
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES
+%----------------------------------------------------------------------------------------
+\usepackage{url}
+\usepackage{parskip} 	
+
+%other packages for formatting
+\RequirePackage{color}
+\RequirePackage{graphicx}
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage[scale=0.9]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{caption}
+\usepackage{subcaption}
+
+%tabularx environment
+\usepackage{tabularx}
+
+%for lists within experience section
+\usepackage{enumitem}
+
+% centered version of 'X' col. type
+\newcolumntype{C}{>{\centering\arraybackslash}X} 
+
+%to prevent spillover of tabular into next pages
+\usepackage{supertabular}
+\usepackage{tabularx}
+\newlength{\fullcollw}
+\setlength{\fullcollw}{0.47\textwidth}
+
+%custom \section
+\usepackage{titlesec}				
+\usepackage{multicol}
+\usepackage{multirow}
+
+%CV Sections inspired by: 
+%http://stefano.italians.nl/archives/26
+\titleformat{\section}{\large\scshape\raggedright}{}{0em}{}[\titlerule]
+\titlespacing{\section}{0pt}{10pt}{10pt}
+
+%for publications
+\usepackage[style=authoryear,sorting=ynt, maxbibnames=2]{biblatex}
+
+%Setup hyperref package, and colours for links
+\usepackage[unicode, draft=false]{hyperref}
+\definecolor{linkcolour}{rgb}{0,0.2,0.6}
+\hypersetup{colorlinks,breaklinks,urlcolor=linkcolour,linkcolor=linkcolour}
+\addbibresource{citations.bib}
+\setlength\bibitemsep{1em}
+
+%for social icons
+\usepackage{fontawesome5}
+
+%debug page outer frames
+%\usepackage{showframe}
+
+%----------------------------------------------------------------------------------------
+%	BEGIN DOCUMENT
+%----------------------------------------------------------------------------------------
+\begin{document}
+
+% non-numbered pages
+\pagestyle{empty} 
+
+%----------------------------------------------------------------------------------------
+%	TITLE
+%----------------------------------------------------------------------------------------
+\section{\huge\textbf{Calculus principles and applications}}
+
+
+%----------------------------------------------------------------------------------------
+%   DEFINITIONS
+%----------------------------------------------------------------------------------------
+\section{Definitions}
+
+
+\begin{itemize}
+
+    \item \textbf{Limit:}
+    The value that a function (or sequence) approaches as the input (or index) approaches some value. 
+    \[
+    \lim_{{x \to a}} f(x) = L
+    \]
+    means that as \( x \) approaches \( a \), \( f(x) \) approaches \( L \).
+
+    \item \textbf{Series:}
+    The sum of the terms of a sequence. If \( a_1, a_2, a_3, \ldots \) is a sequence, then the series is written as
+    \[
+    \sum_{n=1}^{\infty} a_n
+    \]
+
+    \item \textbf{Derivative:}
+    A measure of how a function changes as its input changes. It is the slope of the tangent line to the function at a given point.
+    \[
+    f'(x) = \lim_{{h \to 0}} \frac{f(x+h) - f(x)}{h}
+    \]
+
+    \item \textbf{Convergent Series:}
+    A series whose terms approach a specific value as more terms are added. Formally, a series \( \sum_{n=1}^{\infty} a_n \) converges if the sequence of partial sums \( S_N = \sum_{n=1}^{N} a_n \) approaches a limit as \( N \) approaches infinity.
+
+    \item \textbf{Divergent Series:}
+    A series that does not converge, meaning its terms do not approach a specific value as more terms are added.
+
+    \item \textbf{Definite Integral:}
+    The integral of a function over a specified interval. It represents the area under the curve of the function between two points \( a \) and \( b \).
+    \[
+    \int_{a}^{b} f(x) \, dx
+    \]
+
+    \item \textbf{Indefinite Integral:}
+    The general form of the antiderivative of a function. It represents a family of functions whose derivative is the given function.
+    \[
+    \int f(x) \, dx = F(x) + C
+    \]
+    where \( F(x) \) is the antiderivative of \( f(x) \) and \( C \) is the constant of integration.
+
+    \item \textbf{Volume of Revolution:}
+    The volume of a solid formed by revolving a region around an axis. For a function \( y = f(x) \) rotated about the x-axis from \( x = a \) to \( x = b \), the volume is given by
+    \[
+    V = \pi \int_{a}^{b} [f(x)]^2 \, dx
+    \]
+
+    \item \textbf{Arc Length:}
+    The length of a curve described by a function \( y = f(x) \) from \( x = a \) to \( x = b \). It is calculated as
+    \[
+    L = \int_{a}^{b} \sqrt{1 + \left( \frac{dy}{dx} \right)^2} \, dx
+    \]
+
+    \item \textbf{Surface Area of Revolution:}
+    The surface area of a solid formed by revolving a curve around an axis. For a function \( y = f(x) \) rotated about the x-axis from \( x = a \) to \( x = b \), the surface area is given by
+    \[
+    A = 2\pi \int_{a}^{b} f(x) \sqrt{1 + \left( \frac{dy}{dx} \right)^2} \, dx
+    \]
+
+    \item \textbf{Centre of Mass:}
+    The point at which the entire mass of an object can be considered to be concentrated. For a region \( R \) with density function \( \rho(x,y) \), the coordinates of the center of mass \((\bar{x}, \bar{y})\) are given by
+    \[
+    \bar{x} = \frac{\iint_R x \rho(x,y) \, dA}{\iint_R \rho(x,y) \, dA}, \quad \bar{y} = \frac{\iint_R y \rho(x,y) \, dA}{\iint_R \rho(x,y) \, dA}
+    \]
+
+    \item \textbf{Moments:}
+    Measures of the distribution of mass within an object. The moment about the y-axis (first moment) is given by
+    \[
+    M_y = \iint_R x \rho(x,y) \, dA
+    \]
+    and the moment about the x-axis is
+    \[
+    M_x = \iint_R y \rho(x,y) \, dA
+    \]
+
+\end{itemize}
+%----------------------------------------------------------------------------------------
+%	LIMITS AND DIFFERENTIATION FROM FIRST PRINCIPLES
+%----------------------------------------------------------------------------------------
+\section{Limits and Differentiation From First Principles}
+
+\subsection*{Limits}
+
+In calculus, a \textbf{limit} is the value that a function (or sequence) approaches as the input (or index) approaches some value. Limits are essential for defining both derivatives and integrals.
+
+\[
+\lim_{{x \to a}} f(x) = L
+\]
+
+This notation means that as \( x \) approaches \( a \), the function \( f(x) \) approaches the value \( L \).
+
+\subsection*{Differentiation from First Principles}
+
+The derivative of a function \( f(x) \) at a point \( x = a \) is defined as the limit of the average rate of change of the function over a small interval as the interval approaches zero. This is given by:
+
+\[
+f'(a) = \lim_{{h \to 0}} \frac{f(a+h) - f(a)}{h}
+\]
+
+Here, \( h \) is a small increment in \( x \).
+
+\subsubsection*{Worked Example}
+
+Consider the function \( f(x) = x^2 \). We want to find the derivative of \( f(x) \) at any point \( x \) using the definition.
+
+First, calculate \( f(x+h) \):
+
+\[
+f(x+h) = (x+h)^2 = x^2 + 2xh + h^2
+\]
+
+Then, find the difference \( f(x+h) - f(x) \):
+
+\[
+f(x+h) - f(x) = (x^2 + 2xh + h^2) - x^2 = 2xh + h^2
+\]
+
+Now, form the difference quotient:
+
+\[
+\frac{f(x+h) - f(x)}{h} = \frac{2xh + h^2}{h} = 2x + h
+\]
+
+Finally, take the limit as \( h \) approaches 0:
+
+\[
+f'(x) = \lim_{{h \to 0}} (2x + h) = 2x
+\]
+
+So, the derivative of \( f(x) = x^2 \) is \( f'(x) = 2x \).
+
+\subsubsection*{Graphical Representation of \(\Delta x\)}
+
+To visualize the concept of \(\Delta x\) (or \( h \)) as a small increment added to \( x \), consider the following graph:
+
+\begin{center}
+\begin{tikzpicture}
+    \begin{axis}[
+        axis lines = left,
+        xlabel = \(x\),
+        ylabel = {\(f(x)\)},
+        domain = -1:2,
+        samples = 100,
+        width = 10cm,
+        height = 8cm,
+        grid = both,
+        grid style = {dashed, gray!30},
+    ]
+    % Plot the function f(x) = x^2
+    \addplot[blue, thick] {x^2};
+    \addlegendentry{\(f(x) = x^2\)}
+    
+    % Points x and x+h
+    \addplot[only marks, mark=*] coordinates {(1,1) (1.5,2.25)};
+    \node at (axis cs:1,1) [anchor=north] {$(x, f(x))$};
+    \node at (axis cs:1.5,2.25) [anchor=south] {$(x+h, f(x+h))$};
+    
+    % Vertical lines
+    \addplot[dashed] coordinates {(1,0) (1,1)};
+    \addplot[dashed] coordinates {(1.5,0) (1.5,2.25)};
+    
+    % Horizontal line showing h
+    \addplot[<->, thick] coordinates {(1,0.2) (1.5,0.2)};
+    \node at (axis cs:1.25,0.3) [anchor=south] {$h$};
+    
+    \end{axis}
+\end{tikzpicture}
+\end{center}
+
+In this graph, we can see the function \( f(x) = x^2 \) and two points: \( (x, f(x)) \) and \( (x+h, f(x+h)) \). The distance between \( x \) and \( x+h \) is the increment \( h \), which we think of as a small increment added to \( x \).
+
+\subsubsection*{Graphical Representation of the Tangent Line}
+
+To further visualize differentiation, consider the function \( f(x) = x^2 \) and its derivative \( f'(x) = 2x \). The graph below shows the function \( f(x) = x^2 \) and the tangent line at \( x = 1 \), where the slope of the tangent line is the derivative at that point.
+
+\begin{center}
+\begin{tikzpicture}
+    \begin{axis}[
+        axis lines = left,
+        xlabel = \(x\),
+        ylabel = {\(f(x)\)},
+        domain = -2:2,
+        samples = 100,
+        width = 10cm,
+        height = 8cm,
+        grid = both,
+        grid style = {dashed, gray!30},
+    ]
+    % Plot the function f(x) = x^2
+    \addplot[blue, thick] {x^2};
+    \addlegendentry{\(f(x) = x^2\)}
+    
+    % Plot the tangent line at x = 1
+    \addplot[red, thick, domain=-2:2] {2*(1)*(x-1) + 1^2};
+    \addlegendentry{Tangent line at \(x = 1\)}
+    
+    % Point of tangency
+    \addplot[only marks, mark=*] coordinates {(1,1)};
+    \node at (axis cs:1,1.5) [anchor=north west] {$(1,1)$};
+    
+    \end{axis}
+\end{tikzpicture}
+\end{center}
+
+The blue curve represents the function \( f(x) = x^2 \), and the red line represents the tangent at \( x = 1 \). The slope of this tangent line is \( f'(1) = 2 \times 1 = 2 \), which matches our derivative calculation.
+
+%----------------------------------------------------------------------------------------
+%	Volumes of revolution, arc-length, surface area of revolutions
+%----------------------------------------------------------------------------------------
+\section{Volumes of revolution, arc-length, surface area of revolutions}
+
+The volume of a solid of revolution is calculated by rotating a region around an axis. The formulas differ depending on whether the rotation is about the \( x \)-axis or the \( y \)-axis.
+
+\subsection*{About the \( x \)-Axis}
+For a function \( y = f(x) \) rotated about the \( x \)-axis from \( x = a \) to \( x = b \), the volume is given by
+\[
+V = \pi \int_{a}^{b} [f(x)]^2 \, dx
+\]
+
+\subsubsection*{Worked Example}
+Find the volume of the solid obtained by rotating \( y = x^2 \) about the \( x \)-axis from \( x = 0 \) to \( x = 1 \).
+
+\[
+V = \pi \int_{0}^{1} (x^2)^2 \, dx = \pi \int_{0}^{1} x^4 \, dx = \pi \left[ \frac{x^5}{5} \right]_{0}^{1} = \pi \left( \frac{1}{5} - 0 \right) = \frac{\pi}{5}
+\]
+
+\subsection*{About the \( y \)-Axis}
+For a function \( x = g(y) \) rotated about the \( y \)-axis from \( y = c \) to \( y = d \), the volume is given by
+\[
+V = \pi \int_{c}^{d} [g(y)]^2 \, dy
+\]
+
+\subsubsection*{Worked Example}
+Find the volume of the solid obtained by rotating \( x = \sqrt{y} \) about the \( y \)-axis from \( y = 0 \) to \( y = 1 \).
+
+\[
+V = \pi \int_{0}^{1} (\sqrt{y})^2 \, dy = \pi \int_{0}^{1} y \, dy = \pi \left[ \frac{y^2}{2} \right]_{0}^{1} = \pi \left( \frac{1}{2} - 0 \right) = \frac{\pi}{2}
+\]
+
+\subsubsection*{Graphs}
+
+\begin{figure}[h]
+    \centering
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \begin{tikzpicture}
+            \begin{axis}[
+                axis lines = left,
+                xlabel = \(x\),
+                ylabel = \(y\),
+                domain = 0:1,
+                samples = 100,
+                width = \textwidth,
+                height = \textwidth,
+                grid = both,
+                grid style = {dashed, gray!30},
+                title = {$y = x^2$}
+            ]
+            \addplot[blue, thick] {x^2};
+            \end{axis}
+        \end{tikzpicture}
+        \caption{Rotating about the \(x\)-axis}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \begin{tikzpicture}
+            \begin{axis}[
+                axis lines = left,
+                xlabel = \(x\),
+                ylabel = \(y\),
+                domain = 0:1,
+                samples = 100,
+                width = \textwidth,
+                height = \textwidth,
+                grid = both,
+                grid style = {dashed, gray!30},
+                title = {$x = \sqrt{y}$}
+            ]
+            \addplot[red, thick] {sqrt(x)};
+            \end{axis}
+        \end{tikzpicture}
+        \caption{Rotating about the \(y\)-axis}
+    \end{subfigure}
+    \caption{Graphs of the functions rotated to find volume}
+\end{figure}
+
+\section*{Arc Length}
+
+The arc length of a curve described by a function \( y = f(x) \) from \( x = a \) to \( x = b \) is given by
+\[
+L = \int_{a}^{b} \sqrt{1 + \left( \frac{dy}{dx} \right)^2} \, dx
+\]
+
+\subsubsection*{Worked Example}
+Find the arc length of the curve \( y = \frac{1}{2}x^2 \) from \( x = 0 \) to \( x = 1 \).
+
+First, find the derivative:
+\[
+\frac{dy}{dx} = x
+\]
+
+Then, compute the arc length:
+\[
+L = \int_{0}^{1} \sqrt{1 + x^2} \, dx
+\]
+
+To solve this integral, we can use a trigonometric substitution, \( x = \sinh(u) \), but here we'll provide the final result:
+\[
+L = \left[ \frac{1}{2}(x \sqrt{1 + x^2} + \ln|x + \sqrt{1 + x^2}|) \right]_{0}^{1}
+= \frac{1}{2}\left(1 \cdot \sqrt{2} + \ln(1 + \sqrt{2})\right) - 0
+= \frac{\sqrt{2}}{2} + \frac{\ln(1 + \sqrt{2})}{2}
+\]
+
+\subsubsection*{Graph}
+
+\begin{center}
+\begin{tikzpicture}
+    \begin{axis}[
+        axis lines = left,
+        xlabel = \(x\),
+        ylabel = \(y\),
+        domain = 0:1.2,
+        samples = 100,
+        width = 10cm,
+        height = 8cm,
+        grid = both,
+        grid style = {dashed, gray!30},
+        title = {$y = \frac{1}{2}x^2$}
+    ]
+    \addplot[blue, thick] {0.5*x^2};
+    \end{axis}
+\end{tikzpicture}
+\end{center}
+
+\section*{Surface Area of Revolution}
+
+The surface area of a solid formed by revolving a curve around an axis is calculated as follows:
+
+\subsection*{About the \( x \)-Axis}
+For a function \( y = f(x) \) rotated about the \( x \)-axis from \( x = a \) to \( x = b \), the surface area is given by
+\[
+A = 2\pi \int_{a}^{b} f(x) \sqrt{1 + \left( \frac{dy}{dx} \right)^2} \, dx
+\]
+
+\subsubsection*{Worked Example}
+Find the surface area of the solid obtained by rotating \( y = x^2 \) about the \( x \)-axis from \( x = 0 \) to \( x = 1 \).
+
+First, find the derivative:
+\[
+\frac{dy}{dx} = 2x
+\]
+
+Then, compute the surface area:
+\[
+A = 2\pi \int_{0}^{1} x^2 \sqrt{1 + (2x)^2} \, dx
+= 2\pi \int_{0}^{1} x^2 \sqrt{1 + 4x^2} \, dx
+\]
+
+This integral is solved using substitution or numerical methods. Here, we'll provide the final result:
+\[
+A \approx 2\pi \left( \frac{1}{12} + \frac{\sinh^{-1}(2)}{8} \right)
+\]
+
+\subsubsection*{Graph}
+
+\begin{center}
+\begin{tikzpicture}
+    \begin{axis}[
+        axis lines = left,
+        xlabel = \(x\),
+        ylabel = \(y\),
+        domain = 0:1.2,
+        samples = 100,
+        width = 10cm,
+        height = 8cm,
+        grid = both,
+        grid style = {dashed, gray!30},
+        title = {$y = x^2$}
+    ]
+    \addplot[blue, thick] {x^2};
+    \end{axis}
+\end{tikzpicture}
+\end{center}
+
+%--------------------------------------------------------------------------------------
+%   CENTRE OF MASS
+%--------------------------------------------------------------------------------------
+\section{Centre Of Mass}
+\subsection*{Centre of Mass in One Dimension}
+
+The center of mass (or centroid) of a system of particles in one dimension is given by:
+\[
+\bar{x} = \frac{\sum m_i x_i}{\sum m_i}
+\]
+where \( m_i \) is the mass of the \( i \)-th particle and \( x_i \) is the position of the \( i \)-th particle.
+
+For a continuous mass distribution along a line, the center of mass is given by:
+\[
+\bar{x} = \frac{\int x \, dm}{\int dm}
+\]
+
+\subsection*{Centre of Mass of a Rectangle}
+
+Consider a rectangle with uniform density, width \( w \), and height \( h \).
+
+\subsection*{Steps to Find the Centre of Mass}
+
+1. Set up the coordinate system with the origin at the bottom-left corner of the rectangle.
+2. The area element \( dA \) is \( dx \, dy \).
+3. Integrate to find the center of mass:
+
+\[
+\bar{x} = \frac{\int_0^w \int_0^h x \, dy \, dx}{\int_0^w \int_0^h dy \, dx} = \frac{\int_0^w x h \, dx}{wh} = \frac{h \left[ \frac{x^2}{2} \right]_0^w}{wh} = \frac{h \frac{w^2}{2}}{wh} = \frac{w}{2}
+\]
+
+\[
+\bar{y} = \frac{\int_0^w \int_0^h y \, dy \, dx}{\int_0^w \int_0^h dy \, dx} = \frac{\int_0^h y w \, dy}{wh} = \frac{w \left[ \frac{y^2}{2} \right]_0^h}{wh} = \frac{w \frac{h^2}{2}}{wh} = \frac{h}{2}
+\]
+
+\subsection*{Diagram}
+\begin{center}
+\begin{tikzpicture}
+    \begin{axis}[
+        axis lines = middle,
+        xlabel = \(x\),
+        ylabel = \(y\),
+        xtick = {0, 1, 2},
+        ytick = {0, 1, 2},
+        xmin = -0.5, xmax = 2.5,
+        ymin = -0.5, ymax = 2.5,
+        width = 10cm,
+        height = 8cm,
+        grid = both,
+        grid style = {dashed, gray!30},
+        axis on top,
+        enlargelimits={abs=0.2},
+        title = {Centre of Mass of a Rectangle}
+    ]
+    \addplot[mark=none, color=blue, thick] coordinates {(0,0) (2,0) (2,2) (0,2) (0,0)};
+    \addplot[only marks, mark=*] coordinates {(1,1)};
+    \node at (axis cs:1,1) [anchor=north west] {\(\left(\frac{w}{2}, \frac{h}{2}\right)\)};
+    \end{axis}
+\end{tikzpicture}
+\end{center}
+
+\subsection*{Centre of Mass of a Circle}
+
+Consider a circle with radius \( R \) and uniform density.
+
+\subsection*{Steps to Find the Centre of Mass}
+
+1. Set up the coordinate system with the origin at the center of the circle.
+2. Use polar coordinates: \( x = r \cos\theta \), \( y = r \sin\theta \).
+3. Integrate to find the center of mass:
+
+\[
+\bar{x} = \frac{\int_0^{2\pi} \int_0^R r \cos\theta \, r \, dr \, d\theta}{\int_0^{2\pi} \int_0^R r \, dr \, d\theta} = 0 \quad (\text{by symmetry})
+\]
+
+\[
+\bar{y} = \frac{\int_0^{2\pi} \int_0^R r \sin\theta \, r \, dr \, d\theta}{\int_0^{2\pi} \int_0^R r \, dr \, d\theta} = 0 \quad (\text{by symmetry})
+\]
+
+\subsection*{Diagram}
+\begin{center}
+\begin{tikzpicture}
+    \begin{axis}[
+        axis lines = middle,
+        xlabel = \(x\),
+        ylabel = \(y\),
+        xtick = {-1, 0, 1},
+        ytick = {-1, 0, 1},
+        xmin = -1.5, xmax = 1.5,
+        ymin = -1.5, ymax = 1.5,
+        width = 10cm,
+        height = 10cm,
+        grid = both,
+        grid style = {dashed, gray!30},
+        axis on top,
+        enlargelimits={abs=0.2},
+        title = {Centre of Mass of a Circle}
+    ]
+    \addplot[domain=0:360, samples=100, mark=none, color=blue, thick] ({cos(x)}, {sin(x)});
+    \addplot[only marks, mark=*] coordinates {(0,0)};
+    \node at (axis cs:0,0) [anchor=north west] {\((0, 0)\)};
+    \end{axis}
+\end{tikzpicture}
+\end{center}
+
+\subsection*{Centre of Mass of a Triangle}
+
+Consider a triangle with vertices at \((0,0)\), \((a,0)\), and \((0,h)\) with uniform density.
+
+\subsection*{Steps to Find the Centre of Mass}
+
+1. Set up the coordinate system with the origin at the bottom-left corner of the triangle.
+2. The area element \( dA \) is \( dx \, dy \).
+3. The area of the triangle is \( \frac{1}{2}ah \).
+4. Integrate to find the center of mass:
+
+\[
+\bar{x} = \frac{1}{\text{Area}} \int_{\text{Area}} x \, dA
+\]
+Given the triangle's linear boundaries, this becomes:
+\[
+\bar{x} = \frac{1}{\frac{1}{2}ah} \int_0^a \int_0^{h\left(1 - \frac{x}{a}\right)} x \, dy \, dx
+\]
+
+\[
+\bar{x} = \frac{2}{ah} \int_0^a \left[ xy \right]_0^{h\left(1 - \frac{x}{a}\right)} \, dx
+= \frac{2}{ah} \int_0^a x h\left(1 - \frac{x}{a}\right) \, dx
+= \frac{2h}{ah} \int_0^a \left( x - \frac{x^2}{a} \right) \, dx
+\]
+\[
+= \frac{2}{a} \left[ \frac{x^2}{2} - \frac{x^3}{3a} \right]_0^a
+= \frac{2}{a} \left( \frac{a^2}{2} - \frac{a^3}{3a} \right)
+= \frac{2}{a} \left( \frac{a^2}{2} - \frac{a^2}{3} \right)
+= \frac{2}{a} \cdot \frac{a^2}{6}
+= \frac{2a}{6}
+= \frac{a}{3}
+\]
+
+\[
+\bar{y} = \frac{1}{\frac{1}{2}ah} \int_0^a \int_0^{h\left(1 - \frac{x}{a}\right)} y \, dy \, dx
+= \frac{2}{ah} \int_0^a \left[ \frac{y^2}{2} \right]_0^{h\left(1 - \frac{x}{a}\right)} \, dx
+= \frac{2}{ah} \int_0^a \frac{h^2}{2} \left(1 - \frac{x}{a}\right)^2 \, dx
+\]
+\[
+= \frac{h^2}{ah} \int_0^a \left(1 - \frac{2x}{a} + \frac{x^2}{a^2}\right) \, dx
+= \frac{h}{a} \left[ x - \frac{x^2}{a} + \frac{x^3}{3a^2} \right]_0^a
+= \frac{h}{a} \left( a - \frac{a^2}{a} + \frac{a^3}{3a^2} \right)
+= \frac{h}{a} \left( a - a + \frac{a}{3} \right)
+\]
+\[
+= \frac{h}{a} \cdot \frac{a}{3}
+= \frac{h}{3}
+\]
+
+\subsection*{Diagram}
+\begin{center}
+\begin{tikzpicture}
+    \begin{axis}[
+        axis lines = middle,
+        xlabel = \(x\),
+        ylabel = \(y\),
+        xtick = {0, 1, 2, 3},
+        ytick = {0, 1, 2, 3},
+        xmin = -0.5, xmax = 3.5,
+        ymin = -0.5, ymax = 3.5,
+        width = 10cm,
+        height = 10cm,
+        grid = both,
+        grid style = {dashed, gray!30},
+        axis on top,
+        enlargelimits={abs=0.2},
+        title = {Centre of Mass of a Triangle}
+    ]
+    \addplot[mark=none, color=blue, thick] coordinates {(0,0) (3,0) (0,3) (0,0)};
+    \addplot[only marks, mark=*] coordinates {(1,1)};
+    \node at (axis cs:1,1) [anchor=north west] {\(\left(\frac{a}{3}, \frac{h}{3}\right)\)};
+    \end{axis}
+\end{tikzpicture}
+\end{center}
+
+\vfill
+\end{document}
