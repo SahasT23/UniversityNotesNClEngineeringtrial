@@ -1,0 +1,881 @@
+\documentclass[a4paper,12pt]{article}
+
+%----------------------------------------------------------------------------------------
+%	FONT
+%----------------------------------------------------------------------------------------
+
+% % fontspec allows you to use TTF/OTF fonts directly
+% \usepackage{fontspec}
+% \defaultfontfeatures{Ligatures=TeX}
+
+% % modified for ShareLaTeX use
+% \setmainfont[
+% SmallCapsFont = Fontin-SmallCaps.otf,
+% BoldFont = Fontin-Bold.otf,
+% ItalicFont = Fontin-Italic.otf
+% ]
+% {Fontin.otf}
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES
+%----------------------------------------------------------------------------------------
+\usepackage{url}
+\usepackage{parskip} 	
+
+%other packages for formatting
+\RequirePackage{color}
+\RequirePackage{graphicx}
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage[scale=0.9]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{multicol}
+
+%tabularx environment
+\usepackage{tabularx}
+
+%for lists within experience section
+\usepackage{enumitem}
+
+% centered version of 'X' col. type
+\newcolumntype{C}{>{\centering\arraybackslash}X} 
+
+%to prevent spillover of tabular into next pages
+\usepackage{supertabular}
+\usepackage{tabularx}
+\newlength{\fullcollw}
+\setlength{\fullcollw}{0.47\textwidth}
+
+%custom \section
+\usepackage{titlesec}				
+\usepackage{multicol}
+\usepackage{multirow}
+
+%CV Sections inspired by: 
+%http://stefano.italians.nl/archives/26
+\titleformat{\section}{\large\scshape\raggedright}{}{0em}{}[\titlerule]
+\titlespacing{\section}{0pt}{10pt}{10pt}
+
+%for publications
+\usepackage[style=authoryear,sorting=ynt, maxbibnames=2]{biblatex}
+
+%Setup hyperref package, and colours for links
+\usepackage[unicode, draft=false]{hyperref}
+\definecolor{linkcolour}{rgb}{0,0.2,0.6}
+\hypersetup{colorlinks,breaklinks,urlcolor=linkcolour,linkcolor=linkcolour}
+\addbibresource{citations.bib}
+\setlength\bibitemsep{1em}
+
+%for social icons
+\usepackage{fontawesome5}
+
+%debug page outer frames
+%\usepackage{showframe}
+
+%----------------------------------------------------------------------------------------
+%	BEGIN DOCUMENT
+%----------------------------------------------------------------------------------------
+\begin{document}
+
+% non-numbered pages
+\pagestyle{empty} 
+
+%----------------------------------------------------------------------------------------
+%	TITLE
+%----------------------------------------------------------------------------------------
+\section{\huge\textbf{Functions and Graphs}}
+% \begin{tabularx}{\linewidth}{ @{}X X@{} }
+% \huge{Your Name}\vspace{2pt} & \hfill \emoji{incoming-envelope} email@email.com \\
+% \raisebox{-0.05\height}\faGithub\ username \ | \
+% \raisebox{-0.00\height}\faLinkedin\ username \ | \ \raisebox{-0.05\height}\faGlobe \ mysite.com  & \hfill \emoji{calling} number
+% \end{tabularx}
+
+%----------------------------------------------------------------------------------------
+% DEFINITIONS AND INTRODUCTION
+%----------------------------------------------------------------------------------------
+\section{Introduction and definitions}
+
+A function $f$ is a rule that assigns a unique output value $f(x)$ to each input value $x$ in the domain of the function. The domain is the set of input values for which the function is defined, and the range is the set of possible output values.
+
+Functions can be represented in various ways, including:
+\begin{itemize}
+    \item Algebraic expressions: $f(x) = x^2 + 2x - 3$
+    \item Tables of values: $\begin{array}{c|c}
+        x & f(x) \\ \hline
+        0 & 3 \\
+        1 & 4 \\
+        2 & 7
+    \end{array}$
+    \item Or as a graph (y = x): \begin{center}
+        \begin{picture}(100,100)
+            \put(0,50){\vector(1,0){100}}
+            \put(50,0){\vector(0,1){100}}
+            \qbezier(10,10)(50,50)(90,90)
+        \end{picture}
+    \end{center}
+\end{itemize}
+
+\subsection*{Operations on Functions}
+
+There are various operations that can be performed on functions:
+
+\begin{enumerate}
+    \item \textbf{Vertical Stretch/Shrink}: $g(x) = af(x)$, where $a$ is a constant. This operation stretches or shrinks the graph of $f(x)$ vertically by a factor of $a$.
+    
+    \item \textbf{Horizontal Stretch/Shrink}: $h(x) = f(bx)$, where $b$ is a constant. This operation stretches or shrinks the graph of $f(x)$ horizontally by a factor of $\frac{1}{b}$.
+    
+    \item \textbf{Reflection}: $r(x) = -f(x)$ reflects the graph of $f(x)$ about the $x$-axis, and $s(x) = f(-x)$ reflects the graph about the $y$-axis.
+    
+    \item \textbf{Translation}: $t(x) = f(x - c) + d$ translates the graph of $f(x)$ horizontally by $c$ units and vertically by $d$ units.
+    
+    \item \textbf{Inverse Function}: If $f$ is a one-to-one function, its inverse $f^{-1}$ is defined such that $f^{-1}(f(x)) = x$ for all $x$ in the domain of $f$. The inverse function "undoes" the operation of the original function.
+    
+    \item \textbf{Composition}: $(f \circ g)(x) = f(g(x))$ is the composition of functions $f$ and $g$, where the output of $g(x)$ becomes the input of $f$.
+\end{enumerate}
+
+%----------------------------------------------------------------------------------------
+%	EXAMPLES 
+%----------------------------------------------------------------------------------------
+\section{Worked examples of function operations}
+\subsection*{Function Composition}
+
+The composition of two functions $f$ and $g$, denoted by $f \circ g$, is a new function defined by $(f \circ g)(x) = f(g(x))$. In other words, the output of $g(x)$ becomes the input of $f$.
+
+For example, let $f(x) = x^2 + 1$ and $g(x) = 2x - 3$. Then, the composition $(f \circ g)(x)$ is given by:
+
+\begin{align*}
+(f \circ g)(x) &= f(g(x)) \\
+               &= f(2x - 3) \\
+               &= (2x - 3)^2 + 1 \\
+               &= 4x^2 - 12x + 10
+\end{align*}
+
+\subsection*{Domain and Range}
+
+The domain of a function is the set of input values for which the function is defined, and the range is the set of possible output values.
+
+For the composed function $(f \circ g)(x)$, the domain consists of all values of $x$ for which both $g(x)$ and $f(g(x))$ are defined.
+
+Consider the functions $f(x) = \sqrt{x}$ and $g(x) = x^2 - 4$. The domain of $g(x)$ is $\mathbb{R}$ (all real numbers), but the domain of $f(x)$ is $x \geq 0$ (non-negative real numbers).
+
+The graph of $(f \circ g)(x)$ is shown below, with the domain and range shaded:
+
+\begin{center}
+\begin{tikzpicture}
+    \draw[->] (-3,0) -- (3,0) node[right] {$x$};
+    \draw[->] (0,-1) -- (0,3) node[above] {$y$};
+    \draw[domain=2:3, samples=100, thick] plot (\x, {sqrt(\x^2 - 4)});
+    \draw[dashed] (2,0) -- (2,2);
+    \draw[dashed] (0,2) -- (0,-1);
+    \fill[green, opacity=0.2] (2,0) -- (3,0) -- (3,2) -- (2,2) -- cycle;
+    \node[below right] at (2,0) {$x = 2$};
+    \node[above left] at (0,2) {$y = 2$};
+\end{tikzpicture}
+\end{center}
+
+The domain of $(f \circ g)(x)$ is $x \geq 2$, and the range is $y \geq 0$.
+
+\subsection*{Inverse Functions}
+
+The inverse of a function $f$, denoted by $f^{-1}$, is a function that "undoes" the operation of $f$. That is, $f^{-1}(f(x)) = x$ for all $x$ in the domain of $f$.
+
+To find the inverse of a function $f(x)$, we follow these steps:\\
+
+1. Replace $f(x)$ with $y$.\\
+2. Interchange $x$ and $y$.\\
+3. Solve for $y$.\\
+4. Denote the resulting function as $f^{-1}(x)$.\\
+
+For example, consider the function $f(x) = 2x + 3$.\\
+
+1. Replace $f(x)$ with $y$: $y = 2x + 3.$\\
+2. Interchange $x$ and $y$: $x = 2y + 3.$\\
+3. Solve for $y$: $2y = x - 3$, so $y = \frac{x - 3}{2}.$\\
+4. The inverse function is $f^{-1}(x) = \frac{x - 3}{2}.$\\
+
+To verify, we can check that $f^{-1}(f(x)) = x$:
+
+\begin{align*}
+f^{-1}(f(x)) &= f^{-1}(2x + 3) \\
+             &= \frac{2x + 3 - 3}{2} \\
+             &= x
+\end{align*}
+
+Hence, the inverse function correctly "undoes" the original function.
+% ... (inverse function explanation remains the same)
+
+%----------------------------------------------------------------------------------------
+%   LOGARITHMIC AND EXPONENTIAL FUNCTIONS
+%----------------------------------------------------------------------------------------
+\section*{Logarithmic and Exponential Functions}
+
+\subsection*{Logarithmic Functions}
+
+The logarithmic function with base \(a\) is defined as:
+\[
+\log_a(x) = y \quad \text{if and only if} \quad a^y = x
+\]
+
+The natural logarithm (logarithm with base \(e\)) is denoted as \(\ln(x)\):
+\[
+\ln(x) = y \quad \text{if and only if} \quad e^y = x
+\]
+
+\subsection*{Exponential Functions}
+
+The exponential function with base \(e\) is written as:
+\[
+e^x
+\]
+
+An exponential function with base \(a\) is written as:
+\[
+a^x
+\]
+
+\subsection*{Operations Involving Logarithmic and Exponential Functions}
+
+Addition:
+\[
+\log_a(x) + \log_a(y) = \log_a(xy)
+\]
+\[
+\ln(x) + \ln(y) = \ln(xy)
+\]
+
+Subtraction:
+\[
+\log_a(x) - \log_a(y) = \log_a\left(\frac{x}{y}\right)
+\]
+\[
+\ln(x) - \ln(y) = \ln\left(\frac{x}{y}\right)
+\]
+
+Multiplication:
+\[
+a \cdot \log_b(x)
+\]
+\[
+a \cdot \ln(x)
+\]
+
+Division:
+\[
+\frac{\log_a(x)}{\log_a(y)} = \log_y(x)
+\]
+\[
+\frac{\ln(x)}{\ln(y)}
+\]
+
+Powers:
+\[
+\log_a(x^y) = y \log_a(x)
+\]
+\[
+\ln(x^y) = y \ln(x)
+\]
+
+%---------------------------------------------------------------------------------------
+%   GRAPHS
+%---------------------------------------------------------------------------------------
+
+\section*{Graphs}
+
+Below are the graphs of the natural logarithm function \(\ln(x)\) and the exponential function \(e^x\) (which are the inverses of each other):
+
+\begin{center}
+\begin{tikzpicture}
+    \begin{axis}[
+        axis lines = middle,
+        xlabel = \(x\),
+        ylabel = \(y\),
+        legend style={at={(1,1)}, anchor=north west},
+        samples=100
+    ]
+    % ln(x) function
+    \addplot [
+        domain=0.1:10, 
+        samples=100, 
+        color=red,
+    ]
+    {ln(x)};
+    \addlegendentry{\(\ln(x)\)}
+
+    % e^x function
+    \addplot [
+        domain=-2:2, 
+        samples=100, 
+        color=blue,
+    ]
+    {exp(x)};
+    \addlegendentry{\(e^x\)}
+
+    \end{axis}
+\end{tikzpicture}
+\end{center}
+
+%--------------------------------------------------------------------------------------
+%   TRIGONOMETRIC FUNCTIONS
+%--------------------------------------------------------------------------------------
+
+\section*{Trigonometric Functions}
+
+\subsection*{Derivation from a unit circle}
+
+\begin{center}
+\begin{tikzpicture}[scale=3]
+    % Unit circle
+    \draw[thick] (0,0) circle(1);
+    % Axes
+    \draw[thick,<->] (-1.2,0) -- (1.2,0) node[right] {$x$};
+    \draw[thick,<->] (0,-1.2) -- (0,1.2) node[above] {$y$};
+    % Angle and radius
+    \draw[thick] (0,0) -- (0.866,0.5) node[midway, above right] {$r=1$};
+    \draw[thick, dashed] (0.866,0) -- (0.866,0.5);
+    % Angle label
+    \node at (0.4, 0.1) {$\theta$};
+    % Coordinates
+    \node at (0.866,0.5) [above right] {$(\cos \theta, \sin \theta)$};
+    \node at (0.866,0) [below] {$\cos \theta$};
+    \node at (0,0.5) [left] {$\sin \theta$};
+\end{tikzpicture}
+\end{center}
+
+\subsection*{Definitions}
+
+On the unit circle, for an angle \(\theta\):
+
+\[
+\sin \theta = \frac{\text{opposite}}{\text{hypotenuse}} = y
+\]
+\[
+\cos \theta = \frac{\text{adjacent}}{\text{hypotenuse}} = x
+\]
+\[
+\tan \theta = \frac{\sin \theta}{\cos \theta}
+\]
+
+\subsection*{Graphs of \(\sin(x)\) and \(\cos(x)\)}
+
+\begin{center}
+\begin{tikzpicture}
+    \begin{axis}[
+        axis lines = middle,
+        xlabel = \(x\),
+        ylabel = \(y\),
+        legend style={at={(1,1)}, anchor=north west},
+        samples=100,
+        domain=0:2*pi,
+        xtick={0,pi/2,pi,3*pi/2,2*pi},
+        xticklabels={$0$, $\frac{\pi}{2}$, $\pi$, $\frac{3\pi}{2}$, $2\pi$},
+        ytick={-1,0,1},
+        ymin=-1.5, ymax=1.5,
+        enlargelimits=true,
+        grid = major
+    ]
+    \addplot [
+        color=red,
+        thick
+    ]{sin(deg(x))};
+    \addlegendentry{\(\sin(x)\)}
+    \addplot [
+        color=blue,
+        thick
+    ]{cos(deg(x))};
+    \addlegendentry{\(\cos(x)\)}
+    \end{axis}
+\end{tikzpicture}
+\end{center}
+
+\subsection*{Trigonometric Identities}
+
+Pythagorean Identity:
+\[
+\sin^2 \theta + \cos^2 \theta = 1
+\]
+
+Quotient Identities:
+\[
+\tan \theta = \frac{\sin \theta}{\cos \theta}
+\]
+\[
+\cot \theta = \frac{\cos \theta}{\sin \theta}
+\]
+
+Reciprocal Identities:
+\[
+\csc \theta = \frac{1}{\sin \theta}
+\]
+\[
+\sec \theta = \frac{1}{\cos \theta}
+\]
+\[
+\cot \theta = \frac{1}{\tan \theta}
+\]
+
+\subsection*{Differentiation and Integration of Trigonometric Functions}
+
+Differentiation:
+\[
+\frac{d}{dx} \sin x = \cos x
+\]
+\[
+\frac{d}{dx} \cos x = -\sin x
+\]
+\[
+\frac{d}{dx} \tan x = \sec^2 x
+\]
+\[
+\frac{d}{dx} \cot x = -\csc^2 x
+\]
+\[
+\frac{d}{dx} \sec x = \sec x \tan x
+\]
+\[
+\frac{d}{dx} \csc x = -\csc x \cot x
+\]
+
+Integration:
+\[
+\int \sin x \, dx = -\cos x + C
+\]
+\[
+\int \cos x \, dx = \sin x + C
+\]
+\[
+\int \tan x \, dx = -\ln|\cos x| + C
+\]
+\[
+\int \cot x \, dx = \ln|\sin x| + C
+\]
+\[
+\int \sec x \, dx = \ln|\sec x + \tan x| + C
+\]
+\[
+\int \csc x \, dx = -\ln|\csc x + \cot x| + C
+\]
+
+\subsection*{Inverse Functions}
+
+The inverse sine function \( \sin^{-1}(x) \) (or \( \arcsin(x) \)) is derived as follows:
+\[
+y = \sin^{-1}(x) \implies \sin(y) = x
+\]
+Differentiating implicitly:
+\[
+\cos(y) \frac{dy}{dx} = 1 \implies \frac{dy}{dx} = \frac{1}{\cos(y)}
+\]
+Using \( \cos^2(y) = 1 - \sin^2(y) \):
+\[
+\frac{dy}{dx} = \frac{1}{\sqrt{1 - x^2}}
+\]
+Thus,
+\[
+\frac{d}{dx} \sin^{-1}(x) = \frac{1}{\sqrt{1 - x^2}}
+\]
+
+The inverse cosine function \( \cos^{-1}(x) \) (or \( \arccos(x) \)) is derived similarly:
+\[
+y = \cos^{-1}(x) \implies \cos(y) = x
+\]
+Differentiating implicitly:
+\[
+-\sin(y) \frac{dy}{dx} = 1 \implies \frac{dy}{dx} = -\frac{1}{\sin(y)}
+\]
+Using \( \sin^2(y) = 1 - \cos^2(y) \):
+\[
+\frac{dy}{dx} = -\frac{1}{\sqrt{1 - x^2}}
+\]
+Thus,
+\[
+\frac{d}{dx} \cos^{-1}(x) = -\frac{1}{\sqrt{1 - x^2}}
+\]
+
+\subsection*{Transformations of Trigonometric Functions}
+
+Consider the function \( y = \sin(x) \). The following transformations can be applied:
+
+1. Vertical Translation:
+   \[
+   y = \sin(x) + k
+   \]
+   Shifts the graph vertically by \( k \) units.
+
+2. Horizontal Translation:
+   \[
+   y = \sin(x - h)
+   \]
+   Shifts the graph horizontally by \( h \) units.
+
+3. Vertical Stretch/Compression:
+   \[
+   y = A \sin(x)
+   \]
+   Stretches the graph vertically by a factor of \( |A| \). If \( |A| > 1 \), it is a stretch; if \( 0 < |A| < 1 \), it is a compression.
+
+4. Horizontal Stretch/Compression:
+   \[
+   y = \sin(Bx)
+   \]
+   Compresses the graph horizontally by a factor of \( |B| \). If \( |B| > 1 \), it is a compression; if \( 0 < |B| < 1 \), it is a stretch.
+
+5. Reflection:
+   \[
+   y = -\sin(x)
+   \]
+   Reflects the graph across the x-axis.
+
+6. Phase Shift (Horizontal Translation):
+   \[
+   y = \sin(x - C)
+   \]
+   Shifts the graph horizontally by \( C \) units.
+
+7. Composite Functions:
+   \[
+   y = \sin(f(x))
+   \]
+   Applies a function \( f(x) \) to the argument of the sine function, modifying its frequency, phase, or amplitude.
+
+\subsection*{Example of Transformations}
+
+The function \( y = 2 \sin(3x - \frac{\pi}{4}) + 1 \) includes several transformations:
+- Amplitude is 2 (vertical stretch).
+- Period is \( \frac{2\pi}{3} \) (horizontal compression by factor of 3).
+- Phase shift is \( \frac{\pi}{4} \) units to the right.
+- Vertical shift is 1 unit up.
+
+\begin{center}
+\begin{tikzpicture}
+    \begin{axis}[
+        axis lines = middle,
+        xlabel = \(x\),
+        ylabel = \(y\),
+        legend style={at={(1,1)}, anchor=north west},
+        samples=100,
+        domain=0:4*pi,
+        xtick={0,pi/2,pi,3*pi/2,2*pi,5*pi/2,3*pi,7*pi/2,4*pi},
+        xticklabels={$0$, $\frac{\pi}{2}$, $\pi$, $\frac{3\pi}{2}$, $2\pi$, $\frac{5\pi}{2}$, $3\pi$, $\frac{7\pi}{2}$, $4\pi$},
+        ytick={-3,-2,-1,0,1,2,3},
+        ymin=-3, ymax=3,
+        enlargelimits=true,
+        grid = major
+    ]
+    \addplot [
+        color=green,
+        thick
+    ]{2*sin(deg(3*x - pi/4)) + 1};
+    \addlegendentry{\(2 \sin(3x - \frac{\pi}{4}) + 1\)}
+    \end{axis}
+\end{tikzpicture}
+\end{center}
+
+%---------------------------------------------------------------------------------------
+%   EVEN AND ODD FUNCTIONS
+%---------------------------------------------------------------------------------------
+\section*{Even and Odd Functions}
+
+\subsection*{Definitions}
+
+A function \( f(x) \) is called \textbf{even} if:
+\[
+f(-x) = f(x) \quad \text{for all } x \text{ in the domain of } f.
+\]
+Even functions are symmetric about the y-axis.
+
+A function \( f(x) \) is called \textbf{odd} if:
+\[
+f(-x) = -f(x) \quad \text{for all } x \text{ in the domain of } f.
+\]
+Odd functions are symmetric about the origin.
+
+\subsection*{Examples of Even and Odd Functions}
+
+Examples of even functions include:
+\[
+f(x) = x^2, \quad f(x) = \cos(x)
+\]
+
+Examples of odd functions include:
+\[
+f(x) = x^3, \quad f(x) = \sin(x)
+\]
+
+\subsection*{Graphs of Even and Odd Functions}
+
+\begin{multicols}{2}
+
+\textbf{Even Function:} \( f(x) = x^2 \)
+
+\begin{center}
+\begin{tikzpicture}
+    \begin{axis}[
+        axis lines = middle,
+        xlabel = \(x\),
+        ylabel = \(y\),
+        samples=100,
+        domain=-2:2,
+        ymin=-1, ymax=4,
+        grid = major
+    ]
+    \addplot [
+        color=blue,
+        thick
+    ]{x^2};
+    \end{axis}
+\end{tikzpicture}
+\end{center}
+
+\columnbreak
+
+\textbf{Odd Function:} \( f(x) = x^3 \)
+
+\begin{center}
+\begin{tikzpicture}
+    \begin{axis}[
+        axis lines = middle,
+        xlabel = \(x\),
+        ylabel = \(y\),
+        samples=100,
+        domain=-2:2,
+        ymin=-8, ymax=8,
+        grid = major
+    ]
+    \addplot [
+        color=red,
+        thick
+    ]{x^3};
+    \end{axis}
+\end{tikzpicture}
+\end{center}
+
+\end{multicols}
+
+\begin{multicols}{2}
+
+\textbf{Even Function:} \( f(x) = \cos(x) \)
+
+\begin{center}
+\begin{tikzpicture}
+    \begin{axis}[
+        axis lines = middle,
+        xlabel = \(x\),
+        ylabel = \(y\),
+        samples=100,
+        domain=-pi:pi,
+        xtick={-pi, -pi/2, 0, pi/2, pi},
+        xticklabels={$-\pi$, $-\frac{\pi}{2}$, $0$, $\frac{\pi}{2}$, $\pi$},
+        ymin=-1.5, ymax=1.5,
+        grid = major
+    ]
+    \addplot [
+        color=green,
+        thick
+    ]{cos(deg(x))};
+    \end{axis}
+\end{tikzpicture}
+\end{center}
+
+\columnbreak
+
+\textbf{Odd Function:} \( f(x) = \sin(x) \)
+
+\begin{center}
+\begin{tikzpicture}
+    \begin{axis}[
+        axis lines = middle,
+        xlabel = \(x\),
+        ylabel = \(y\),
+        samples=100,
+        domain=-pi:pi,
+        xtick={-pi, -pi/2, 0, pi/2, pi},
+        xticklabels={$-\pi$, $-\frac{\pi}{2}$, $0$, $\frac{\pi}{2}$, $\pi$},
+        ymin=-1.5, ymax=1.5,
+        grid = major
+    ]
+    \addplot [
+        color=orange,
+        thick
+    ]{sin(deg(x))};
+    \end{axis}
+\end{tikzpicture}
+\end{center}
+
+\end{multicols}
+
+%------------------------------------------------------------------------------------------------------
+%   GRAPH SKETCHING
+%------------------------------------------------------------------------------------------------------
+
+\section*{Graph Sketching}
+
+\subsection*{1. Finding Intercepts}
+
+\subsubsection*{Finding x-intercepts}
+To find the x-intercepts, set \( y = 0 \) and solve for \( x \).
+
+\subsubsection*{Finding y-intercepts}
+To find the y-intercepts, set \( x = 0 \) and solve for \( y \).
+
+\subsection*{Example:}
+Given the function \( f(x) = x^3 - 4x \):
+
+\textbf{y-intercept:}
+\[
+f(0) = 0^3 - 4 \cdot 0 = 0
+\]
+So, the y-intercept is \( (0, 0) \).
+
+\textbf{x-intercepts:}
+\[
+x^3 - 4x = 0 \implies x(x^2 - 4) = 0 \implies x(x - 2)(x + 2) = 0
+\]
+So, the x-intercepts are \( x = 0, 2, -2 \).
+
+\begin{center}
+\begin{tikzpicture}
+    \begin{axis}[
+        axis lines = middle,
+        xlabel = \(x\),
+        ylabel = \(y\),
+        samples=50,
+        domain=-3:3,
+        ymin=-10, ymax=10,
+        grid = major,
+        width=0.8\textwidth,
+        height=0.6\textwidth
+    ]
+    \addplot [
+        color=blue,
+        thick
+    ]{x^3 - 4*x};
+    \addlegendentry{\(f(x) = x^3 - 4x\)}
+    \addplot[only marks, mark=*] coordinates {(0,0) (2,0) (-2,0)};
+    \end{axis}
+\end{tikzpicture}
+\end{center}
+
+\subsection*{2. Finding Stationary Points}
+
+To find stationary points, differentiate the function and set the derivative to zero.
+
+\[
+f'(x) = \frac{d}{dx}(x^3 - 4x) = 3x^2 - 4
+\]
+\[
+3x^2 - 4 = 0 \implies x^2 = \frac{4}{3} \implies x = \pm \frac{2}{\sqrt{3}}
+\]
+
+To find the corresponding y-values:
+\[
+f\left(\frac{2}{\sqrt{3}}\right) = \left(\frac{2}{\sqrt{3}}\right)^3 - 4 \cdot \frac{2}{\sqrt{3}} = \frac{8}{3\sqrt{3}} - \frac{8\sqrt{3}}{3} = \frac{8 - 8\sqrt{3}}{3\sqrt{3}}
+\]
+\[
+f\left(-\frac{2}{\sqrt{3}}\right) = \left(-\frac{2}{\sqrt{3}}\right)^3 - 4 \cdot \left(-\frac{2}{\sqrt{3}}\right) = -\frac{8}{3\sqrt{3}} + \frac{8\sqrt{3}}{3} = \frac{-8 + 8\sqrt{3}}{3\sqrt{3}}
+\]
+
+So, the stationary points are \(\left(\frac{2}{\sqrt{3}}, \frac{8 - 8\sqrt{3}}{3\sqrt{3}}\right)\) and \(\left(-\frac{2}{\sqrt{3}}, \frac{-8 + 8\sqrt{3}}{3\sqrt{3}}\right)\).
+
+\subsection*{3. Finding Inflection Points}
+
+To find inflection points, differentiate the function twice and set the second derivative to zero.
+
+\[
+f''(x) = \frac{d^2}{dx^2}(x^3 - 4x) = \frac{d}{dx}(3x^2 - 4) = 6x
+\]
+\[
+6x = 0 \implies x = 0
+\]
+
+To find the corresponding y-value:
+\[
+f(0) = 0^3 - 4 \cdot 0 = 0
+\]
+
+So, the inflection point is \( (0, 0) \).
+
+\subsection*{4. Asymptotes}
+
+\subsubsection*{Vertical Asymptotes}
+
+Vertical asymptotes occur where the function approaches infinity as \( x \) approaches a certain value.
+
+\subsubsection*{Horizontal Asymptotes}
+
+Horizontal asymptotes occur where the function approaches a constant value as \( x \) approaches infinity.
+
+\subsubsection*{Slant Asymptotes}
+
+Slant (oblique) asymptotes occur when the polynomial in the numerator is of a higher degree than the polynomial in the denominator.
+
+\subsection*{Example:}
+
+Given the function \( f(x) = \frac{x^2 + 1}{x - 1} \):
+
+\textbf{Vertical Asymptotes:}
+
+Set the denominator to zero:
+\[
+x - 1 = 0 \implies x = 1
+\]
+
+\textbf{Horizontal Asymptotes:}
+
+Compare the degrees of the numerator and the denominator. Since the degree of the numerator is 2 and the degree of the denominator is 1, there is no horizontal asymptote.
+
+\textbf{Slant Asymptotes:}
+
+Perform polynomial division of \( x^2 + 1 \) by \( x - 1 \):
+\[
+\frac{x^2 + 1}{x - 1} = x + 1 + \frac{2}{x - 1}
+\]
+
+So, the slant asymptote is \( y = x + 1 \).
+
+\begin{center}
+\begin{tikzpicture}
+    \begin{axis}[
+        axis lines = middle,
+        xlabel = \(x\),
+        ylabel = \(y\),
+        samples=50,
+        domain=-3:3,
+        ymin=-5, ymax=5,
+        grid = major,
+        width=0.8\textwidth,
+        height=0.6\textwidth
+    ]
+    \addplot [
+        color=blue,
+        thick
+    ]{(x^2 + 1)/(x - 1)};
+    \addlegendentry{\(f(x) = \frac{x^2 + 1}{x - 1}\)}
+    \addplot [
+        color=red,
+        thick,
+        domain=-3:3,
+        samples=2
+    ]{x + 1};
+    \addlegendentry{Slant Asymptote: \(y = x + 1\)}
+    \draw[dashed] (axis cs:1,-5);
+    \draw[dashed] (axis cs:1,-5) -- (axis cs:1,5);
+    \addlegendentry{Vertical Asymptote: \(x = 1\)}
+    \end{axis}
+\end{tikzpicture}
+\end{center}
+
+\subsection*{Summary of Steps for Graph Sketching}
+
+1. Find the intercepts.\\
+2. Find the stationary points by differentiating and setting the derivative to zero.\\
+3. Find the inflection points by differentiating twice and setting the second derivative to zero.\\
+4. Identify asymptotes:\\
+   - Vertical asymptotes: Set the denominator to zero.\\
+   - Horizontal asymptotes: Compare the degrees of the numerator and denominator.\\
+   - Slant asymptotes: Perform polynomial division if the degree of the numerator is higher than that of the denominator.\\
+
+\vfill
+\end{document}
+
