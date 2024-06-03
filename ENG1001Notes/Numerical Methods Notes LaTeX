@@ -1,0 +1,478 @@
+% need to change to suit embedded systems
+% article class because we want to fully customize the page and not use a cv template
+\documentclass[a4paper,12pt]{article}
+
+%----------------------------------------------------------------------------------------
+%	FONT
+%----------------------------------------------------------------------------------------
+
+% % fontspec allows you to use TTF/OTF fonts directly
+% \usepackage{fontspec}
+% \defaultfontfeatures{Ligatures=TeX}
+
+% % modified for ShareLaTeX use
+% \setmainfont[
+% SmallCapsFont = Fontin-SmallCaps.otf,
+% BoldFont = Fontin-Bold.otf,
+% ItalicFont = Fontin-Italic.otf
+% ]
+% {Fontin.otf}
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES
+%----------------------------------------------------------------------------------------
+\usepackage{url}
+\usepackage{parskip} 	
+
+%other packages for formatting
+\RequirePackage{color}
+\RequirePackage{graphicx}
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage[scale=0.9]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{caption}
+\usepackage{subcaption}
+
+%tabularx environment
+\usepackage{tabularx}
+
+%for lists within experience section
+\usepackage{enumitem}
+
+% centered version of 'X' col. type
+\newcolumntype{C}{>{\centering\arraybackslash}X} 
+
+%to prevent spillover of tabular into next pages
+\usepackage{supertabular}
+\usepackage{tabularx}
+\newlength{\fullcollw}
+\setlength{\fullcollw}{0.47\textwidth}
+
+%custom \section
+\usepackage{titlesec}				
+\usepackage{multicol}
+\usepackage{multirow}
+
+%CV Sections inspired by: 
+%http://stefano.italians.nl/archives/26
+\titleformat{\section}{\large\scshape\raggedright}{}{0em}{}[\titlerule]
+\titlespacing{\section}{0pt}{10pt}{10pt}
+
+%for publications
+\usepackage[style=authoryear,sorting=ynt, maxbibnames=2]{biblatex}
+
+%Setup hyperref package, and colours for links
+\usepackage[unicode, draft=false]{hyperref}
+\definecolor{linkcolour}{rgb}{0,0.2,0.6}
+\hypersetup{colorlinks,breaklinks,urlcolor=linkcolour,linkcolor=linkcolour}
+\addbibresource{citations.bib}
+\setlength\bibitemsep{1em}
+
+%for social icons
+\usepackage{fontawesome5}
+
+%debug page outer frames
+%\usepackage{showframe}
+
+%----------------------------------------------------------------------------------------
+%	BEGIN DOCUMENT
+%----------------------------------------------------------------------------------------
+\begin{document}
+
+% non-numbered pages
+\pagestyle{empty} 
+
+%----------------------------------------------------------------------------------------
+%	TITLE
+%----------------------------------------------------------------------------------------
+\section{\huge\textbf{Numerical Methods}}
+
+%----------------------------------------------------------------------------------------
+%   NEWTON_RAPHSOn METHODS
+%----------------------------------------------------------------------------------------
+\section*{Newton-Raphson Method}
+
+The Newton-Raphson method is an iterative technique for finding the roots of a function \( f(x) = 0 \). The formula for the method is:
+\[
+x_{n+1} = x_n - \frac{f(x_n)}{f'(x_n)}
+\]
+where \( f'(x) \) is the derivative of \( f(x) \).
+
+\subsection*{Worked Example}
+
+Find the root of \( f(x) = x^2 - 2 \) using the Newton-Raphson method.
+
+1. Start with an initial guess \( x_0 \).
+2. Calculate the next approximation using the formula.
+
+Given:
+\[
+f(x) = x^2 - 2 \quad \text{and} \quad f'(x) = 2x
+\]
+
+Starting with \( x_0 = 1 \):
+\[
+x_1 = x_0 - \frac{f(x_0)}{f'(x_0)} = 1 - \frac{1^2 - 2}{2 \cdot 1} = 1 - \frac{-1}{2} = 1.5
+\]
+
+Next iteration:
+\[
+x_2 = x_1 - \frac{f(x_1)}{f'(x_1)} = 1.5 - \frac{1.5^2 - 2}{2 \cdot 1.5} = 1.5 - \frac{0.25}{3} = 1.4167
+\]
+
+Next iteration:
+\[
+x_3 = x_2 - \frac{f(x_2)}{f'(x_2)} = 1.4167 - \frac{1.4167^2 - 2}{2 \cdot 1.4167} = 1.4167 - \frac{0.006944}{2.8334} \approx 1.4142
+\]
+
+Thus, the root converges to approximately \( \sqrt{2} \approx 1.4142 \).
+
+\section*{Spider Diagrams}
+
+These diagrams (below) are a visual way of representing how the method works and can be used in your working out.\\ 
+
+We will plot four types of diagrams:\\
+
+1. Converging - We arrive at a solution.\\
+2. Diverging - No solution with Newton-Raphson Method.\\
+3. Cobweb - We arrive at a solution.\\
+4. Staircase - No solution with Newton-Raphson Method.\\
+
+\subsection*{Converging Diagram}
+
+\begin{center}
+\begin{tikzpicture}
+    \begin{axis}[
+        axis lines = middle,
+        xlabel = \(x\),
+        ylabel = \(y\),
+        xmin = 0, xmax = 2,
+        ymin = 0, ymax = 2,
+        width = 8cm,
+        height = 8cm,
+        title = {Converging Diagram}
+    ]
+    \addplot[domain=0:2, samples=100, mark=none, color=blue] {x^2};
+    \addplot[domain=0:2, samples=100, mark=none, color=red] {x};
+    \addplot[mark=*] coordinates {(1,0) (1,1) (1.5,1.5) (1.5,0.25) (1.4167,1.4167) (1.4167,0.006944) (1.4142,1.4142)};
+    \draw[dashed] (axis cs: 1.5, 1.5) -- (axis cs: 1.5, 0.25);
+    \draw[dashed] (axis cs: 1.4167, 1.4167) -- (axis cs: 1.4167, 0.006944);
+    \end{axis}
+\end{tikzpicture}
+\end{center}
+
+\subsection*{Diverging Diagram}
+
+\begin{center}
+\begin{tikzpicture}
+    \begin{axis}[
+        axis lines = middle,
+        xlabel = \(x\),
+        ylabel = \(y\),
+        xmin = 0, xmax = 3,
+        ymin = 0, ymax = 5,
+        width = 8cm,
+        height = 8cm,
+        title = {Diverging Diagram}
+    ]
+    \addplot[domain=0:3, samples=100, mark=none, color=blue] {x^2 - 2};
+    \addplot[domain=0:3, samples=100, mark=none, color=red] {x};
+    \addplot[mark=*] coordinates {(0.5,0) (0.5,-1.75) (1.375,1.375) (1.375,0.890625) (1.05469,1.05469) (1.05469,-0.887207)};
+    \draw[dashed] (axis cs: 0.5, -1.75) -- (axis cs: 0.5, 0.5);
+    \draw[dashed] (axis cs: 1.375, 1.375) -- (axis cs: 1.375, 0.890625);
+    \draw[dashed] (axis cs: 1.05469, 1.05469) -- (axis cs: 1.05469, -0.887207);
+    \end{axis}
+\end{tikzpicture}
+\end{center}
+
+\subsection*{Cobweb Diagram}
+
+\begin{center}
+\begin{tikzpicture}
+    \begin{axis}[
+        axis lines = middle,
+        xlabel = \(x\),
+        ylabel = \(y\),
+        xmin = -0.5, xmax = 2.5,
+        ymin = -0.5, ymax = 2.5,
+        width = 8cm,
+        height = 8cm,
+        title = {Cobweb Diagram}
+    ]
+    \addplot[domain=-0.5:2.5, samples=100, mark=none, color=blue] {x^2 - x};
+    \addplot[domain=-0.5:2.5, samples=100, mark=none, color=red] {x};
+    \addplot[mark=*] coordinates {(2,0) (2,2) (1,1) (1,0) (0.5,0.5) (0.5,-0.25) (-0.25,-0.25)};
+    \draw[dashed] (axis cs: 2, 2) -- (axis cs: 2, 0);
+    \draw[dashed] (axis cs: 1, 1) -- (axis cs: 1, 0);
+    \draw[dashed] (axis cs: 0.5, 0.5) -- (axis cs: 0.5, -0.25);
+    \end{axis}
+\end{tikzpicture}
+\end{center}
+
+\subsection*{Staircase Diagram}
+
+\begin{center}
+\begin{tikzpicture}
+    \begin{axis}[
+        axis lines = middle,
+        xlabel = \(x\),
+        ylabel = \(y\),
+        xmin = 0, xmax = 2,
+        ymin = 0, ymax = 2,
+        width = 8cm,
+        height = 8cm,
+        title = {Staircase Diagram}
+    ]
+    \addplot[domain=0:2, samples=100, mark=none, color=blue] {sqrt(x)};
+    \addplot[domain=0:2, samples=100, mark=none, color=red] {x};
+    \addplot[mark=*] coordinates {(1.5,0) (1.5,1.2247) (1.2247,1.2247) (1.2247,1.1067) (1.1067,1.1067)};
+    \draw[dashed] (axis cs: 1.5, 1.2247) -- (axis cs: 1.5, 1.2247);
+    \draw[dashed] (axis cs: 1.2247, 1.2247) -- (axis cs: 1.2247, 1.1067);
+    \end{axis}
+\end{tikzpicture}
+\end{center}
+
+%----------------------------------------------------------------------------------------
+%	NUMERICAL INTEGRATION
+%----------------------------------------------------------------------------------------
+\section{Numerical Integration}
+
+
+Numerical integration is a method to approximate the definite integral of a function when it is difficult or impossible to find the integral analytically. Two common methods are the Trapezium Rule and Simpson's Rule.
+
+\subsection*{Trapezium Rule}
+
+The Trapezium Rule approximates the integral of a function \( f(x) \) over the interval \([a, b]\) by dividing the area under the curve into trapezoids.
+
+The formula for the Trapezium Rule is:
+\[
+\int_a^b f(x) \, dx \approx \frac{b - a}{2n} \left( f(x_0) + 2 \sum_{i=1}^{n-1} f(x_i) + f(x_n) \right)
+\]
+where \( n \) is the number of subintervals and \( x_i = a + i \cdot \frac{b - a}{n} \).
+
+\subsection*{Worked Example}
+
+Approximate the integral of \( f(x) = x^2 \) from \( 0 \) to \( 2 \) using the Trapezium Rule with \( n = 4 \).
+
+\[
+a = 0, \quad b = 2, \quad n = 4, \quad h = \frac{b - a}{n} = \frac{2 - 0}{4} = 0.5
+\]
+
+\[
+x_i = 0, 0.5, 1, 1.5, 2
+\]
+
+\[
+f(x_i) = 0^2, 0.5^2, 1^2, 1.5^2, 2^2 = 0, 0.25, 1, 2.25, 4
+\]
+
+\[
+\int_0^2 x^2 \, dx \approx \frac{0.5}{2} \left( 0 + 2(0.25 + 1 + 2.25) + 4 \right)
+= 0.25 \left( 0 + 2(3.5) + 4 \right)
+= 0.25 \left( 0 + 7 + 4 \right)
+= 0.25 \times 11
+= 2.75
+\]
+
+\subsection*{Diagram}
+
+\begin{center}
+\begin{tikzpicture}
+    \begin{axis}[
+        axis lines = middle,
+        xlabel = \(x\),
+        ylabel = \(y\),
+        xtick = {0, 0.5, 1, 1.5, 2},
+        ytick = {0, 0.25, 1, 2.25, 4},
+        xmin = 0, xmax = 2.5,
+        ymin = 0, ymax = 4.5,
+        width = 10cm,
+        height = 10cm,
+        grid = both,
+        grid style = {dashed, gray!30},
+        axis on top,
+        enlargelimits={abs=0.2},
+        title = {Trapezium Rule Approximation}
+    ]
+    \addplot[domain=0:2, samples=100, mark=none, color=blue, thick] {x^2};
+    \addplot[mark=none, color=red, thick] coordinates {(0,0) (0.5,0.25) (1,1) (1.5,2.25) (2,4)};
+    \foreach \i in {0,0.5,...,2} {
+        \addplot[mark=none, color=black, thick, dashed] coordinates {(\i,0) (\i,\i*\i)};
+    }
+    \end{axis}
+\end{tikzpicture}
+\end{center}
+
+\subsection*{Simpson's Rule}
+
+Simpson's Rule approximates the integral of a function \( f(x) \) over the interval \([a, b]\) by dividing the area under the curve into parabolic segments.
+
+The formula for Simpson's Rule is:
+\[
+\int_a^b f(x) \, dx \approx \frac{b - a}{3n} \left( f(x_0) + 4 \sum_{i=1, \text{ odd}}^{n-1} f(x_i) + 2 \sum_{i=2, \text{ even}}^{n-2} f(x_i) + f(x_n) \right)
+\]
+where \( n \) is the number of subintervals (must be even) and \( x_i = a + i \cdot \frac{b - a}{n} \).
+
+\subsection*{Worked Example}
+
+Approximate the integral of \( f(x) = x^2 \) from \( 0 \) to \( 2 \) using Simpson's Rule with \( n = 4 \).
+
+\[
+a = 0, \quad b = 2, \quad n = 4, \quad h = \frac{b - a}{n} = \frac{2 - 0}{4} = 0.5
+\]
+
+\[
+x_i = 0, 0.5, 1, 1.5, 2
+\]
+
+\[
+f(x_i) = 0^2, 0.5^2, 1^2, 1.5^2, 2^2 = 0, 0.25, 1, 2.25, 4
+\]
+
+\[
+\int_0^2 x^2 \, dx \approx \frac{0.5}{3} \left( 0 + 4(0.25 + 2.25) + 2(1) + 4 \right)
+\]
+\[
+= \frac{1}{6} \left( 0 + 4 \cdot 2.5 + 2 \cdot 1 + 4 \right)
+\]
+\[
+= \frac{1}{6} \left( 0 + 10 + 2 + 4 \right)
+\]
+\[
+= \frac{1}{6} \times 16
+\]
+\[
+= \frac{16}{6}
+\]
+\[
+= \frac{8}{3} \approx 2.67
+\]
+
+\subsection*{Diagram}
+
+\begin{center}
+\begin{tikzpicture}
+    \begin{axis}[
+        axis lines = middle,
+        xlabel = \(x\),
+        ylabel = \(y\),
+        xtick = {0, 0.5, 1, 1.5, 2},
+        ytick = {0, 0.25, 1, 2.25, 4},
+        xmin = 0, xmax = 2.5,
+        ymin = 0, ymax = 4.5,
+        width = 10cm,
+        height = 10cm,
+        grid = both,
+        grid style = {dashed, gray!30},
+        axis on top,
+        enlargelimits={abs=0.2},
+        title = {Simpson's Rule Approximation}
+    ]
+    \addplot[domain=0:2, samples=100, mark=none, color=blue, thick] {x^2};
+    \addplot[domain=0:2, samples=50, mark=none, color=red, thick] {0.25 * (6 * x - x^2)};
+    \addplot[domain=0:2, samples=50, mark=none, color=red, thick] {(x - 1.5)^2 + 2.25};
+    \addplot[mark=none, color=red, thick] coordinates {(0,0) (0.5,0.25) (1,1) (1.5,2.25) (2,4)};
+    \foreach \i in {0,0.5,...,2} {
+        \addplot[mark=none, color=black, thick, dashed] coordinates {(\i,0) (\i,\i*\i)};
+    }
+    \end{axis}
+\end{tikzpicture}
+\end{center}
+
+\subsection*{Relation to Integration}
+
+Both the Trapezium Rule and Simpson's Rule are methods of numerical integration used to approximate the value of a definite integral. These methods are particularly useful when the function does not have an elementary antiderivative or when an analytical approach is impractical. The Trapezium Rule approximates the area under the curve using trapezoids, while Simpson's Rule uses parabolic segments, providing a more accurate approximation for smooth functions.
+
+%----------------------------------------------------------------------------------------
+%	EULER'S METHOD TO SOLVE DIFFERENTIAL EQUATIONS
+%----------------------------------------------------------------------------------------
+\section{Euler's Method to solve differential equations}
+
+Euler's method is a numerical technique used to approximate solutions to ordinary differential equations (ODEs). Given an initial value problem of the form:
+\[
+\frac{dy}{dx} = f(x, y), \quad y(x_0) = y_0
+\]
+Euler's method iteratively estimates \(y(x)\) at discrete points by using the slope of the tangent line at each step.
+
+The general formula for Euler's method is:
+\[
+y_{i+1} = y_i + hf(x_i, y_i)
+\]
+where \(h\) is the step size, \(x_i\) is the current \(x\)-value, and \(y_i\) is the current \(y\)-value.
+
+\subsection*{Worked Example}
+
+Consider the differential equation:
+\[
+\frac{dy}{dx} = y, \quad y(0) = 1
+\]
+using Euler's method with a step size \(h = 0.2\).
+
+\subsection*{Solution}
+
+Using Euler's method, we have:
+\[
+y_{i+1} = y_i + hf(x_i, y_i) = y_i + hy_i = (1+h)y_i
+\]
+
+Starting with the initial condition \(y(0) = 1\):
+\[
+x_0 = 0, \quad y_0 = 1
+\]
+
+At \(x = 0\), \(y = 1\), so \(y_1 = (1 + 0.2) \times 1 = 1.2\).
+
+At \(x = 0.2\), \(y = 1.2\), so \(y_2 = (1 + 0.2) \times 1.2 = 1.44\).
+
+Continuing this process:
+\[
+\begin{aligned}
+&x_3 = 0.4, \quad y_3 = (1 + 0.2) \times 1.44 = 1.728 \\
+&x_4 = 0.6, \quad y_4 = (1 + 0.2) \times 1.728 = 2.074 \\
+&x_5 = 0.8, \quad y_5 = (1 + 0.2) \times 2.074 = 2.488 \\
+&x_6 = 1.0, \quad y_6 = (1 + 0.2) \times 2.488 = 2.986 \\
+&x_7 = 1.2, \quad y_7 = (1 + 0.2) \times 2.986 = 3.583 \\
+&x_8 = 1.4, \quad y_8 = (1 + 0.2) \times 3.583 = 4.3 \\
+&x_9 = 1.6, \quad y_9 = (1 + 0.2) \times 4.3 = 5.165 \\
+&x_{10} = 1.8, \quad y_{10} = (1 + 0.2) \times 5.165 = 6.198 \\
+\end{aligned}
+\]
+
+\subsection*{Graph of the Solution}
+
+\begin{center}
+\begin{tikzpicture}
+    \begin{axis}[
+        axis lines = middle,
+        xlabel = \(x\),
+        ylabel = \(y\),
+        xmin = 0, xmax = 2,
+        ymin = 0, ymax = 8,
+        width = 11cm,
+        height = 8cm,
+        title = {Euler's Method Approximation}
+    ]
+    \addplot[domain=0:2, samples=100, mark=none, color=blue] {exp(x)};
+    \addplot[mark=*] coordinates {(0,1) (0.2,1.2) (0.4,1.44) (0.6,1.728) (0.8,2.074) (1,2.488) (1.2,2.986) (1.4,3.583) (1.6,4.3) (1.8,5.165) (2,6.198)};
+    \end{axis}
+\end{tikzpicture}
+\end{center}
+
+The blue curve represents the exact solution to the differential equation, and the points marked with asterisks represent the approximate solution obtained using Euler's method.
+
+\subsection*{Steps to Solving a Differential Equation using Euler's Method}
+
+To solve a differential equation using Euler's method, follow these steps:
+\begin{enumerate}
+    \item Identify the differential equation and initial conditions.
+    \item Choose a step size (\(h\)).
+    \item Start with the initial condition and compute the next approximation using Euler's formula: \(y_{i+1} = y_i + hf(x_i, y_i)\).
+    \item Repeat step 3 until you reach the desired \(x\)-value.
+    \item Plot the approximate points to visualize the solution.
+\end{enumerate}
+
+\vfill
+\end{document}
