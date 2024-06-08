@@ -1,0 +1,596 @@
+\documentclass[a4paper,12pt]{article}
+
+%----------------------------------------------------------------------------------------
+%	FONT
+%----------------------------------------------------------------------------------------
+
+% % fontspec allows you to use TTF/OTF fonts directly
+% \usepackage{fontspec}
+% \defaultfontfeatures{Ligatures=TeX}
+
+% % modified for ShareLaTeX use
+% \setmainfont[
+% SmallCapsFont = Fontin-SmallCaps.otf,
+% BoldFont = Fontin-Bold.otf,
+% ItalicFont = Fontin-Italic.otf
+% ]
+% {Fontin.otf}
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES
+%----------------------------------------------------------------------------------------
+\usepackage{url}
+\usepackage{parskip} 	
+
+%other packages for formatting
+\RequirePackage{color}
+\RequirePackage{graphicx}
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage[scale=0.9]{geometry}
+\usepackage{amsmath}
+\usepackage{tikz}
+\usepackage{amsfonts}
+\usepackage{caption}
+\usepackage{array}
+\usepackage{geometry}
+
+
+%tabularx environment
+\usepackage{tabularx}
+
+%for lists within experience section
+\usepackage{enumitem}
+
+% centered version of 'X' col. type
+\newcolumntype{C}{>{\centering\arraybackslash}X} 
+
+%to prevent spillover of tabular into next pages
+\usepackage{supertabular}
+\usepackage{tabularx}
+\newlength{\fullcollw}
+\setlength{\fullcollw}{0.47\textwidth}
+
+%custom \section
+\usepackage{titlesec}				
+\usepackage{multicol}
+\usepackage{multirow}
+
+%CV Sections inspired by: 
+%http://stefano.italians.nl/archives/26
+\titleformat{\section}{\large\scshape\raggedright}{}{0em}{}[\titlerule]
+\titlespacing{\section}{0pt}{10pt}{10pt}
+
+%for publications
+\usepackage[style=authoryear,sorting=ynt, maxbibnames=2]{biblatex}
+
+%Setup hyperref package, and colours for links
+\usepackage[unicode, draft=false]{hyperref}
+\definecolor{linkcolour}{rgb}{0,0.2,0.6}
+\hypersetup{colorlinks,breaklinks,urlcolor=linkcolour,linkcolor=linkcolour}
+\addbibresource{citations.bib}
+\setlength\bibitemsep{1em}
+
+%for social icons
+\usepackage{fontawesome5}
+
+%debug page outer frames
+%\usepackage{showframe}
+
+%----------------------------------------------------------------------------------------
+%	BEGIN DOCUMENT
+%----------------------------------------------------------------------------------------
+\begin{document}
+
+% non-numbered pages
+\pagestyle{empty} 
+
+%----------------------------------------------------------------------------------------
+%	Main Body
+%----------------------------------------------------------------------------------------
+
+\title{Structure and Function of the Processor}
+\author{OCR Computer Science A Level}
+\date{}
+
+\maketitle
+
+\section*{Specification}
+
+\subsection*{1.1.1 a)}
+\begin{itemize}
+    \item The Arithmetic and Logic Unit
+    \item The Control Unit
+    \item Registers:
+    \begin{itemize}
+        \item Program Counter
+        \item Accumulator
+        \item Memory Address Register
+        \item Memory Data Register
+        \item Current Instruction Register
+    \end{itemize}
+    \item Buses:
+    \begin{itemize}
+        \item Data Bus
+        \item Address Bus
+        \item Control Bus
+    \end{itemize}
+    \item How these relate to assembly language programs
+\end{itemize}
+
+\subsection*{1.1.1 b)}
+\begin{itemize}
+    \item The Fetch-Decode-Execute Cycle
+    \item Its effect on registers
+\end{itemize}
+
+\subsection*{1.1.1 c)}
+\begin{itemize}
+    \item The factors affecting the performance of the CPU:
+    \begin{itemize}
+        \item Clock Speed
+        \item Number of Cores
+        \item Cache
+    \end{itemize}
+\end{itemize}
+
+\subsection*{1.1.1 d)}
+\begin{itemize}
+    \item The use of pipelining in a processor to improve efficiency
+\end{itemize}
+
+\subsection*{1.1.1 e)}
+\begin{itemize}
+    \item Von Neumann architecture
+    \item Harvard architecture
+    \item Contemporary processor architecture
+\end{itemize}
+
+\section*{Components of a Processor}
+
+The processor is the brain of a computer. It executes instructions which allows programs to run.
+
+\subsection*{The Arithmetic and Logic Unit}
+The ALU (Arithmetic and Logic Unit) completes all of the arithmetical and logical operations. Arithmetical operations include all mathematical operations such as addition and subtraction on fixed or floating point numbers. Logical operations include boolean logic operations such as AND, OR, NOT, and XOR.
+
+\subsection*{The Control Unit}
+The Control Unit is the component of the processor which directs the operations of the CPU. It has the following jobs:
+\begin{itemize}
+    \item Controlling and coordinating the activities of the CPU
+    \item Managing the flow of data between the CPU and other devices
+    \item Accepting the next instruction
+    \item Decoding instructions
+    \item Storing the resulting data back in memory
+\end{itemize}
+
+\subsection*{Registers}
+Registers are small memory cells that operate at a very high speed. They are used to temporarily store data and all arithmetic, logical and shift operations occur in these registers.
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{|>{\raggedright}p{5cm}|>{\raggedright\arraybackslash}p{10cm}|}
+\hline
+\textbf{Register} & \textbf{Purpose} \\
+\hline
+Program Counter (PC) & Holds the address of the next instruction to be executed. \\
+\hline
+Accumulator (ACC) & Stores the results from calculations. \\
+\hline
+Memory Address Register (MAR) & Holds the address of a location that is to be read from or written to. \\
+\hline
+Memory Data Register (MDR) & Temporarily stores data that has been read or data that needs to be written. \\
+\hline
+Current Instruction Register (CIR) & Holds the current instruction being executed,
+\caption{Registers and their purposes}
+\end{tabular}
+\end{table}
+
+\section*{Buses}
+Buses are a set of parallel wires which connect two or more components inside the CPU. There are three buses in the CPU: data bus, control bus, and address bus. These buses collectively are called the system bus.
+
+The width of the bus is the number of parallel wires the bus has. The width of the bus is directly proportional to the number of bits that can be transferred simultaneously at any given time. Buses are typically 8, 16, 32, or 64 wires wide.
+
+\subsection*{Data Bus}
+This is a bi-directional bus (meaning bits can be carried in both directions). This is used for transporting data and instructions between components.
+
+\subsection*{Address Bus}
+This is the bus used to transmit the memory addresses specifying where data is to be sent to or retrieved from. The width of the address bus is proportional to the number of addressable memory locations.
+
+\subsection*{Control Bus}
+This is a bi-directional bus used to transmit control signals between internal and external components. The control bus coordinates the use of the address and data buses and provides status information between system components. The control signals include:
+\begin{itemize}
+    \item Bus request: shows that a device is requesting the use of the data bus
+    \item Bus grant: shows that the CPU has granted access to the data bus
+    \item Memory write: data is written into the addressed location using this bus
+    \item Memory read: data is read from a specific location to be placed onto the data bus
+    \item Interrupt request: shows that a device is requesting access to the CPU
+    \item Clock: used to synchronise operations
+\end{itemize}
+
+\subsection*{Assembly Language}
+Assembly code uses mnemonics to represent instructions, for example ADD represents addition. This is a simplified way of representing machine code. The instruction is divided into operand and opcode in the Current Instruction Register. The operand contains the data or the address of the data upon which the operation is to be performed. The opcode specifies the type of instruction to be executed.
+
+\begin{figure}[h!]
+    \centering
+    \begin{tikzpicture}
+    \draw[step=1cm,gray,very thin] (0,0) grid (4,1);
+    \node at (0.5, 0.5) {0};
+    \node at (1.5, 0.5) {1};
+    \node at (2.5, 0.5) {0};
+    \node at (3.5, 0.5) {0};
+    \draw[step=1cm,gray,very thin] (4,0) grid (8,1);
+    \node at (4.5, 0.5) {0};
+    \node at (5.5, 0.5) {1};
+    \node at (6.5, 0.5) {0};
+    \node at (7.5, 0.5) {1};
+    \draw[step=1cm,gray,very thin] (8,0) grid (12,1);
+    \node at (8.5, 0.5) {0};
+    \node at (9.5, 0.5) {1};
+    \node at (10.5, 0.5) {1};
+    \node at (11.5, 0.5) {0};
+    \draw[step=1cm,gray,very thin] (12,0) grid (16,1);
+    \node at (12.5, 0.5) {1};
+    \node at (13.5, 0.5) {0};
+    \node at (14.5, 0.5) {1};
+    \node at (15.5, 0.5) {0};
+    \end{tikzpicture}
+    \caption{Example of Machine Code Representation}
+\end{figure}
+
+\section*{Pipelining}
+Pipelining is the process of completing the fetch, decode, and execute cycles of three separate instructions simultaneously, holding appropriate data in a buffer in close proximity to the CPU until it’s required. While one instruction is being executed, another can be decoded and another fetched.
+
+Pipelining is aimed to reduce the amount of the CPU which is kept idle. It is separated into instruction pipelining and arithmetic pipelining. Instruction pipelining is separating out the instruction into fetching, decoding, and executing. Arithmetic pipelining is breaking down the arithmetic operations and overlapping them as they are performed.
+
+\begin{figure}[h!]
+    \centering
+    \begin{tikzpicture}
+    % Fetch stage
+    \draw[fill=blue!20] (0,0) rectangle (3,1);
+    \node at (1.5,0.5) {Fetch};
+
+    % Decode stage
+    \draw[fill=green!20] (3,0) rectangle (6,1);
+    \node at (4.5,0.5) {Decode};
+
+    % Execute stage
+    \draw[fill=red!20] (6,0) rectangle (9,1);
+    \node at (7.5,0.5) {Execute};
+    \end{tikzpicture}
+    \caption{Pipelining Stages}
+\end{figure}
+
+\section*{Fetch-Decode-Execute Cycle and Registers}
+The fetch-decode-execute cycle is the sequence of operations that are completed in order to execute an instruction.
+
+\subsection*{Fetch phase:}
+\begin{itemize}
+    \item Address from the PC is copied to the MAR
+    \item Instruction held at that address is copied to MDR by the data bus
+    \item Simultaneously, the contents of the PC are increased by 1
+    \item The value held in the MDR is copied to the CIR
+\end{itemize}
+
+\subsection*{Decode phase:}
+\begin{itemize}
+    \item The contents of CIR are split into operand and opcode
+\end{itemize}
+
+\subsection*{Execute phase:}
+\begin{itemize}
+    \item The decoded instruction is executed
+\end{itemize}
+
+\section*{Factors affecting CPU performance}
+There are three factors that affect CPU performance: clock speed, number of cores and the amount and type of cache memory.
+
+\subsection*{Clock Speed}
+The clock speed is determined by the system clock. This is an electronic device which generates signals, switching between 0 and 1. All processor activities begin on a clock pulse, and each CPU operation starts as the clock changes from 0 to 1. The clock speed is the time taken for one clock cycle to complete.
+
+\subsection*{Number of Cores}
+A core is an independent processor that is able to run its own fetch-execute cycle. A computer with multiple cores can complete more than one fetch-execute cycle at any given time. A computer with dual cores can theoretically complete tasks twice as fast as a computer with a single core. However, not all programs are able to utilise multiple cores efficiently as they have not been designed to do so, so this is not always possible.
+
+\subsection*{Amount and Type of Cache Memory}
+Cache memory is the CPU’s onboard memory. Instructions fetched from main memory are copied to the cache, so if required again, they can be accessed quicker. As cache fills up, unused instructions are replaced.
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{|>{\raggedright}p{4cm}|>{\raggedright\arraybackslash}p{10cm}|}
+\hline
+\textbf{Cache Type} & \textbf{Properties} \\
+\hline
+Level 1 Cache & Very fast memory cells with a small capacity. (2-64KB) \\
+\hline
+Level 2 Cache & Relatively fast memory cell, with a medium-sized capacity. (256KB-2MB) \\
+\hline
+Level 3 Cache & Much larger and slower memory cell. \\
+\hline
+\end{tabular}
+\caption{Cache types and properties}
+\end{table}
+
+\section*{Computer Architecture}
+\subsection*{Von Neumann Architecture}
+This architecture includes the basic components of the computer and processor (single control unit, ALU, registers and memory units) in which a shared memory and shared data bus is used for both data and instructions. Von Neumann architecture is built on the stored program concept.
+
+\subsection*{Harvard Architecture}
+Harvard architecture has physically separate memories for instructions and data, more commonly used with embedded processors. This is useful for when memories have different characteristics, i.e., instructions may be read-only, while data may be read-write. This also allows you to optimise the size of individual memory cells and their buses depending on your needs, i.e., the instruction memory can be designed to be larger so a larger word size can be used for instructions.
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{|>{\raggedright}p{7cm}|>{\raggedright\arraybackslash}p{7cm}|}
+\hline
+\textbf{Advantages of Von Neumann Architecture} & \textbf{Advantages of Harvard Architecture} \\
+\hline
+Cheaper to develop as the control unit is easier to design & Quicker execution as data and instructions can be fetched in parallel. \\
+\hline
+Programs can be optimised in size & Memories can be different sizes, which can make more efficient use of space \\
+\hline
+\end{tabular}
+\caption{Advantages of Von Neumann and Harvard Architectures}
+\end{table}
+
+\subsection*{Contemporary Processing}
+Contemporary processors use a combination of Harvard and Von Neumann architecture. Von Neumann is used when working with data and instructions in main memory, but uses Harvard architecture to divide the cache into instruction cache and data cache.
+
+
+\title{Von Neumann and Harvard Architectures}
+
+\section*{Von Neumann Architecture}
+\begin{figure}[h!]
+    \centering
+    \begin{tikzpicture}[node distance=1.5cm]
+        % Nodes
+        \node (cpu) [draw, rectangle, minimum width=2.5cm, minimum height=1cm] {CPU};
+        \node (alu) [draw, rectangle, below of=cpu, minimum width=2.5cm, minimum height=1cm] {ALU};
+        \node (cu) [draw, rectangle, below of=alu, minimum width=2.5cm, minimum height=1cm] {Control Unit};
+        \node (memory) [draw, rectangle, right of=cpu, xshift=3cm, minimum width=2.5cm, minimum height=1cm] {Memory};
+        \node (data) [draw, rectangle, below of=memory, minimum width=2.5cm, minimum height=1cm] {Data};
+        \node (instr) [draw, rectangle, below of=data, minimum width=2.5cm, minimum height=1cm] {Instructions};
+        
+        % Arrows
+        \draw[->] (cpu) -- (alu);
+        \draw[->] (alu) -- (cu);
+        \draw[->] (cpu) -- (memory);
+        \draw[->] (alu) -- (memory);
+        \draw[->] (cu) -- (memory);
+        \draw[->] (memory) -- (data);
+        \draw[->] (data) -- (instr);
+    \end{tikzpicture}
+    \caption{Von Neumann Architecture}
+\end{figure}
+
+\section*{Harvard Architecture}
+\begin{figure}[h!]
+    \centering
+    \begin{tikzpicture}[node distance=2cm]
+        % Nodes
+        \node (cpu) [draw, rectangle, minimum width=2.5cm, minimum height=1cm] {CPU};
+        \node (alu) [draw, rectangle, below of=cpu, minimum width=2.5cm, minimum height=1cm] {ALU};
+        \node (cu) [draw, rectangle, below of=alu, minimum width=2.5cm, minimum height=1cm] {Control Unit};
+        \node (dataMemory) [draw, rectangle, right of=cpu, xshift=3cm, minimum width=2.5cm, minimum height=1cm] {Data Memory};
+        \node (instrMemory) [draw, rectangle, right of=dataMemory, xshift=3cm, minimum width=2.5cm, minimum height=1cm] {Instruction Memory};
+        
+        % Arrows
+        \draw[->] (cpu) -- (alu);
+        \draw[->] (alu) -- (cu);
+        \draw[->] (cpu) -- (dataMemory);
+        \draw[->] (dataMemory) -- (instrMemory);
+        \draw[->] (alu) -- (dataMemory);
+        \draw[->] (cu) -- (instrMemory);
+    \end{tikzpicture}
+    \caption{Harvard Architecture}
+\end{figure}
+
+%----------------------------------------------------------------------------------------
+%   1.1.2
+%----------------------------------------------------------------------------------------
+\title{OCR Computer Science A Level\\1.1.2 Types of Processor}
+
+
+\section{Specification}
+\subsection{1.1.2 a)}
+\begin{itemize}
+    \item RISC Processors
+    \item CISC Processors
+    \item The difference between RISC and CISC
+\end{itemize}
+
+\subsection{1.1.2 b)}
+\begin{itemize}
+    \item GPUs and their uses
+\end{itemize}
+
+\subsection{1.1.2 c)}
+\begin{itemize}
+    \item Multicore Systems
+    \item Parallel Systems
+\end{itemize}
+
+\section{RISC and CISC processors}
+
+\subsection{Reduced Instruction Set Computers (RISC)}
+In these processors, there is a small instruction set. Each instruction is approximately one line of machine code and takes one clock cycle. Below is an example of multiplying two numbers X and Y.
+
+\begin{verbatim}
+LDA R1, X
+LDA R2, Y
+MULT R1, R2
+STO R1, X
+\end{verbatim}
+
+\subsection{Complex Instruction Set Computers (CISC)}
+In these processors there is a large instruction set. The aim is to try and accomplish tasks in as few lines of assembly code as possible. These instructions are built into the hardware. Early on these processors were used as the standard, however with time they got replaced by RISC design. Now they are used more in microcontrollers and embedded systems. For comparison, below is the same code as above but written for a CISC processor.
+
+\begin{verbatim}
+MULT A, B
+\end{verbatim}
+
+\subsection{Comparison between RISC and CISC}
+
+\begin{tabular}{|p{0.45\textwidth}|p{0.45\textwidth}|}
+\hline
+\textbf{RISC Processors} & \textbf{CISC Processors} \\
+\hline
+The compiler has to do more work to translate high level code into machine code. & The compiler has less work to translate high level code into machine code. \\
+\hline
+More RAM is required to store the code. & Less RAM is required since code is shorter. \\
+\hline
+Pipelining is possible since each instruction takes one clock cycle. & Many specialised instructions are made, even though only a few of them are used. \\
+\hline
+\end{tabular}
+
+\section{Multi-core and Parallel Systems}
+Multi-core CPUs have multiple independent cores that can complete instructions separately which results in higher performance. Parallel systems accomplish a similar task however instead of requiring multiple cores they can complete tasks with a single core, by using threading. Generally, multi-core systems perform better in larger projects than parallel systems.
+
+\subsection{Graphics Processing Unit (GPU)}
+A graphics processing unit (GPU) is a device which unlike CPUs has lots of independent processors which work in parallel making it very efficient at completing repetitive tasks such as image processing and machine learning. GPUs are a type of co-processor (a secondary processor designed to supplement the activities of the primary processor).
+
+%----------------------------------------------------------------------------------------
+%	1.1.3
+%----------------------------------------------------------------------------------------
+\section{1.1.3 Input, Output and Storage}
+\title{OCR Computer Science A Level\\1.1.3 Input, Output and Storage}
+\author{Advanced Notes}
+
+
+\section{Specification}
+\subsection{1.1.3 a)}
+\begin{itemize}
+    \item How different input, output and storage devices can be applied to the solution of different problems.
+\end{itemize}
+
+\subsection{1.1.3 b)}
+\begin{itemize}
+    \item The uses of magnetic, flash and optical storage devices.
+\end{itemize}
+
+\subsection{1.1.3 c)}
+\begin{itemize}
+    \item RAM and ROM.
+\end{itemize}
+
+\subsection{1.1.3 d)}
+\begin{itemize}
+    \item Virtual storage.
+\end{itemize}
+
+\section{Input, Output and Storage Devices}
+An input device is one which can be used to put data and information into a computer. Likewise, an output device is one which can be used to send information from the computer.
+
+\subsection{Examples of input devices include:}
+\begin{description}
+    \item[Keyboard] Used to enter text into a computer
+    \item[Webcam] A camera used by a computer to take photos and record videos
+    \item[Magnetic stripe reader] Used to read data from magnetic stripes on cards like credit and debit cards
+    \item[Barcode reader] Used in supermarket checkouts and access control systems to read information from printed labels and cards
+\end{description}
+
+\subsection{Examples of output devices include:}
+\begin{description}
+    \item[Speakers] Used to output sound from a computer
+    \item[Printers] Used to output information from a computer onto paper
+    \item[Projector] Used to project video content from a computer onto a screen
+\end{description}
+
+A small number of devices can be categorised as both input and output devices. For example, a touch screen outputs information in a visual way like a monitor, while acting as a device for touch input.
+
+Important things to consider when purchasing an input device include the speed and accuracy of input. Different devices will be able to transfer data at faster rates or to record information in greater detail. In addition, cost and relevance must be considered. Is this device the right one for the task?
+
+\section{The Use of Storage}
+There are a variety of different methods of storing information, each of which is suited to a particular type of information. Some devices are best for storing small quantities of information, while others are suited to large capacity storage.
+
+\subsection{Optical}
+Optical devices are read from and written to using lasers. Binary information is represented by portions of the disc which either reflect or scatter the incident laser light written in spiral tracks on the disc's surface.
+
+\subsubsection{CDs}
+CD stands for compact disc. They use optical technology to store small quantities of information. Most commonly used for audio files, CDs can also be used to store text and digital images. CDs are small, thin and light which makes them very portable. Their disadvantages include being easily damaged by scratches, their limited storage capacity and relatively slow transfer speeds. Varieties of CD include CD-R which can only be written to once, CD-RW which can be written to more than once and CD-ROM which is written to during production and can then only be read from.
+
+\subsubsection{DVDs}
+DVD stands for digital versatile disc or digital video disc. Similar to CDs, DVDs are also optical devices which have a higher storage capacity than CDs, making them suited to storing digital videos which require more storage space than audio files or photos.
+
+\subsubsection{Blu-Ray}
+An advancement over DVDs, blu-ray discs have more than five times as much storage than traditional DVDs, making them useful for storing high-resolution films.
+
+\subsection{Magnetic}
+Devices which store information magnetically represent binary information using two magnetic states: polarised and unpolarised. If a portion of magnetic material is polarised, all magnetic poles align and can be read by a read/write head passing over the region. If an area is not polarised, magnetic poles are randomly scattered and produce a different reading on a read/write head. These two states can represent 1 and 0, allowing any information to be represented in binary form.
+
+The most common type of magnetic storage is hard disk drives. However, magnetic tape (including cassette tapes) also stores information magnetically.
+
+\subsubsection{Hard Disk Drives}
+Sometimes abbreviated to HDD, hard disk drives typically have high capacities of between 500GB and 5TB. They work by rotating magnetic platters at high speeds under a read/write head on an actuating arm. The combination of the arm and rotating platter allows the read/write head to access any part of the platter. Most HDDs will have multiple platters stacked on top of each other to maximise storage capacity.
+
+Disadvantages of HDDs include their somewhat slow data transfer speeds and their tendency to become damaged by movement. The combination of brittle platters and moving parts results in a delicate device.
+
+\subsubsection{Magnetic Tape}
+First used to record computer data in the 1950s, magnetic tape was a popular storage medium right through to the 1980s. Wound onto reels, long stretches of tape were passed through readers which would check the polarity of the tape and read off a binary value. Tape was a bulky way to store data, and although improvements were made by reducing the width of the tape and writing in diagonal lines as opposed to horizontal tracks, the technology was superseded by more modern technology like ROM cartridges.
+
+\subsubsection{Floppy Disks}
+A floppy disk comprises a thin magnetic disk (which would have originally been flexible, hence the name) enclosed in plastic to protect the disk from dust and dirt. They were incredibly portable, thanks to their thin size and low weight, so became popular for exchanging small amounts of data - in a similar way to how USB flash drives are used today. Floppy disks had a typical storage capacity of 1MB although some later versions boasted as much as 200MB.
+
+\subsection{Flash}
+Flash storage is fast and compact. The technology makes use of silicon semiconductors forming the logic gates NAND and NOR to store electrical charge in one of two states: high or low. These two states represent the binary values True and False, which can be used to represent information.
+
+Information is stored in blocks, which are combined to form pages.
+
+\begin{figure}[h]
+\centering
+\begin{tabularx}{0.8\textwidth}{|X|X|X|X|X|X|X|X|}
+\hline
+1 & 1 & 0 & 1 & 0 & 0 & 1 & 1 \\
+\hline
+0 & 0 & 0 & 0 & 1 & 0 & 0 & 1 \\
+\hline
+1 & 0 & 0 & 1 & 0 & 0 & 1 & 1 \\
+\hline
+1 & 1 & 0 & 0 & 1 & 1 & 0 & 1 \\
+\hline
+\multicolumn{8}{|c|}{Block} \\
+\hline
+\multicolumn{8}{|c|}{Page} \\
+\hline
+1 & 1 & 0 & 1 & 0 & 1 & 1 & 0 \\
+\hline
+1 & 0 & 1 & 0 & 0 & 1 & 0 & 1 \\
+\hline
+1 & 0 & 0 & 1 & 1 & 0 & 0 & 1 \\
+\hline
+1 & 1 & 0 & 1 & 0 & 1 & 1 & 1 \\
+\hline
+\end{tabularx}
+\caption{Block and Page structure in Flash memory}
+\label{fig:flash_memory}
+\end{figure}
+
+The preferred logic gate used for storing small quantities of data, such as code to be executed, is NOR. For larger files, like photos and videos, NAND is the preferred technology.
+
+Flash memory can be erased and reprogrammed electronically, and is non-volatile, meaning it stores its data even when power is lost. These features make SSDs a good replacement for HDDs as they have the same functionality but improved performance.
+
+Although flash memory is similar to RAM, the two differ in that RAM is volatile (loses its content with loss of power) while flash memory retains its information.
+
+As a general rule, flash memory is more expensive per gigabyte than other methods of data storage, like magnetic and optical.
+
+\subsubsection{Solid State Drives}
+Often referred to as SSDs, solid state drives are currently one of the most popular forms of data storage. They are extremely light and portable, while having no moving parts - this makes them much more resistant to damage from movement than hard disk drives, which are packed with moving parts. Furthermore, SSDs are renowned for their high data transfer rates. The primary disadvantage of SSDs is their cost, which continues to decrease as they become more common. Another disadvantage is their limited lifespan. Every time a page is written to, the voltage required to write to it increases. Over time, this required voltage will become too high for the page to be written to.
+
+\section{RAM and ROM}
+So far, we've seen secondary storage devices, used to store user data like images and videos. RAM and ROM are two types of primary storage, used by the computer's operating system to run the computer. They store information like code instructions to execute and files which are required by running programs.
+
+\subsection{RAM}
+Random access memory is a type of fast main memory used to store data and programs that the computer is currently using. This speeds up the computer's execution as RAM has higher access speeds than even flash memory. RAM is more expensive per gigabyte than secondary storage devices, so computers often have only 4 or 8 GB or RAM compared to 100s or 1000s of GB of secondary storage.
+
+RAM is volatile, meaning that it loses its information when power is lost. For this reason, RAM isn't used for storing personal files but as temporary storage while the computer is running.
+
+\subsection{ROM}
+Read only memory, as the name suggests, cannot be modified. Once programmed, the state of the memory cells inside does not changed. ROM is useful for storing fixed sequences of instructions like a computer's startup (bootstrap) routine. ROM is non-volatile, so it retains its data even when the computer is powered off.
+
+\section{Virtual Storage}
+Virtual storage is the name given to storing information remotely so that it can be accessed by any computer with access to the same system, for example over the Internet. Examples of virtual storage include cloud storage services like Google Drive and Microsoft OneDrive as well as networked storage used in offices and schools.
+
+As internet speeds increase, virtual storage is becoming a more popular method of storage thanks to the convenience of files being available "in the cloud" on any device connected to the Internet.
+
+Virtual storage is often an abstraction of multiple drives acting like one. Information stored in the cloud is actually stored on 100s of hard drives or SSDs formatted to act as a single piece of storage.
+
+While virtual storage is convenient to access and share, its disadvantages include limitations of a user's network speed and high costs.
+
+\vfill
+\end{document}
