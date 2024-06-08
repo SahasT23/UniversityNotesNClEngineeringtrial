@@ -1,0 +1,564 @@
+\documentclass[a4paper,12pt]{article}
+
+%----------------------------------------------------------------------------------------
+%	FONT
+%----------------------------------------------------------------------------------------
+
+% % fontspec allows you to use TTF/OTF fonts directly
+% \usepackage{fontspec}
+% \defaultfontfeatures{Ligatures=TeX}
+
+% % modified for ShareLaTeX use
+% \setmainfont[
+% SmallCapsFont = Fontin-SmallCaps.otf,
+% BoldFont = Fontin-Bold.otf,
+% ItalicFont = Fontin-Italic.otf
+% ]
+% {Fontin.otf}
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES
+%----------------------------------------------------------------------------------------
+\usepackage{url}
+\usepackage{parskip} 	
+
+%other packages for formatting
+\RequirePackage{color}
+\RequirePackage{graphicx}
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage[scale=0.9]{geometry}
+\usepackage{amsmath}
+\usepackage{hyperref}
+\usepackage{tikz}
+\usetikzlibrary{shapes,arrows}
+\usepackage{listings}
+
+%tabularx environment
+\usepackage{tabularx}
+
+%for lists within experience section
+\usepackage{enumitem}
+
+% centered version of 'X' col. type
+\newcolumntype{C}{>{\centering\arraybackslash}X} 
+
+%to prevent spillover of tabular into next pages
+\usepackage{supertabular}
+\usepackage{tabularx}
+\newlength{\fullcollw}
+\setlength{\fullcollw}{0.47\textwidth}
+
+%custom \section
+\usepackage{titlesec}				
+\usepackage{multicol}
+\usepackage{multirow}
+
+%CV Sections inspired by: 
+%http://stefano.italians.nl/archives/26
+\titleformat{\section}{\large\scshape\raggedright}{}{0em}{}[\titlerule]
+\titlespacing{\section}{0pt}{10pt}{10pt}
+
+%for publications
+\usepackage[style=authoryear,sorting=ynt, maxbibnames=2]{biblatex}
+
+%Setup hyperref package, and colours for links
+\usepackage[unicode, draft=false]{hyperref}
+
+%for social icons
+\usepackage{fontawesome5}
+
+%debug page outer frames
+%\usepackage{showframe}
+
+%----------------------------------------------------------------------------------------
+%	BEGIN DOCUMENT
+%----------------------------------------------------------------------------------------
+\begin{document}
+
+% non-numbered pages
+\pagestyle{empty} 
+
+%----------------------------------------------------------------------------------------
+%	TITLE
+%----------------------------------------------------------------------------------------
+
+
+\title{OCR Computer Science A Level\\1.2 Systems Software}
+\maketitle
+\author{Advanced Notes}
+
+
+\section{Specification}
+\subsection{1.2.1 a)}
+\begin{itemize}
+    \item Operating Systems
+    \begin{itemize}
+        \item The need for, function and purpose of operating systems
+    \end{itemize}
+\end{itemize}
+
+\subsection{1.2.1 b)}
+\begin{itemize}
+    \item Memory Management
+    \begin{itemize}
+        \item Paging
+        \item Segmentation
+        \item Virtual Memory
+    \end{itemize}
+\end{itemize}
+
+\subsection{1.2.1 c)}
+\begin{itemize}
+    \item Interrupts
+    \begin{itemize}
+        \item Role of interrupts
+        \item Role of ISR (Interrupt Service Routines)
+        \item Role of interrupts within Fetch-Decode-Execute Cycle
+    \end{itemize}
+\end{itemize}
+
+\subsection{1.2.1 d)}
+\begin{itemize}
+    \item Scheduling
+    \begin{itemize}
+        \item Round robin
+        \item First come first served
+        \item Multi-level feedback queues
+        \item Shortest job first
+        \item Shortest remaining time
+    \end{itemize}
+\end{itemize}
+
+\subsection{1.2.1 e)}
+\begin{itemize}
+    \item Types of operating system
+    \begin{itemize}
+        \item Distributed
+        \item Embedded
+        \item Multi-tasking
+        \item Multi-user
+        \item Real Time
+    \end{itemize}
+\end{itemize}
+
+\subsection{1.2.1 f)}
+\begin{itemize}
+    \item BIOS
+\end{itemize}
+
+\subsection{1.2.1 g)}
+\begin{itemize}
+    \item Device drivers
+\end{itemize}
+
+\subsection{1.2.1 h)}
+\begin{itemize}
+    \item Virtual machines
+    \begin{itemize}
+        \item Where software is used to take on the function of a machine for:
+        \begin{itemize}
+            \item Executing intermediate code
+            \item Running an operating system within another
+        \end{itemize}
+    \end{itemize}
+\end{itemize}
+
+\section{Operating Systems}
+The term 'operating system' refers to a collection of programs that work together to provide an interface between the user and computer. Operating systems enable the user to communicate with the computer and perform certain low-level tasks involving the management of computer memory and resources. Therefore they are essential in devices such as laptops, mobile phones and games consoles. Examples of popular desktop operating systems include Windows and macOS while popular mobile phone operating systems include iOS and Android.
+
+Operating systems are essential to a computer system as they provide the following features:
+\begin{itemize}
+    \item Memory management (paging, segmentation, virtual memory)
+    \item Resource management (scheduling)
+    \item File management (moving, editing, deleting files and folders)
+    \item Input/ Output management (device drivers)
+    \item Interrupt management
+    \item Utility software (disk defragmenter, backup, formatting etc.)
+    \item Security (firewall)
+    \item User interface
+\end{itemize}
+
+\section{Memory Management}
+Computer memory must be shared fairly between multiple programs and applications being used. Often, main memory is not large enough to store all of the programs being used. One of the roles of the operating system is to determine and allocate the length of processor time each task receives through the use of paging, segmentation and virtual memory.
+
+\subsection{Paging}
+Paging is when memory is split up into equal-sized sections known as pages, with programs being made up of a certain number of equally-sized pages. These can then be swapped between main memory and the hard disk as needed.
+
+\subsection{Segmentation}
+Segmentation is the splitting up of memory into logical sized divisions, known as segments, which vary in size. These are representative of the structure and logical flow of the program, with segments being allocated to blocks of code such as conditional statements or loops.
+
+\subsection{Virtual Memory}
+Virtual memory uses a section of the hard drive to act as RAM when the space in main memory is insufficient to store programs being used. Sections of programs that are not currently in use are temporarily moved into virtual memory through paging, freeing up memory for other programs in RAM.
+
+The key issue with using these three techniques is disk thrashing. This is when the computer 'freezes' and occurs as a result of pages being swapped too frequently between the hard disk and main memory. As a result, more time is spent transferring these pages between main memory and the hard disk then is spent actually running the program. This issue becomes progressively worse as virtual memory is filled up.
+
+\section{Interrupts}
+Interrupts are signals generated by software or hardware to indicate to the processor that a process needs attention. Different types of interrupts have different priorities and how urgent they are must be taken into account by the operating system when allocating processor time. Interrupts are stored in order of their priority within an abstract data structure called a priority queue in a special register known as an interrupt register. It is the job of the operating system to ensure interrupts are serviced fairly by the processor through the Interrupt Service Routine. Examples of interrupts include a printer signalling the completion of a print job or a peripheral signalling power failure.
+
+\subsection{Interrupt Service Routine}
+The processor checks the contents of the interrupt register at the end of each Fetch-Decode-Execute cycle. If an interrupt exists that is of a higher priority to the process being executed, the current contents of the special purpose registers in the CPU are temporarily transferred into a stack. The processor then responds to the interrupt by loading the appropriate interrupt service routine (ISR) into RAM. A flag is set to signal the ISR has begun.
+
+Once the interrupt has been serviced, the flag is reset. The interrupt queue is checked again for further interrupts of a higher priority to the process that was originally being executed.
+
+If there are more interrupts to be serviced, the process described above is repeated until all priority interrupts have been serviced. If there are no more interrupts or interrupts are of a lower priority to the current process, the contents of the stack are transferred back into the registers in memory. The Fetch-Decode-Execute cycle resumes as before.
+
+\section{Scheduling}
+Another core function of the operating system is to ensure all sections of programs being run (known as 'jobs') receive a fair amount of processing time. This is done by implementing various scheduling algorithms, which work in different ways. Scheduling algorithms can either be:
+
+\begin{enumerate}
+    \item Pre-emptive: Jobs are actively made to start and stop by the operating system. For example: Multilevel Feedback Queues, Shortest Remaining Time, Round Robin.
+    \item Non pre-emptive: Once a job is started, it is left alone until it is completed. For example: First Come First Served, Shortest Job First.
+\end{enumerate}
+
+Below are the scheduling algorithms you need to know:
+
+\begin{itemize}
+    \item Round robin: Each job is given a section of processor time - known as a time slice - within which it is allowed to execute. Once each job in the queue has used its first time slice, the operating system again grants each job an equal slice of processor time. This continues until a job has been completed, at which point it is removed from the queue. Although Round Robin ensures each job is seen to, longer jobs will take a much longer time for completion due to their execution being inefficiently split up into multiple cycles. This algorithm also does not take into account job priority.
+    
+    \item First come first served: Jobs are processed in chronological order by which they entered the queue. Although this is straightforward to implement, FCFS again does not allocate processor time based on priority.
+    
+    \item Multilevel feedback queues: This makes use of multiple queues, each which is ordered based on a different priority. This can be difficult to implement due to deciding which job to prioritise based on a combination of priorities.
+    
+    \item Shortest job first: The queue storing jobs to be processed is ordered according to the time required for completion, with the longest jobs being serviced at the end. This type of scheduling is most suited to batch systems, where shorter jobs are given preference to minimise waiting time. However it requires the processor to know or calculate how long each job will take and this is not always possible. There is also a risk of processor starvation if short jobs continue being added to the job queue.
+    
+    \item Shortest remaining time: The queue storing jobs to be processed is ordered according to the time left for completion, with the jobs with the least time to completion being serviced first. Again, there is a risk of processor starvation for longer jobs if short jobs are added to the job queue.
+\end{itemize}
+
+\section{Types of Operating System}
+There are various types of operating systems which have different uses.
+
+\begin{itemize}
+    \item Distributed: This is a type of operating system which is run across multiple devices, allowing the load to be spread across multiple computer processors when a task is run.
+    
+    \item Embedded: Built to perform a small range of specific tasks, this operating system is catered towards a specific device. They are limited in their functionality and hard to update although they consume significantly less power than other types of OS.
+    
+    \item Multi-tasking: Multi-tasking operating systems enable the user to carry out tasks seemingly simultaneously. This is done by using time slicing to switch quickly between programs and applications in memory.
+    
+    \item Multi-user: Multiple users make use of one computer, typically a supercomputer, within a multi-user system. Therefore a scheduling algorithm must be used to ensure processor time is shared fairly between jobs. Without a suitable scheduling algorithm, there is a risk of processor starvation, which is when a process is not given adequate processor time to execute and complete.
+    
+    \item Real Time: Commonly used in time-critical computer systems, a real time OS is designed to perform a task within a guaranteed time frame. Examples of use include the management of control rods at a nuclear power station or within self-driving cars: any situation where a response within a certain time period is crucial to safety.
+\end{itemize}
+
+\section{BIOS}
+The Basic Input Output System is the first program that runs when a computer system is switched on. The Program Counter register points to the location of the BIOS upon each start-up of the computer as the BIOS is responsible for running various key tests before the operating system is loaded into memory, such as:
+
+\begin{itemize}
+    \item POST (Power-on self test) which ensures that all hardware (keyboards, disk drives) are correctly connected and functional
+    \item Checking the CPU clock, memory and processor is operational
+    \item Testing for external memory devices connected to the computer
+\end{itemize}
+
+The BIOS is critical to the computer system as it is only after these checks are completed that the operating system can be loaded into RAM from the hard disk.
+
+\section{Device Drivers}
+Device drivers are computer programs which are provided by the operating system and allow the operating system to interact with hardware.
+
+When a piece of hardware is used, such as a keyboard, it is the device driver that communicates this request to the operating system which can then produce the relevant output - which in this case is displaying a letter on the screen.
+
+Device drivers are specific to the computer's architecture, so different drivers must be used for different device types such as smartphones, games consoles and desktop PCs. As drivers interact with the operating system, they are also specific to the operating system installed on the device.
+
+\section{Virtual Machines}
+A virtual machine is a theoretical computer in that it is a software implementation of a computer system. It provides an environment with a translator for intermediate code to run.
+
+\subsection{Intermediate Code}
+Code that is halfway between machine code and object code is called intermediate code. This is independent of the processor architecture so can be used across different machines and operating systems.
+
+Virtual machines are commonly used to create a development environment for programmers to test programs on different operating systems. The advantage of this is that it saves both the time and money of having to purchase multiple devices solely for testing. However, running intermediate code in a virtual machine can also be considerably slower compared to running low-level code on the device it was designed for.
+
+Other uses of virtual machines include:
+
+\begin{itemize}
+    \item Protection from malware: Malware will affect the virtual machine rather than the device being used.
+    \item Running incompatible software: Programs specific to different operating systems or different versions of an operating system can be run within a VM, saving time and money required to purchase the hardware. A common example is of games consoles being implemented on PCs via a virtual machine.
+\end{itemize}
+
+%----------------------------------------------------------------------------------------
+% OVERVIEW
+%----------------------------------------------------------------------------------------
+
+\title{OCR Computer Science AS Level\\1.2.2 Applications Generation}
+
+\section{Specification}
+\subsection{1.2.2 a)}
+\begin{itemize}
+    \item Nature of applications
+\end{itemize}
+
+\subsection{1.2.2 b)}
+\begin{itemize}
+    \item Utilities
+\end{itemize}
+
+\subsection{1.2.2 c)}
+\begin{itemize}
+    \item Open source vs closed source
+\end{itemize}
+
+\subsection{1.2.2 d)}
+\begin{itemize}
+    \item Translators
+    \begin{itemize}
+        \item Interpreters
+        \item Compilers
+        \item Assemblers
+    \end{itemize}
+\end{itemize}
+
+\section{Nature of applications}
+Software can either be categorised as applications software or systems software.
+
+\subsection{Applications software}
+Applications software is designed to be used by the end-user to perform one specific task. Application software requires systems software in order to run.
+
+Examples: desktop publishing, word processing, spreadsheets, web browsers.
+
+\subsection{Systems software}
+Systems software is low-level software that is responsible for running the computer system smoothly, interacting with hardware and generally providing a platform for applications software to run. The user does not directly interact with systems software but it ensures high performance for the user.
+
+Examples: library programs, utility programs, operating system, device drivers.
+
+\section{Utilities}
+Utilities are a key piece of system software integral to ensuring the consistent, high performance of the operating system. Each utility program has a specific function linked to the maintenance of the operating system.
+
+Examples include:
+\begin{itemize}
+    \item Compression: Operating systems provide utilities that enable files to compressed and decompressed. This is used when compressing large files to be transmitted across the Internet and is commonly used to compress scanned files.
+    
+    \item Disk defragmentation: As the hard disk becomes full, read/write times slow down. This is because files become fragmented as they are stored in different parts of memory. The disk defragmenter utility rearranges the contents of the hard drive so they can be accessed faster, thus improving performance.
+    
+    \item Antivirus: Antivirus is responsible for detecting potential threats to the computer, alerting the user and removing these threats.
+    
+    \item Automatic updating: This utility ensures the operating system is kept up to date, with any updates being automatically installed when the computer is restarted. Updates tackle bugs or security flaws so this ensures the system is less vulnerable to malware and hacking threats.
+    
+    \item Backup: The backup utility automatically creates routine copies of specific files selected by the user. How often files are backed up is also specified by the user. This means that in the event of a power failure, malicious attack or other accident, files can be recovered.
+\end{itemize}
+
+\section{Open source vs closed source}
+Source code is written by a programmer and refers to object code before it has been compiled. When software is described to be 'open source' or 'closed source', this refers to whether or not the source code is accessible to the public.
+
+\begin{tabularx}{\textwidth}{|X|X|}
+\hline
+\textbf{Open Source} & \textbf{Closed Source} \\
+\hline
+\textbf{Definition:} Open source code can be used by anyone without a license and is distributed with the source code. & \textbf{Definition:} Closed source code requires the user to hold an appropriate license to use it. Users cannot access the source code as the company owns the copyright license. \\
+\hline
+\textbf{Advantages:}
+\begin{itemize}
+    \item Can be modified and improved by anyone
+    \item Thorough, regular and well-tested updates
+    \item Technical support from online community
+\end{itemize}
+&
+\textbf{Advantages:}
+\begin{itemize}
+    \item Company owning software provides expert support and user manuals.
+    \item Can be modified and sold on
+    \item High levels of security as developed professionally.
+\end{itemize}
+\\
+\hline
+\textbf{Disadvantages:}
+\begin{itemize}
+    \item Support available online may be insufficient or incorrect. No user manuals.
+    \item Lower security as may not be developed in a controlled environment
+\end{itemize}
+&
+\textbf{Disadvantages:}
+\begin{itemize}
+    \item License restricts how many people can use the software at once
+    \item Users cannot modify and improve software themselves
+\end{itemize}
+\\
+\hline
+\end{tabularx}
+
+Whether a user chooses to use open source or closed source software ultimately depends on the suitability of the software to the task they will be using it for. The user must also consider:
+\begin{itemize}
+    \item Costs - implementation, maintenance, training of staff, license
+    \item Functionality - features available, ease of use
+\end{itemize}
+
+\section{Translators}
+A translator is a program that converts high-level source code into low-level object code, which is then ready to be executed by a computer. There are three types of translator that convert different types of code and work in different ways.
+
+\subsection{Compiler}
+Compilers translate high-level code into machine code all at once, after carrying out a number of checks and reporting back any errors. This initial compilation process is longer than using an interpreter or an assembler. If changes need to be made, the whole program must be recompiled.
+
+Once code has been compiled to produce machine code, it can only be executed on certain devices - compiled code is specific to a particular processor type and operating system. Code can be run without a translator being present.
+
+\subsection{Interpreter}
+Interpreters translate and execute code line-by-line. They stop and produce an error if a line contains an error. They may initially appear faster than compilers as code is instantly executed, but are slower than running compiled code as code must be translated each time it is executed with an interpreter.
+
+This feature makes interpreters useful for testing sections of code and pinpointing errors, as time is not wasted compiling the entire program before it has been fully debugged. Interpreted code requires an interpreter in order to run on different devices. However, code can be executed on a range of platforms as long as the right interpreter is available, thus making interpreted code more portable.
+
+\subsection{Assembler}
+\subsubsection{Assembly Code}
+Assembly code is considered to be a low-level language as it is the 'next level up' from machine code. Assembly code is platform specific, as the instructions used are dependent on the instruction set of the processor.
+
+Assemblers translate assembly code into machine code. Each line of assembly code is equivalent to almost one line of machine code so code is translated on almost a one-to-one basis.
+
+\section*{Translator Diagram}
+\begin{figure}[h!]
+\centering
+\begin{tikzpicture}[node distance=2cm]
+    \node[rectangle, draw] (source) {Source Code};
+    \node[rectangle, draw, below of=source] (lexer) {Lexer};
+    \node[rectangle, draw, below of=lexer] (parser) {Parser};
+    \node[rectangle, draw, below of=parser] (semantic) {Semantic Analyzer};
+    \node[rectangle, draw, below of=semantic] (intermediate) {Intermediate Code Generator};
+    \node[rectangle, draw, below of=intermediate] (optimizer) {Code Optimizer};
+    \node[rectangle, draw, below of=optimizer] (target) {Target Code Generator};
+    \node[rectangle, draw, below of=target] (machine) {Machine Code};
+    
+    \draw[->] (source) -- (lexer);
+    \draw[->] (lexer) -- (parser);
+    \draw[->] (parser) -- (semantic);
+    \draw[->] (semantic) -- (intermediate);
+    \draw[->] (intermediate) -- (optimizer);
+    \draw[->] (optimizer) -- (target);
+    \draw[->] (target) -- (machine);
+    
+\end{tikzpicture}
+\caption{Components of a Translator}
+\label{fig:translator}
+\end{figure}
+
+The diagram shows the general structure of a translator:
+\begin{enumerate}
+    \item \textbf{Lexer (Lexical Analyzer):} Breaks the source code into tokens (keywords, identifiers, literals, etc.).
+    \item \textbf{Parser:} Checks if the tokens are in the correct order according to the language's syntax.
+    \item \textbf{Semantic Analyzer:} Checks for semantic errors (like type mismatches).
+    \item \textbf{Intermediate Code Generator:} Generates an intermediate representation of the code.
+    \item \textbf{Code Optimizer:} Optimizes the intermediate code for efficiency.
+    \item \textbf{Target Code Generator:} Converts the optimized intermediate code into machine code.
+\end{enumerate}
+
+Note that interpreters might not generate machine code but execute the intermediate code directly.
+
+\section{Procedural Programming Language Techniques}
+
+\subsection{Program Flow}
+Structured programming is a popular subsection of procedural programming in which the program flow is given by three main programming structures:
+\begin{itemize}
+    \item \textbf{Sequence}: Code is executed line-by-line, from top to bottom using the translator.
+    \item \textbf{Selection}: A certain block of code is run if a specific condition is met, using \texttt{IF}, \texttt{ELSE IF}, and \texttt{ELSE} statements.
+    \item \textbf{Iteration}: A block of code is executed a certain number of times or while a condition is met. Iteration uses \texttt{FOR}, \texttt{WHILE}, or \texttt{REPEAT UNTIL} loops.
+\end{itemize}
+
+\subsection{Variables and Constants}
+Variables are assigned using the \texttt{=} sign, as shown below:
+
+\begin{lstlisting}[language=Python]
+name = Ellen
+sides = 3
+\end{lstlisting}
+
+Constants are often capitalised, as shown below:
+
+\begin{lstlisting}[language=Python]
+PI = 3.14159
+VAT = 20
+\end{lstlisting}
+
+\subsection{Procedures and Functions}
+The subroutine below is an example of a function as it always returns a value of either \texttt{True} or \texttt{False} regardless of the input.
+
+\begin{lstlisting}[language=Python]
+function isEven(number):
+    if number MOD 2 = 0:
+        return True
+    else:
+        return False
+end function
+\end{lstlisting}
+
+\subsection{Arithmetic, Boolean and Assignment Operators}
+A set of arithmetic operators are used to carry out mathematical functions within programs:
+
+\begin{itemize}
+    \item \texttt{**} is used for exponentiation: $$2^4 = 16$$
+    \item \texttt{DIV} or \texttt{//} calculates the whole number of times a number goes into another (integer division): $$50 \div 7 = 7$$
+    \item \texttt{MOD} or \texttt{\%} is used to find the remainder: $$50 \bmod 7 = 1$$
+\end{itemize}
+
+Relational operators include \texttt{>}, \texttt{<}, \texttt{=}, \texttt{>=}, \texttt{<=}, and \texttt{!=} (not equal to).
+
+\begin{lstlisting}[language=Python]
+if result != keyword:
+    print('not found')
+\end{lstlisting}
+
+Boolean operators include \texttt{AND}, \texttt{OR}, and \texttt{NOT}:
+
+\begin{lstlisting}[language=Python]
+if num2 > num1 AND num2 MOD 2 != 0:
+    return True
+\end{lstlisting}
+
+\subsection{String Handling}
+To get the length of a string:
+\begin{lstlisting}[language=Python]
+text = "physics and maths tutor"
+print(text.length)  # Output: 23
+\end{lstlisting}
+
+To get a substring:
+\begin{lstlisting}[language=Python]
+text = "physics and maths tutor"
+print(text.substring(2, 4))  # Output: 'ysic'
+\end{lstlisting}
+
+\subsection{File Handling}
+\begin{lstlisting}[language=Python]
+myFile = openRead("filename.txt")
+fileContent = myFile.readLine()
+myFile.close()
+
+myFile = openWrite("nameoffile.txt")
+myFile.writeLine("Physics and Maths Tutor")
+\end{lstlisting}
+
+\section{Assembly Language}
+
+Assembly language uses mnemonics rather than binary. Here's a table of mnemonics:
+
+\begin{center}
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Mnemonic} & \textbf{Instruction} & \textbf{Function} \\
+\hline
+ADD & Add & Add value at given address to Accumulator \\
+SUB & Subtract & Subtract value at given address from Accumulator \\
+STA & Store & Store Accumulator value at given address \\
+LDA & Load & Load value at given address into Accumulator \\
+INP & Input & User input value held in Accumulator \\
+OUT & Output & Print value in Accumulator \\
+HLT & Halt & Stop program \\
+DAT & Data & Create flag with label for data storage \\
+BRZ & Branch if zero & Branch if Accumulator is zero \\
+BRP & Branch if positive & Branch if Accumulator is positive \\
+BRA & Branch always & Unconditional branch \\
+\hline
+\end{tabular}
+\end{center}
+
+Example LMC program to find the modulus when \texttt{num1} is divided by \texttt{num2}:
+
+\begin{lstlisting}[language={}]
+INP
+STA num1
+INP
+STA num2
+LDA num1
+positive STA num1  // branches to the 'positive' flag,
+SUB num2          // subtracting num2 while the result
+BRP positive      // of num1 minus num2 is positive
+LDA num1
+OUT
+HLT
+num1 DAT
+num2 DAT
+\end{lstlisting}
+
+\vfill
+\end{document}
