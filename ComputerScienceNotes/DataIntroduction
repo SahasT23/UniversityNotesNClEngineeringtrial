@@ -1,0 +1,458 @@
+\documentclass[a4paper,12pt]{article}
+
+%----------------------------------------------------------------------------------------
+%	FONT
+%----------------------------------------------------------------------------------------
+
+% % fontspec allows you to use TTF/OTF fonts directly
+% \usepackage{fontspec}
+% \defaultfontfeatures{Ligatures=TeX}
+
+% % modified for ShareLaTeX use
+% \setmainfont[
+% SmallCapsFont = Fontin-SmallCaps.otf,
+% BoldFont = Fontin-Bold.otf,
+% ItalicFont = Fontin-Italic.otf
+% ]
+% {Fontin.otf}
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES
+%----------------------------------------------------------------------------------------
+\usepackage{url}
+\usepackage{parskip} 	
+
+%other packages for formatting
+\RequirePackage{color}
+\RequirePackage{graphicx}
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage[scale=0.9]{geometry}
+\usepackage{amsmath}
+\usepackage{tikz}
+
+%tabularx environment
+\usepackage{tabularx}
+
+%for lists within experience section
+\usepackage{enumitem}
+
+% centered version of 'X' col. type
+\newcolumntype{C}{>{\centering\arraybackslash}X} 
+
+%to prevent spillover of tabular into next pages
+\usepackage{supertabular}
+\usepackage{tabularx}
+\newlength{\fullcollw}
+\setlength{\fullcollw}{0.47\textwidth}
+
+%custom \section
+\usepackage{titlesec}				
+\usepackage{multicol}
+\usepackage{multirow}
+
+%CV Sections inspired by: 
+%http://stefano.italians.nl/archives/26
+\titleformat{\section}{\large\scshape\raggedright}{}{0em}{}[\titlerule]
+\titlespacing{\section}{0pt}{10pt}{10pt}
+
+%for publications
+\usepackage[style=authoryear,sorting=ynt, maxbibnames=2]{biblatex}
+
+%Setup hyperref package, and colours for links
+\usepackage[unicode, draft=false]{hyperref}
+\definecolor{linkcolour}{rgb}{0,0.2,0.6}
+\hypersetup{colorlinks,breaklinks,urlcolor=linkcolour,linkcolor=linkcolour}
+\addbibresource{citations.bib}
+\setlength\bibitemsep{1em}
+
+%for social icons
+\usepackage{fontawesome5}
+
+%debug page outer frames
+%\usepackage{showframe}
+
+%----------------------------------------------------------------------------------------
+%	BEGIN DOCUMENT
+%----------------------------------------------------------------------------------------
+\begin{document}
+
+% non-numbered pages
+\pagestyle{empty} 
+
+%----------------------------------------------------------------------------------------
+%	TITLE
+%----------------------------------------------------------------------------------------
+
+
+\title{OCR Computer Science A Level \\ 1.3}
+
+\maketitle
+
+\section{Specification}
+
+\begin{itemize}
+    \item 1.3.2 a)
+    \begin{itemize}
+        \item Relational Database
+        \item Flat File
+        \item Primary Keys, Foreign Keys, Secondary Keys
+        \item Entity Relationship Modelling
+    \end{itemize}
+    \item 1.3.2 b)
+    \begin{itemize}
+        \item Methods of capturing, selecting, managing, and exchanging data
+    \end{itemize}
+\end{itemize}
+
+\section{Relational Database}
+
+\subsection{Relational Databases}
+
+An entity is an item of interest about which \textbf{information is stored}. A relational database is a database which \textbf{recognises the differences} between \textbf{entities} by creating different tables for each entity.
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}
+    \node[draw, rectangle] (doc) at (0,0) {Doctor};
+    \node[draw, rectangle] (pat) at (3,0) {Patient};
+    \draw[->] (doc) -- node[above] {DoctorID} (pat);
+\end{tikzpicture}
+\caption{Entity Relationship Model showing Doctor and Patient entities}
+\end{figure}
+
+Attributes are \textbf{characteristics of the entity}; these are categories about which data is collected.
+
+\subsection{Flat File}
+
+A flat file is a database that consists of a \textbf{single file}. The flat file will most likely be based around a \textbf{single entity and its attributes}.
+
+Flat files are typically written out in the following way:
+
+\[
+\text{Entity1} (\text{Attribute1}, \text{Attribute2}, \text{Attribute3} \ldots)
+\]
+
+The example in the table shows the entity Car. Age and Price are attributes of each car. For this example, the description would be laid out as:
+
+\[
+\text{Car} (\text{CarID}, \text{Age}, \text{Price})
+\]
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+CarID & Age & Price \\ \hline
+Car1  & 5 years & £1,500 \\ \hline
+Car2  & 2 years & £2,400 \\ \hline
+\end{tabular}
+\caption{Flat file example of a Car entity}
+\end{table}
+
+\subsection{Primary Key}
+
+A primary key is a \textbf{unique identifier} for each \textbf{record} in the table. In the Car table example, the unique identifier is the CarID as this is always different for each row in the table. In the Doctor and Patient tables, the primary keys would be DoctorID and PatientID respectively. The primary key is shown by \textbf{underlining} it.
+
+\subsection{Foreign Key}
+
+A foreign key is the attribute which \textbf{links two tables together}. The foreign key will exist in one table as the primary key and act as the foreign key in another. In the Doctor and Patient tables, DoctorID is the foreign key in the Patient table. The foreign key is shown using an asterisk.
+
+\subsection{Secondary Key}
+
+A secondary key allows a database to be \textbf{searched quickly}. For instance, a patient is unlikely to remember their PatientID but will know their surname. Therefore, a secondary index (secondary key) is set up on the surname attribute. This makes it possible to \textbf{order and search} by surname which makes it easier to find specific patients in the database.
+
+\subsection{Entity Relationship Modelling}
+
+When relating two databases together, there are different degrees of relationships they can possess:
+
+\begin{itemize}
+    \item \textbf{One-to-one}: Each entity can only be linked to one other entity, such as the relationship between a husband and wife. The husband entity can only be associated with one wife entity and vice versa.
+    \item \textbf{One-to-many}: One table can be associated with many other tables, such as a mother having multiple children. Similarly, multiple child entities can be linked to the same mother entity.
+    \item \textbf{Many-to-many}: One entity can be associated with many other entities and the same applies the other way round. An example is students and courses - each student can enrol in more than one course and each course can have more than one student.
+\end{itemize}
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}
+    \node[draw, rectangle] (a) at (0,0) {Entity A};
+    \node[draw, rectangle] (b) at (3,0) {Entity B};
+    \draw[-] (a) -- (b);
+
+    \node[draw, rectangle] (c) at (0,-2) {Entity C};
+    \node[draw, rectangle] (d) at (3,-2) {Entity D};
+    \draw[-] (c) -- (d);
+
+    \node[draw, rectangle] (e) at (0,-4) {Entity E};
+    \node[draw, rectangle] (f) at (3,-4) {Entity F};
+    \draw[-] (e) -- (f);
+    \draw[-] (e) -- (d);
+
+\end{tikzpicture}
+\caption{ER Diagrams: (a) One-to-one, (b) One-to-many, (c) Many-to-many}
+\end{figure}
+
+To practice entity relationship modelling, think about different real-world objects and how they are linked to each other. Consider, for example, the link between customers, orders, and products.
+
+\section{Handling Data}
+
+\subsection{Capturing Data}
+
+Data needs to be input into the database and there are multiple methods of doing this. The chosen method is always dependent on the context. For example, if pedestrians are participating in a survey, their responses will need to be \textbf{manually entered} into the database.
+
+Data is also captured when people pay cheques. Banks scan cheques using \textbf{Magnetic Ink Character Recognition (MICR)}. All of the details excluding the amount are printed in a special magnetic ink which can be recognised by a computer but the amount must be entered manually. \textbf{Optical Mark Recognition (OMR)} is used for multiple choice questions on a test. Other forms use \textbf{Optical Character Recognition (OCR)}.
+
+\subsection{Selecting and Managing Data}
+
+Selecting the correct data is an important part of \textbf{data preprocessing}. This could involve only selecting data that fits a certain criteria to reduce the volume of input. For example, a camera catching speeding cars will only select cars going above a certain speed. Then, background information will be removed so only the number plate is added to a record. Collected data can alternatively be managed using SQL to sort, restructure, and select certain sections.
+
+\subsection{Exchanging Data}
+
+Exchanging data is the process of \textbf{transferring the collected data}. One common way of exchanging data is \textbf{EDI (Electronic Data Interchange)}. This \textbf{doesn’t require human interaction} and enables data transfer from one computer to another.
+
+\vfill
+
+
+%----------------------------------------------------------------------------------------
+% OVERVIEW
+%----------------------------------------------------------------------------------------
+
+\title{OCR Computer Science A Level \\ 1.3.2 Networks}
+
+\maketitle
+
+\section{Specification}
+
+\begin{itemize}
+    \item 1.3.3 a)
+    \begin{itemize}
+        \item Characteristics of a Network
+        \item Importance of Protocols and Standards
+    \end{itemize}
+    \item 1.3.3 b)
+    \begin{itemize}
+        \item The internet Structure:
+        \begin{itemize}
+            \item The TCP/IP stack
+            \item Protocol Layering
+            \item LANs and WANs
+            \item DNS
+            \item Packet and Circuit Switching
+        \end{itemize}
+    \end{itemize}
+    \item 1.3.3 c)
+    \begin{itemize}
+        \item Client-server
+        \item Peer-to-peer
+    \end{itemize}
+\end{itemize}
+
+\section{Networks and Protocols}
+
+\subsection{Characteristics of a Network}
+A \textbf{network} is the name given to \textbf{two or more} computers connected together with the ability to \textbf{transmit data} between each other. There are two main types of networks: \textbf{local area networks} and \textbf{wide area networks}.
+
+\subsection{Local Area Network (LAN)}
+A Local area network (or LAN) is the name given to a network which is spread over a \textbf{small geographical area} or a \textbf{single site}, for example: a school.
+
+\subsection{Wide Area Network (WAN)}
+A Wide area network (or WAN) is the name given to a network which is spread over a \textbf{large geographical area}. Large corporations with offices in multiple locations will often have a WAN allowing them to communicate between different sites.
+
+\subsection{Network Topologies}
+There are two types of network topology:
+\begin{itemize}
+    \item \textbf{Physical topology}: the \textbf{physical layout} of the wires and components which form the network. Examples include bus, star, and mesh.
+    \item \textbf{Logical topology}: the layout which shows how \textbf{data flows}.
+\end{itemize}
+
+\subsection{Physical Bus Topology}
+In a bus topology, all the terminals (devices) are connected to a \textbf{backbone cable}, the ends of which are plugged into a \textbf{terminator}.
+
+\section{Networks and Protocols}
+
+\subsection{Characteristics of a Network}
+A \textbf{network} is the name given to \textbf{two or more} computers connected together with the ability to \textbf{transmit data} between each other. There are two main types of networks: \textbf{local area networks} (LANs) and \textbf{wide area networks} (WANs).
+
+\textbf{Local area network} (or LAN) is the name given to a network which is spread over a \textbf{small geographical area} or a \textbf{single site}, for example: a school. A \textbf{wide area network} (or WAN) is the name given to a network which is spread over a \textbf{large geographical area}. Large corporations with offices in multiple locations will often have a WAN allowing them to communicate between different sites.
+
+\subsection{Network Topologies}
+There are two types of network topology:
+\begin{enumerate}
+    \item \textbf{Physical topology}: the \textbf{physical layout} of the wires and components which form the network. Examples include bus, star, and mesh.
+    \item \textbf{Logical topology}: the layout which shows how \textbf{data flows}.
+\end{enumerate}
+
+\subsubsection{Physical Bus Topology}
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}
+        \draw[thick] (0,0) -- (10,0);
+        \node at (0,0.5) {Terminator};
+        \node at (10,0.5) {Terminator};
+        \foreach \x in {1, 3, 5, 7, 9} {
+            \node[draw, circle, fill=blue!20] at (\x, 0) {};
+            \draw[thick] (\x, 0) -- (\x, 1);
+        }
+    \end{tikzpicture}
+    \caption{Bus Topology}
+\end{figure}
+
+\textbf{Advantages:}
+\begin{itemize}
+    \item Relatively inexpensive to set up.
+    \item Doesn’t require any additional hardware.
+\end{itemize}
+
+\textbf{Disadvantages:}
+\begin{itemize}
+    \item If backbone cable fails, the entire network gets disconnected.
+    \item As traffic increases, performance decreases.
+    \item All computers can see the data transmission.
+\end{itemize}
+
+\subsubsection{Physical Star Topology}
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}
+        \node[draw, circle, fill=blue!20] (center) at (5, 5) {Switch};
+        \foreach \angle in {0, 45, 90, 135, 180, 225, 270, 315} {
+            \node[draw, circle, fill=blue!20] at ({5 + 3 * cos(\angle)}, {5 + 3 * sin(\angle)}) {};
+            \draw[thick] (center) -- ({5 + 3 * cos(\angle)}, {5 + 3 * sin(\angle)});
+        }
+    \end{tikzpicture}
+    \caption{Star Topology}
+\end{figure}
+
+\textbf{Advantages:}
+\begin{itemize}
+    \item Performance is consistent even with heavy network traffic.
+    \item If one cable fails, only that single terminal is affected.
+    \item Transmits data faster, giving better performance than bus topology.
+    \item Easy to add new stations.
+    \item No data collisions.
+\end{itemize}
+
+\textbf{Disadvantages:}
+\begin{itemize}
+    \item Expensive due to switch and cabling.
+    \item If the central switch fails, the rest of the network fails.
+\end{itemize}
+
+\subsubsection{Physical Mesh Topology}
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}
+        \foreach \i in {0, 1, 2, 3} {
+            \foreach \j in {0, 1, 2, 3} {
+                \node[draw, circle, fill=blue!20] at (\i*2, \j*2) {};
+            }
+        }
+        \foreach \i in {0, 1, 2, 3} {
+            \foreach \j in {0, 1, 2, 3} {
+                \foreach \k in {0, 1, 2, 3} {
+                    \foreach \l in {0, 1, 2, 3} {
+                        \draw[thick] (\i*2, \j*2) -- (\k*2, \l*2);
+                    }
+                }
+            }
+        }
+    \end{tikzpicture}
+    \caption{Mesh Topology}
+\end{figure}
+
+\textbf{Advantages:}
+\begin{itemize}
+    \item If using a wireless network, there is no cabling cost.
+    \item As the number of nodes increase, the reliability and speed of the network becomes better.
+    \item Nodes are automatically incorporated.
+    \item Nodes don’t go through a central switch, improving speed.
+\end{itemize}
+
+\textbf{Disadvantages:}
+\begin{itemize}
+    \item If using a wireless network, devices with wireless capability (which increases cost) must be purchased.
+    \item If using a wired network, a large quantity of cable is required compared to other network topologies like bus and star. This is expensive.
+    \item Maintaining the network is difficult.
+\end{itemize}
+
+\subsection{Protocols}
+A protocol is a \textbf{set of rules} defining how two computers \textbf{communicate} with each other. Protocols are standard so that all devices have a designated method of communicating with each other, regardless of manufacturer.
+
+Examples of commonly used protocols are:
+\begin{itemize}
+    \item \textbf{HTTP (Hypertext Transfer Protocol)} – Used for web page rendering, an encrypted version, \textbf{HTTPS (Secure)}, is becoming more common.
+    \item \textbf{TCP/IP (Transmission Control Protocol / Internet Protocol)} – This is a networking protocol used in the routing of packets through networks.
+    \item \textbf{POP3 (Post Office Protocol)} and \textbf{IMAP (Internet Message Access Protocol)} – Mailing protocols, used for email access.
+    \item \textbf{FTP (File Transfer Protocol)} – Used for the transmission of files over networks.
+\end{itemize}
+
+\section{The Internet Structure}
+
+The Internet is a \textbf{network of networks} which allows computers on opposite sides of the globe to communicate with each other. Continents are connected to each other using \textbf{large international backbone cables}. Many of these pass \textbf{underwater}, linking continents to one another.
+
+\subsection{The TCP/IP Stack and Protocol Layering}
+TCP/IP stands for Transmission Control Protocol / Internet Protocol. A \textbf{stack of networking protocols} that work together passing packets during communication, they work as follows:
+
+\subsubsection{Application Layer}
+The application layer is based at the top of the stack. It specifies \textbf{what protocol} needs to be used in order to \textbf{relate the application that’s being sent}. For example, if the application is a browser then it would select the appropriate protocol such as HTTP, POP3, FTP.
+
+\subsubsection{Transport Layer}
+The transport layer uses TCP to establish an \textbf{end-to-end connection} between the source and recipient computer. The transport layer \textbf{splits data up into packets} and labels these packets with their packet number, the total number of packets the original data was split up into, and the port number being used for communication. If any packets get lost, the transport layer \textbf{requests retransmissions} of these lost packets.
+
+\subsubsection{Network Layer}
+The network layer adds the source and destination \textbf{IP addresses}. (The combination of the IP address and the port number is called a \textbf{socket address}.) Routers operate on the network layer and the router is what uses the IP addresses to forward the packets. The sockets are then used to specify which device the packets must be sent to and the application being used on that device.
+
+\subsubsection{Link Layer}
+The link layer is the \textbf{connection between the network devices}, it adds the \textbf{MAC address} identifying the \textbf{Network Interface Cards} of the source and destination computers. For devices on the same network, the destination MAC address is the address of the \textbf{recipient} computer, otherwise, it will be the MAC address of the \textbf{router}.
+
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}
+        \node[draw, rectangle, fill=blue!20, minimum width=10cm, minimum height=1cm] (app) at (0,0) {Application Layer};
+        \node[draw, rectangle, fill=blue!20, minimum width=10cm, minimum height=1cm] (trans) at (0,-1.5) {Transport Layer};
+        \node[draw, rectangle, fill=blue!20, minimum width=10cm, minimum height=1cm] (net) at (0,-3) {Network Layer};
+        \node[draw, rectangle, fill=blue!20, minimum width=10cm, minimum height=1cm] (link) at (0,-4.5) {Link Layer};
+        \draw[->] (app) -- (trans);
+        \draw[->] (trans) -- (net);
+        \draw[->] (net) -- (link);
+    \end{tikzpicture}
+    \caption{TCP/IP Stack}
+\end{figure}
+
+\subsection{DNS (Domain Name System)}
+The Domain Name System (DNS) is used to \textbf{match IP addresses} to a \textbf{domain name} which is easier to remember. A request is sent to the DNS server which is then either resolved, by returning the IP address, or \textbf{forwarded} to another DNS server higher up in the hierarchy. This process is repeated until the IP address is found.
+
+\subsection{Packet and Circuit Switching}
+\begin{itemize}
+    \item \textbf{Packet Switching}:
+    \begin{itemize}
+        \item Each message is broken up into smaller \textbf{packets} and sent independently of each other.
+        \item Packets may \textbf{take different routes} to reach their destination.
+        \item Packets are reassembled in the correct order at the destination.
+    \end{itemize}
+    \item \textbf{Circuit Switching}:
+    \begin{itemize}
+        \item A \textbf{dedicated connection} is established between the sender and receiver.
+        \item Data is sent over this connection as a \textbf{continuous stream}.
+        \item The connection remains open for the duration of the communication session.
+    \end{itemize}
+\end{itemize}
+
+\section{Client-Server vs. Peer-to-Peer}
+
+\begin{itemize}
+    \item \textbf{Client-Server Network}:
+    \begin{itemize}
+        \item A \textbf{central server} provides data to multiple clients.
+        \item The server \textbf{manages resources} and services.
+        \item Clients request services from the server.
+    \end{itemize}
+    \item \textbf{Peer-to-Peer Network}:
+    \begin{itemize}
+        \item All computers have \textbf{equal status}.
+        \item Each computer acts as a \textbf{client} and a \textbf{server}.
+        \item Data and resources are shared directly between computers.
+    \end{itemize}
+\end{itemize}
+
+\vfill
+\end{document}
