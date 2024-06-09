@@ -1,0 +1,1093 @@
+
+\documentclass[a4paper,12pt]{article}
+
+%----------------------------------------------------------------------------------------
+%	FONT
+%----------------------------------------------------------------------------------------
+
+% % fontspec allows you to use TTF/OTF fonts directly
+% \usepackage{fontspec}
+% \defaultfontfeatures{Ligatures=TeX}
+
+% % modified for ShareLaTeX use
+% \setmainfont[
+% SmallCapsFont = Fontin-SmallCaps.otf,
+% BoldFont = Fontin-Bold.otf,
+% ItalicFont = Fontin-Italic.otf
+% ]
+% {Fontin.otf}
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES
+%----------------------------------------------------------------------------------------
+\usepackage{url}
+\usepackage{parskip} 	
+\usepackage{tabularx}
+
+%other packages for formatting
+\RequirePackage{color}
+\RequirePackage{graphicx}
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage[scale=0.9]{geometry}
+\usepackage{amsmath}
+\usepackage{tikz}
+\usetikzlibrary{shapes,arrows}
+\usepackage{rotating}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\usepackage{listings}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+
+
+%tabularx environment
+\usepackage{tabularx}
+
+%for lists within experience section
+\usepackage{enumitem}
+
+% centered version of 'X' col. type
+\newcolumntype{C}{>{\centering\arraybackslash}X} 
+
+%to prevent spillover of tabular into next pages
+\usepackage{supertabular}
+\usepackage{tabularx}
+\newlength{\fullcollw}
+\setlength{\fullcollw}{0.47\textwidth}
+
+%custom \section
+\usepackage{titlesec}				
+\usepackage{multicol}
+\usepackage{multirow}
+
+%CV Sections inspired by: 
+%http://stefano.italians.nl/archives/26
+\titleformat{\section}{\large\scshape\raggedright}{}{0em}{}[\titlerule]
+\titlespacing{\section}{0pt}{10pt}{10pt}
+
+%for publications
+\usepackage[style=authoryear,sorting=ynt, maxbibnames=2]{biblatex}
+
+%Setup hyperref package, and colours for links
+\usepackage[unicode, draft=false]{hyperref}
+\definecolor{linkcolour}{rgb}{0,0.2,0.6}
+\hypersetup{colorlinks,breaklinks,urlcolor=linkcolour,linkcolor=linkcolour}
+\addbibresource{citations.bib}
+\setlength\bibitemsep{1em}
+
+%for social icons
+\usepackage{fontawesome5}
+
+%debug page outer frames
+%\usepackage{showframe}
+
+%----------------------------------------------------------------------------------------
+%	BEGIN DOCUMENT
+%----------------------------------------------------------------------------------------
+\begin{document}
+
+% non-numbered pages
+\pagestyle{empty} 
+
+%----------------------------------------------------------------------------------------
+%	TITLE
+%----------------------------------------------------------------------------------------
+
+
+\title{OCR Computer Science A Level - 1.4 Algorithms Part I}
+\author{}
+
+\maketitle
+
+\section*{Specification}
+
+\subsection*{1.4.1 a)}
+\begin{itemize}
+    \item Primitive data types
+    \begin{itemize}
+        \item Integer
+        \item Real / floating point
+        \item Character
+        \item String
+        \item Boolean
+    \end{itemize}
+\end{itemize}
+
+\subsection*{1.4.1 b)}
+\begin{itemize}
+    \item Represent positive integers in binary
+\end{itemize}
+
+\subsection*{1.4.1 c)}
+\begin{itemize}
+    \item Negative numbers in binary
+    \begin{itemize}
+        \item Sign magnitude
+        \item Two’s complement
+    \end{itemize}
+\end{itemize}
+
+\subsection*{1.4.1 d)}
+\begin{itemize}
+    \item Addition and subtraction of binary integers
+\end{itemize}
+
+\subsection*{1.4.1 e)}
+\begin{itemize}
+    \item Represent positive integers in hexadecimal
+\end{itemize}
+
+\subsection*{1.4.1 f)}
+\begin{itemize}
+    \item Convert positive integers between binary, hexadecimal, and denary
+\end{itemize}
+
+\subsection*{1.4.1 g)}
+\begin{itemize}
+    \item Representation and normalization of floating point numbers in binary
+\end{itemize}
+
+\subsection*{1.4.1 h)}
+\begin{itemize}
+    \item How character sets are used to represent text
+    \begin{itemize}
+        \item ASCII
+        \item Unicode
+    \end{itemize}
+\end{itemize}
+
+\section*{Data Types}
+
+Although data is always stored in binary by computers, the way in which data is represented varies between different types of data. When writing a program, it’s essential to make sure data is being stored with the right data type, so that the right operations can be performed on it.
+
+\subsection*{Integer}
+An integer is a whole number. Integers include zero and negative numbers; they just can’t have a fractional part. Integers are useful for counting things.
+
+\textbf{Examples:}
+\begin{itemize}
+    \item 6
+    \item 47238
+    \item -12
+    \item 0
+    \item 15
+\end{itemize}
+
+\subsection*{Real}
+Real numbers are positive or negative numbers which can, but do not necessarily, have a fractional part. Reals are useful for measuring things. All integers are real numbers. Real numbers can also be represented using floating point, which is explained later.
+
+\textbf{Examples:}
+\begin{itemize}
+    \item 0
+    \item -71.5
+    \item 5.01
+    \item -80.8
+    \item 15
+\end{itemize}
+
+\subsection*{Character}
+A character is a single symbol used by a computer. These include the letters A to Z, the numbers 0 to 9, and hundreds of symbols like \%, £, and .
+
+\textbf{Examples:}
+\begin{itemize}
+    \item R
+    \item \{
+    \item 7
+    \item $\Sigma$
+\end{itemize}
+
+\subsection*{String}
+A string is a collection of characters. While a string can be used to store a single character, they can also be used to store many characters in succession. Strings are useful for storing text and phone numbers which start with a 0, which numeric data types like integers would cut off.
+
+\textbf{Examples:}
+\begin{itemize}
+    \item Hello, world!
+    \item 07789
+\end{itemize}
+
+\subsection*{Boolean}
+Named after the mathematician George Boole (hence written with a capital B), values taken by a Boolean data type are restricted to True and False. Booleans are useful for recording data that can only take two values, like the state of a power button or whether a line of code has been executed.
+
+\textbf{Examples:}
+\begin{itemize}
+    \item True
+    \item False
+\end{itemize}
+
+\section*{Representing Positive Integers in Binary}
+
+As explained earlier, integers are whole numbers. Computers can store whole numbers using binary. Just like humans count in base 10, computers count in base 2, where each step in place represents a value of two times the previous place.
+
+A single binary digit is called a bit, and eight binary digits can be combined to form a byte. Entertainingly, half a byte (four bits) is called a nybble.
+
+\subsection*{Binary to Decimal}
+
+The least significant bit of a binary number is the one furthest to the right, while the most significant bit is furthest to the left. When representing positive integers, the least significant bit always represents a value of 1, with the 2nd least significant bit representing a value of 2, then 4, 8 etc.
+
+\[
+\begin{array}{cccc}
+8 (2^3) & 4 (2^2) & 2 (2^1) & 1 (2^0) \\
+1 & 1 & 0 & 1 \\
+\end{array}
+\]
+
+The diagram above shows the place value of each digit, as well as the digit’s value (either a 0 or a 1). To work out what the number is, multiply the digit by its place value and add to a total.
+
+For the diagram above, we have \((8 \times 1) + (4 \times 1) + (2 \times 0) + (1 \times 1) = 13\) so the binary 1101 is 13 in decimal.
+
+\subsection*{Decimal to Binary}
+
+If you have a decimal (denary) number to convert into binary, the first step is to find the largest power of two which is smaller than the number you’re converting. Then write out place values in powers of two up to this power.
+
+For example, if we were converting the decimal 47 into binary, we would write out place values up to 32.
+
+\[
+\begin{array}{cccccc}
+32 & 16 & 8 & 4 & 2 & 1 \\
+\end{array}
+\]
+
+Now we need to place a 1 or a 0 in each position so that the total adds up to 47. Starting from the most significant bit (left hand side) we write a 1 if the place value is less than or equal to our value and a 0 otherwise. If we write a 1, then we subtract the place value from our value and use the result for the next stage.
+
+For example: the most significant bit has a value of 32, which is less than 47. Therefore, we write a 1 under 32 and subtract 32 from 47 giving us a new value of 15.
+
+\[
+\begin{array}{cccccc}
+32 & 16 & 8 & 4 & 2 & 1 \\
+1 & & & & & \\
+\end{array}
+\]
+
+We now look at the next most significant bit and follow the same steps as before. This time the bit represents 16 and our value is 15. The bit value is greater than our value and so we place a 0.
+
+\[
+\begin{array}{cccccc}
+32 & 16 & 8 & 4 & 2 & 1 \\
+1 & 0 & & & & \\
+\end{array}
+\]
+
+Next up is 8, smaller than 15. Therefore we place a 1 and our new value is \(15 - 8 = 7\).
+
+\[
+\begin{array}{cccccc}
+32 & 16 & 8 & 4 & 2 & 1 \\
+1 & 0 & 1 & & & \\
+\end{array}
+\]
+
+The next most significant bit is 4. 4 is smaller than 7 and so we place a 1. Our new value is \(7 - 4 = 3\).
+
+\[
+\begin{array}{cccccc}
+32 & 16 & 8 & 4 & 2 & 1 \\
+1 & 0 & 1 & 1 & & \\
+\end{array}
+\]
+
+Next up is 2, again smaller than our value of 3. We place a one and our new value is 1.
+
+\[
+\begin{array}{cccccc}
+32 & 16 & 8 & 4 & 2 & 1 \\
+1 & 0 & 1 & 1 & 1 & \\
+\end{array}
+\]
+
+Finally, the bit represents 1 and our value is 1, so we place a 1.
+
+\[
+\begin{array}{cccccc}
+32 & 16 & 8 & 4 & 2 & 1 \\
+1 & 0 & 1 & 1 & 1 & 1 \\
+\end{array}
+\]
+
+Putting all these 1s and 0s together, we find that the decimal number 47 is represented in binary as 101111.
+
+\section*{Sign Magnitude}
+
+Positive integers can be represented simply using binary, but representing negative integers is slightly more complex. There are multiple ways of representing negative numbers using binary, the simplest of which is called sign magnitude.
+
+In sign magnitude, the most significant bit represents whether the number is positive or negative. If this bit is a 0, the number is positive, but if it’s a 1, the number is negative. The other bits represent the magnitude of the number, or how large the number is.
+
+\[
+\begin{array}{cccc}
+1 (Sign) & 4 & 2 & 1 \\
+1 & 0 & 1 & 1 \\
+\end{array}
+\]
+
+For example, if we wanted to represent -3, we’d first represent the positive number 3 (binary 0011). We would then add a 1 to the most significant bit to show that this is a negative number, giving us 1011.
+
+\section*{Two’s Complement}
+
+The problem with sign magnitude is that it allows us to have both positive and negative zero, which wastes space and can lead to issues in calculations. A different way to represent negative numbers in binary is called two’s complement.
+
+\begin{enumerate}
+    \item Represent the positive integer in binary as usual.
+    \item Invert all of the bits.
+    \item Add 1.
+\end{enumerate}
+
+\section*{Binary Addition}
+
+Binary addition works very similarly to decimal addition, just with fewer digits. In decimal addition, if the result of adding two digits is greater than 9, we carry the extra over to the next column. In binary addition, if the result of adding two digits is greater than 1, we carry the extra over to the next column.
+
+\[
+\begin{array}{cccc}
+& 1 & & \\
+0 & 1 & 1 & 0 \\
++ & 0 & 0 & 1 \\
+\hline
+1 & 0 & 0 & 1 \\
+\end{array}
+\]
+
+\section*{Binary Subtraction}
+
+Binary subtraction works very similarly to decimal subtraction, just with fewer digits. In decimal subtraction, if the result of subtracting two digits is less than 0, we borrow from the next column. In binary subtraction, if the result of subtracting two digits is less than 0, we borrow from the next column.
+
+\[
+\begin{array}{cccc}
+& 1 & 1 & \\
+1 & 0 & 1 & 1 \\
+- & 0 & 0 & 1 \\
+\hline
+0 & 1 & 0 & 0 \\
+\end{array}
+\]
+
+\section*{Hexadecimal}
+
+Hexadecimal is base 16, where each digit represents a value from 0 to 15. The digits from 0 to 9 represent values from 0 to 9, while the letters A to F represent values from 10 to 15. Hexadecimal is often used in computing because it is more compact than binary and easier for humans to read.
+
+\subsection*{Binary to Hexadecimal}
+
+To convert a binary number to hexadecimal, group the binary digits into groups of four, starting from the right. Then, convert each group of four binary digits to its hexadecimal equivalent.
+
+\[
+\begin{array}{cc}
+\text{Binary} & \text{Hexadecimal} \\
+0000 & 0 \\
+0001 & 1 \\
+0010 & 2 \\
+0011 & 3 \\
+0100 & 4 \\
+0101 & 5 \\
+0110 & 6 \\
+0111 & 7 \\
+1000 & 8 \\
+1001 & 9 \\
+1010 & A \\
+1011 & B \\
+1100 & C \\
+1101 & D \\
+1110 & E \\
+1111 & F \\
+\end{array}
+\]
+
+For example, to convert the binary number 11010111 to hexadecimal, we group the binary digits into groups of four: 1101 0111. Then, we convert each group to its hexadecimal equivalent: D7.
+
+\subsection*{Hexadecimal to Binary}
+
+To convert a hexadecimal number to binary, convert each hexadecimal digit to its binary equivalent.
+
+\begin{tabular}{cc}
+\text{Hexadecimal} & \text{Binary} \\
+0 & 0000 \\
+1 & 0001 \\
+2 & 0010 \\
+3 & 0011 \\
+4 & 0100 \\
+5 & 0101 \\
+6 & 0110 \\
+7 & 0111 \\
+8 & 1000 \\
+9 & 1001 \\
+A & 1010 \\
+B & 1011 \\
+C & 1100 \\
+D & 1101 \\
+E & 1110 \\
+F & 1111 \\
+\end{tabular}
+
+For example, to convert the hexadecimal number D7 to binary, we convert each digit to its binary equivalent: 1101 0111.
+
+\section*{Character Sets}
+
+Character sets are used to represent text in a computer. Two commonly used character sets are ASCII and Unicode.
+
+\subsection*{ASCII}
+
+ASCII stands for American Standard Code for Information Interchange. It uses 7 bits to represent 128 different characters, including letters, digits, punctuation marks, and control characters.
+
+\subsection*{Unicode}
+
+Unicode is a character set that aims to represent all characters from all writing systems in the world. It uses different encoding schemes, such as UTF-8, UTF-16, and UTF-32, to represent characters. UTF-8 is the most commonly used encoding scheme, as it is compatible with ASCII and can represent all Unicode characters.
+
+%----------------------------------------------------------------------------------------
+% OVERVIEW
+%----------------------------------------------------------------------------------------
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+
+\subsection{1.4.2 Data Structures}
+
+\subsubsection{Specification}
+\begin{itemize}
+    \item 1.4.2 a)
+    \begin{itemize}
+        \item Arrays
+        \item Records
+        \item Lists
+        \item Tuples
+    \end{itemize}
+    \item 1.4.2 b)
+    \begin{itemize}
+        \item Stack
+        \item Queue
+    \end{itemize}
+\end{itemize}
+
+\subsubsection{Arrays, Records, Lists, and Tuples}
+
+\paragraph{Arrays} An array is an ordered, finite set of elements of a single type. A 1D (one-dimensional) array is a linear array. Unless stated in the question, arrays are always taken to be zero-indexed. This means that the first element in the array is considered to be at position zero. Below is an example of a one-dimensional array:
+
+\begin{lstlisting}[language=Python]
+oneDimensionalArray = [1, 23, 12, 14, 16, 29, 12] # creates a 1D array
+print(oneDimensionalArray[3])
+# Output: 14
+\end{lstlisting}
+
+A two-dimensional array can be visualised as a table or spreadsheet. When searching through a 2D array, you first go down the rows and then across the columns to find a given position. This is the reverse to the method used to find a set of coordinates. Below is an example involving a two-dimensional array.
+
+\begin{lstlisting}[language=Python]
+twoDimensionalArray = [[123, 28, 90, 38, 88, 23, 47], [1, 23, 12, 14, 16, 29, 12]]
+print(twoDimensionalArray)
+# Output:
+# [[23, 28, 90, 38, 88, 23, 47],
+#  [ 1, 23, 12, 14, 16, 29, 12]]
+print(twoDimensionalArray[1, 3]) # Goes down and then across
+# Output: 14
+\end{lstlisting}
+
+A three-dimensional array can be visualised as a multi-page spreadsheet and can be thought of as multiple 2D arrays. Selecting an element in a 3D array requires the following syntax to be used: \texttt{threeDimensionalArray[z, y, x]}, where \texttt{z} is the array number, \texttt{y} is the row number and \texttt{x} is the column number.
+
+\begin{lstlisting}[language=Python]
+threeDimensionalArray = [[[12, 8], [9, 6, 19]], [[241, 89, 4, 1], [19, 2]]]
+print(threeDimensionalArray[0, 1, 2])
+# Output: 19
+\end{lstlisting}
+
+\paragraph{Records} A record is more commonly referred to as a row in a file and is made up of fields. Records are used in databases, as shown in the table below:
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|l|l|}
+\hline
+ID & FirstName & Surname \\
+\hline
+001 & Antony & Joshua \\
+002 & Tyson & Fury \\
+003 & Deonte & Wilder \\
+\hline
+\end{tabular}
+\caption{Fighter Database}
+\end{table}
+
+Above is a file containing three records, where each record has three fields. A record is declared in the following manner:
+
+\begin{lstlisting}[language=Python]
+fighterDataType = record
+    integer ID
+    string FirstName
+    string Surname
+end record
+\end{lstlisting}
+
+Each field in the record can be identified by \texttt{recordName.fieldName}. First, however, the record must be created. When creating a record, a variable must first be declared:
+
+\texttt{fighter : fighterDataType}
+
+Then its attributes can be accessed, using the following syntax:
+
+\texttt{fighter.FirstName}
+
+\paragraph{Lists} A list is a data structure consisting of a number of ordered items where the items can occur more than once. Lists are similar to 1D arrays and elements can be accessed in the same way. The difference is that list values are stored non-contiguously. This means they do not have to be stored next to each other in memory, as data in arrays is stored. Lists can also contain elements of more than one data type, unlike arrays.
+
+There are a range of operations that can be performed involving lists, described in the table below. The following structure is used when manipulating lists:
+
+\begin{lstlisting}[language=Python]
+List = [23, 36, 62, 49, 23, 29, 12]
+List.function(Parameters)
+\end{lstlisting}
+
+\begin{table}[h]
+\centering
+\footnotesize
+\begin{tabularx}{\textwidth}{|l|X|l|}
+\hline
+List Operations & Example & Description \\
+\hline
+\texttt{isEmpty()} & \texttt{List.isEmpty()} $\to$ \texttt{False} & Checks if the list is empty \\
+\hline
+\texttt{append(value)} & \texttt{List.append(15)} $\to$ & Adds a new value to the end of the list \\
+\hline
+\texttt{remove(value)} & \texttt{List.remove(23)} $\to$ & Removes the value the first time it appears in the list \\
+\hline
+\texttt{search(value)} & \texttt{List.search(38)} $\to$ \texttt{False} & Searches for a value in the list \\
+\hline
+\texttt{length()} & \texttt{List.length()} $\to$ 7 & Returns the length of the list \\
+\hline
+\texttt{index(value)} & \texttt{List.index(23)} $\to$ 0 & Returns the position of the item \\
+\hline
+\texttt{insert(position, value)} & \texttt{List.insert(4, 25)} $\to$ & Inserts a value at a given position \\
+\hline
+\texttt{pop()} & \texttt{List.pop()} $\to$ 12 & Returns and removes the last value in the list \\
+\hline
+\texttt{pop(position)} & \texttt{list.pop(3)} & Returns and removes the value in the list at the given position \\
+\hline
+\end{tabularx}
+\caption{List Operations}
+\end{table}
+
+\paragraph{Tuples} An ordered set of values of any type is called a tuple. A tuple is immutable, which means it cannot be changed: elements cannot be added or removed once it has been created. Tuples are initialised using regular brackets instead of square brackets.
+
+\begin{lstlisting}[language=Python]
+tupleExample = ("Value1", 2, "Value3")
+\end{lstlisting}
+
+Elements in a tuple are accessed in a similar way to elements in an array, with the exception that values in a tuple cannot be changed or removed. Attempting to do so will result in a syntax error.
+
+\begin{lstlisting}[language=Python]
+print(tupleExample[0])
+# Output: Value1
+tupleExample[0] = "ChangedValue"
+# Output: Syntax Error
+\end{lstlisting}
+
+\subsubsection{Stacks and Queues}
+
+\paragraph{Stacks} A stack is a last in first out (LIFO) data structure. Items can only be added to or removed from the top of the stack. Stacks are key data structures in computer science, used for:
+
+\begin{itemize}
+    \item Reversing actions (e.g., 'undo' buttons in applications)
+    \item Managing function calls and recursion
+    \item Expression evaluation and syntax parsing
+\end{itemize}
+
+A stack can be implemented as either a static structure (fixed size) or a dynamic structure (variable size). Static stacks are preferred when the maximum size is known in advance, as they are simpler to implement and use memory more efficiently.
+
+\subsubsection*{Stack Operations}
+
+\begin{itemize}
+    \item \texttt{isEmpty()}: Checks if the stack is empty.
+    \item \texttt{push(value)}: Adds a new value to the top of the stack.
+    \item \texttt{peek()}: Returns the top value without removing it.
+    \item \texttt{pop()}: Removes and returns the top value.
+    \item \texttt{size()}: Returns the number of elements in the stack.
+    \item \texttt{isFull()}: Checks if the stack has reached its maximum size.
+\end{itemize}
+
+\subsubsection*{Stack Example}
+
+\begin{lstlisting}[language=Python]
+stack = []  # Initialize an empty stack
+
+stack.append("Alice")    # push("Alice")
+stack.append("Bob")      # push("Bob")
+stack.append("Charlie")  # push("Charlie")
+
+print(stack[-1])        # peek() -> "Charlie"
+print(stack.pop())      # pop() -> "Charlie"
+print(len(stack))       # size() -> 2
+print(stack.pop())      # pop() -> "Bob"
+print(stack.pop())      # pop() -> "Alice"
+print(not stack)        # isEmpty() -> True
+\end{lstlisting}
+
+\paragraph{Queues} A queue is a first in first out (FIFO) data structure; items are added to the end (rear) of the queue and removed from the front. Queues are used in:
+
+\begin{itemize}
+    \item Task scheduling (e.g., print jobs, CPU task management)
+    \item Message passing in communication systems
+    \item Breadth-first search in graph algorithms
+\end{itemize}
+
+There are two common implementations of queues: linear queues and circular queues.
+
+\subsubsection*{Linear Queues}
+
+A linear queue uses an array to store elements. It has two pointers: one for the front (where elements are removed) and one for the rear (where elements are added). The main drawback is that as elements are dequeued, the front of the array becomes unusable, wasting space.
+
+\subsubsection*{Circular Queues}
+
+Circular queues solve the space wastage problem of linear queues. When the rear pointer reaches the end of the array, it wraps around to the front if there's space available. This way, the entire array can be utilized.
+
+\subsubsection*{Queue Operations}
+
+\begin{itemize}
+    \item \texttt{enqueue(value)}: Adds an item to the rear of the queue.
+    \item \texttt{dequeue()}: Removes and returns the item from the front.
+    \item \texttt{isEmpty()}: Checks if the queue is empty.
+    \item \texttt{isFull()}: Checks if the queue is full (for bounded queues).
+    \item \texttt{front()}: Returns the front item without removing it.
+    \item \texttt{rear()}: Returns the last item without removing it.
+\end{itemize}
+
+\subsubsection*{Queue Examples}
+
+\begin{table}[h]
+\centering
+\footnotesize
+\begin{tabular}{|l|l|l|l|l|l|l|}
+\hline
+Operation & \multicolumn{6}{c|}{Queue State (Front $\to$ Rear)} \\
+\cline{2-7}
+ & 0 & 1 & 2 & 3 & 4 & 5 \\
+\hline
+Initial & - & - & - & - & - & - \\
+\hline
+enqueue(A) & A & - & - & - & - & - \\
+\hline
+enqueue(B) & A & B & - & - & - & - \\
+\hline
+enqueue(C) & A & B & C & - & - & - \\
+\hline
+dequeue() $\to$ A & - & B & C & - & - & - \\
+\hline
+enqueue(D) & - & B & C & D & - & - \\
+\hline
+dequeue() $\to$ B & - & - & C & D & - & - \\
+\hline
+\multicolumn{7}{l}{Linear Queue: Wasted space at indices 0 and 1} \\
+\hline
+\end{tabular}
+\caption{Linear Queue Operations}
+\end{table}
+
+In a circular queue, after the last operation (dequeue() $\to$ B), the next enqueue operation would place the new element at index 0, utilizing the space effectively.
+
+\subsubsection*{Circular Queue Example}
+
+\begin{lstlisting}[language=Python]
+class CircularQueue:
+    def __init__(self, size):
+        self.size = size
+        self.queue = [None] * size
+        self.front = self.rear = -1
+
+    def enqueue(self, data):
+        if (self.rear + 1) % self.size == self.front:
+            print("Queue is full")
+        elif self.front == -1:
+            self.front = self.rear = 0
+            self.queue[self.rear] = data
+        else:
+            self.rear = (self.rear + 1) % self.size
+            self.queue[self.rear] = data
+
+    def dequeue(self):
+        if self.front == -1:
+            print("Queue is empty")
+        elif self.front == self.rear:
+            data = self.queue[self.front]
+            self.front = self.rear = -1
+            return data
+        else:
+            data = self.queue[self.front]
+            self.front = (self.front + 1) % self.size
+            return data
+
+# Usage
+q = CircularQueue(5)
+q.enqueue("A"); q.enqueue("B"); q.enqueue("C")
+print(q.dequeue())  # Output: A
+q.enqueue("D"); q.enqueue("E")
+print(q.dequeue())  # Output: B
+q.enqueue("F")  # Uses the space freed by dequeuing A
+\end{lstlisting}
+
+In this example, after dequeuing "A" and "B", the space at the beginning of the array is reused when enqueueing "F", demonstrating the circular nature of the queue.
+
+
+\begin{lstlisting}
+enQueue(Task3) // enQueue(item) is how items are added to a queue
+Position  0     1     2     3     4     5
+Data      Task1 Task2 Task3
+
+deQueue() // deQueue(item) is how items are removed from a queue
+Position  0     1     2     3     4     5
+Data           Task2 Task3
+
+enQueue(Task4)
+Position  0     1     2     3     4     5
+Data           Task2 Task3 Task4
+
+deQueue()
+Position  0     1     2     3     4     5
+Data                  Task3 Task4
+\end{lstlisting}
+
+As the queue removes items, there are addresses in the array which cannot be used again, making a linear queue an ineffective implementation of a queue.
+
+Circular queues try to solve this. A circular queue operates in a similar way to a linear queue in that it is a FIFO structure. However, it is coded in a way that once the queue's rear pointer is equal to the maximum size of the queue, it can loop back to the front of the array and store values here, provided that it is empty. Therefore, circular queues can use space in an array more effectively, although they are harder to implement.
+
+Below is an example illustrating how the rear pointer in a circular queue works:
+
+\begin{lstlisting}
+enQueue(Task5)
+Position  0     1     2     3     4     5
+Data           Task3 Task4 Task5
+rearPointer: 4
+maxSize: 5
+
+enQueue(Task6)
+Position  0     1     2     3     4     5
+Data           Task3 Task4 Task5 Task6
+rearPointer: 5
+maxSize: 5
+
+enQueue(Task7)
+Position  0     1     2     3     4     5
+Data      Task7 Task3 Task4 Task5 Task6
+rearPointer: 0
+maxSize: 5
+\end{lstlisting}
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{|p{3cm}|p{4cm}|p{5cm}|}
+\hline
+Queue Operations & Example & Description \\
+\hline
+\texttt{enQueue(value)} & \texttt{Queue.enQueue("Nadia")} $\to$ & Adds a new item to the end of the queue. Increments the back pointer. \\
+\hline
+\texttt{deQueue()} & \texttt{Queue.deQueue()} $\to$ & Removes the item from the front of the queue. Increments the front pointer. \\
+\hline
+\texttt{isEmpty()} & \texttt{Queue.isEmpty()} $\to$ \texttt{False} & Checks if the queue is empty by comparing the front and back pointers. \\
+\hline
+\texttt{isFull()} & \texttt{Queue.isFull()} $\to$ \texttt{False} & Checks if the queue is full by comparing the back pointer and queue size. \\
+\hline
+\end{tabular}
+\caption{Queue Operations}
+\end{table}
+
+%----------------------------------------------------------------------------------------
+%	BOOLEAN ALGEBRA
+%----------------------------------------------------------------------------------------
+\section{1.4.3 Boolean Algebra}
+
+\subsubsection{Specification}
+\begin{itemize}
+    \item 1.4.3 a)
+    \begin{itemize}
+        \item Define problems using Boolean logic
+    \end{itemize}
+    \item 1.4.3 b)
+    \begin{itemize}
+        \item Manipulate Boolean expressions
+        \begin{itemize}
+            \item Karnaugh maps to simplify Boolean expressions
+        \end{itemize}
+    \end{itemize}
+    \item 1.4.3 c)
+    \begin{itemize}
+        \item Use logic gate diagrams and truth tables
+    \end{itemize}
+\end{itemize}
+
+\subsubsection{Logic Gate Diagrams and Truth Tables}
+Problems can be defined using Boolean logic in Boolean equations. A Boolean equation can equate to either True or False, but not both. There are four operations we need to cover: conjunction, disjunction, negation, and exclusive disjunction.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|l|l|l|l|}
+\hline
+Operation & Conjunction & Disjunction & Negation & Exclusive Disjunction \\
+\hline
+Logic gate & AND & OR & NOT & XOR \\
+\hline
+Symbol & 
+\begin{tikzpicture}[baseline=-0.5ex]
+\draw (0,0) -- (0.5,0.5) -- (0,1) -- (0,0);
+\draw (0,0.25) -- (-0.5,0.25);
+\draw (0,0.75) -- (-0.5,0.75);
+\draw (0.5,0.5) -- (1,0.5);
+\end{tikzpicture} & 
+\begin{tikzpicture}[baseline=-0.5ex]
+\draw (0,0) -- (0.5,0.5) -- (0,1) -- (0,0);
+\node[scale=0.8] at (0.25,0.5) {\textgreater{}1};
+\draw (0,0.25) -- (-0.5,0.25);
+\draw (0,0.75) -- (-0.5,0.75);
+\draw (0.5,0.5) -- (1,0.5);
+\end{tikzpicture} & 
+\begin{tikzpicture}[baseline=-0.5ex]
+\draw (0.5,0.5) circle (0.5);
+\draw (0,0.5) -- (-0.5,0.5);
+\end{tikzpicture} & 
+\begin{tikzpicture}[baseline=-0.5ex]
+\draw (0,0) -- (0.5,0.5) -- (0,1) -- (0,0);
+\node[scale=0.8] at (0.25,0.5) {\textgreater{}1};
+\draw (0,0.25) -- (-0.5,0.25);
+\draw (0,0.75) -- (-0.5,0.75);
+\draw (0.5,0.5) -- (1,0.5);
+\draw (0.75,0.5) circle (0.25);
+\end{tikzpicture} \\
+\hline
+\end{tabular}
+\caption{Logic Gates and Symbols}
+\end{table}
+
+\paragraph{Truth tables}
+A truth table is a table showing every possible permutation of inputs to a logic gate and the corresponding output. Inputs are usually labeled A, B, C etc.
+
+For example, below is the truth table for an AND gate (conjunction) which is True (1) only when both inputs are True, otherwise the output is False (0).
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+A & B & Y \\
+\hline
+0 & 0 & 0 \\
+\hline
+0 & 1 & 0 \\
+\hline
+1 & 0 & 0 \\
+\hline
+1 & 1 & 1 \\
+\hline
+\end{tabular}
+\caption{Conjunction (AND)}
+\end{table}
+
+A conjunction is applied to two literals (or inputs) to produce a single output. The truth table for an AND gate is shown above. Conjunction can be thought of as applying multiplication to its binary inputs. In terms of Boolean logic, the truth table represents the expression $A \wedge B$.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+A & B & Y \\
+\hline
+0 & 0 & 0 \\
+\hline
+0 & 1 & 1 \\
+\hline
+1 & 0 & 1 \\
+\hline
+1 & 1 & 1 \\
+\hline
+\end{tabular}
+\caption{Disjunction (OR)}
+\end{table}
+
+Like conjunction, disjunction operates on two literals and produces a single output. The truth table for an OR gate is shown above. Disjunction can be thought of as applying addition to its inputs, as long as one input is True then the output is True. The truth table shown above is equivalent to the Boolean expression $A \vee B$.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|c|}
+\hline
+A & Y \\
+\hline
+0 & 1 \\
+\hline
+1 & 0 \\
+\hline
+\end{tabular}
+\caption{Negation (NOT)}
+\end{table}
+
+In contrast to conjunction and disjunction, negation is only applied to one literal, and simply reverses the truth value of the input. For example, NOT 1 is 0. The truth table is the same as the expression $\neg A$.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+A & B & Y \\
+\hline
+0 & 0 & 0 \\
+\hline
+0 & 1 & 1 \\
+\hline
+1 & 0 & 1 \\
+\hline
+1 & 1 & 0 \\
+\hline
+\end{tabular}
+\caption{Exclusive Disjunction (XOR)}
+\end{table}
+
+Also known as exclusive OR, hence XOR, exclusive disjunction is similar to disjunction but differs when both inputs are True. Exclusive disjunction only outputs True when exactly one input is True. Otherwise, the output is False. The truth table is the same as the expression $A \oplus B$.
+
+\paragraph{Combining Boolean Operations}
+Boolean equations are made by combining Boolean operators. This is done in the same way that standard mathematical operators are combined. For example, the Boolean equation $A \wedge \neg (B \vee C)$ can be used to describe a certain combination of the variables A, B, and C. A truth table can be made for this equation by building up the parts one by one as follows:
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+A & B & C & B $\vee$ C & $\neg$(B $\vee$ C) & A $\wedge$ $\neg$(B $\vee$ C) \\
+\hline
+0 & 0 & 0 & 0 & 1 & 0 \\
+0 & 0 & 1 & 1 & 0 & 0 \\
+0 & 1 & 0 & 1 & 0 & 0 \\
+0 & 1 & 1 & 1 & 0 & 0 \\
+1 & 0 & 0 & 0 & 1 & 1 \\
+1 & 0 & 1 & 1 & 0 & 0 \\
+1 & 1 & 0 & 1 & 0 & 0 \\
+1 & 1 & 1 & 1 & 0 & 0 \\
+\hline
+\end{tabular}
+\caption{Truth Table for $A \wedge \neg (B \vee C)$}
+\end{table}
+
+\subsubsection{Manipulating Boolean Expressions}
+Sometimes a really long Boolean expression is identical to (has the same truth table as) another, shorter expression. It tends to be desirable to use the shorter versions, and there are a variety of methods that can be used to simplify them.
+
+\paragraph{Karnaugh Maps}
+A Karnaugh map can be used to simplify Boolean expressions. The tables are filled in corresponding to the expression's truth table, like so:
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+A & B & Y \\
+\hline
+0 & 0 & w \\
+0 & 1 & x \\
+1 & 0 & y \\
+1 & 1 & z \\
+\hline
+\end{tabular}
+\quad
+$\Rightarrow$
+\quad
+\begin{tabular}{|c|cc|}
+\hline
+A $\backslash$ B & 0 & 1 \\
+\hline
+0 & w & x \\
+1 & y & z \\
+\hline
+\end{tabular}
+\caption{Conversion to Karnaugh Map}
+\end{table}
+
+A Karnaugh map can also be used for a truth table with three or four variables. It's important that the values in the columns are written using Gray code. That is, they can only ever differ by one bit between adjacent columns and rows, including wraparound (e.g., from the last column to the first), as highlighted in the top line of the map below.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|cccc|}
+\hline
+AB $\backslash$ CD & 00 & 01 & 11 & 10 \\
+\hline
+00 & 0 & 0 & 1 & 1 \\
+01 & 0 & 1 & 0 & 0 \\
+11 & 1 & 0 & 1 & 0 \\
+10 & 0 & 1 & 1 & 1 \\
+\hline
+\end{tabular}
+\caption{4-variable Karnaugh Map}
+\end{table}
+
+To simplify a Boolean expression, first write your truth table as a Karnaugh map. Then highlight all of the 1s in the map with a rectangle. The larger the rectangle you can highlight at once, the better. Bear in mind that only groups of 1s with edges equal to a power of 2 (1, 2, or 4 in a row) can be highlighted, and wraparound is included.
+
+Take for example the Boolean expression:
+
+$$A \wedge B \wedge \neg C \vee A \wedge \neg B \wedge C \vee \neg A \wedge B \wedge C \vee \neg A \wedge B \wedge \neg C$$
+
+The truth table for this expression can then be converted to a Karnaugh map as shown below.
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{|c|c|c|c|}
+\hline
+A & B & C & Y \\
+\hline
+0 & 0 & 0 & 0 \\
+0 & 0 & 1 & 0 \\
+0 & 1 & 0 & 1 \\
+0 & 1 & 1 & 1 \\
+1 & 0 & 0 & 0 \\
+1 & 0 & 1 & 0 \\
+1 & 1 & 0 & 1 \\
+1 & 1 & 1 & 0 \\
+\hline
+\end{tabular}
+\quad
+$\Rightarrow$
+\quad
+\begin{tabular}{|c|cc|}
+\hline
+AB $\backslash$ C & 0 & 1 \\
+\hline
+00 & 0 & 0 \\
+01 & \fbox{1} & \fbox{1} \\
+11 & \fbox{1} & 0 \\
+10 & 0 & 0 \\
+\hline
+\end{tabular}
+\caption{Karnaugh Map for Example Expression}
+\end{table}
+
+Once a Karnaugh map has been made, any 1s can be highlighted using as few rectangles as possible. In this case, two rectangles must be used. Overlapping is good.
+
+Using the highlighting, our expression can now be simplified. From the first rectangle, we can see that C doesn't affect the output when A is false and B is true. From the second, we can see that A doesn't affect the output when B is true and C is false.
+
+From these two highlighted portions, we can significantly reduce the original expression to simply:
+
+$$\neg A \wedge B$$
+
+\vfill
+\end{document}
