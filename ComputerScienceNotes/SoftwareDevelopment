@@ -1,0 +1,440 @@
+\documentclass[a4paper,12pt]{article}
+
+%----------------------------------------------------------------------------------------
+%	FONT
+%----------------------------------------------------------------------------------------
+
+% % fontspec allows you to use TTF/OTF fonts directly
+% \usepackage{fontspec}
+% \defaultfontfeatures{Ligatures=TeX}
+
+% % modified for ShareLaTeX use
+% \setmainfont[
+% SmallCapsFont = Fontin-SmallCaps.otf,
+% BoldFont = Fontin-Bold.otf,
+% ItalicFont = Fontin-Italic.otf
+% ]
+% {Fontin.otf}
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES
+%----------------------------------------------------------------------------------------
+\usepackage{url}
+\usepackage{parskip} 	
+
+%other packages for formatting
+\RequirePackage{color}
+\RequirePackage{graphicx}
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage[scale=0.9]{geometry}
+\usepackage{amsmath}
+\usepackage{tikz}
+\usepackage{float}
+
+%tabularx environment
+\usepackage{tabularx}
+
+%for lists within experience section
+\usepackage{enumitem}
+
+% centered version of 'X' col. type
+\newcolumntype{C}{>{\centering\arraybackslash}X} 
+
+%to prevent spillover of tabular into next pages
+\usepackage{supertabular}
+\usepackage{tabularx}
+\newlength{\fullcollw}
+\setlength{\fullcollw}{0.47\textwidth}
+
+%custom \section
+\usepackage{titlesec}				
+\usepackage{multicol}
+\usepackage{multirow}
+
+%CV Sections inspired by: 
+%http://stefano.italians.nl/archives/26
+\titleformat{\section}{\large\scshape\raggedright}{}{0em}{}[\titlerule]
+\titlespacing{\section}{0pt}{10pt}{10pt}
+
+%for publications
+\usepackage[style=authoryear,sorting=ynt, maxbibnames=2]{biblatex}
+
+%Setup hyperref package, and colours for links
+\usepackage[unicode, draft=false]{hyperref}
+\definecolor{linkcolour}{rgb}{0,0.2,0.6}
+\hypersetup{colorlinks,breaklinks,urlcolor=linkcolour,linkcolor=linkcolour}
+\addbibresource{citations.bib}
+\setlength\bibitemsep{1em}
+
+%for social icons
+\usepackage{fontawesome5}
+
+%debug page outer frames
+%\usepackage{showframe}
+
+%----------------------------------------------------------------------------------------
+%	BEGIN DOCUMENT
+%----------------------------------------------------------------------------------------
+\begin{document}
+
+% non-numbered pages
+\pagestyle{empty} 
+
+%----------------------------------------------------------------------------------------
+%	TITLE
+%----------------------------------------------------------------------------------------
+
+\title{Programming Techniques}
+
+\maketitle
+
+\section*{Specification}
+
+\subsection*{2.2.1 a)}
+\begin{itemize}
+    \item Programming constructs
+    \begin{itemize}
+        \item Sequence
+        \item Iteration
+        \item Branching
+    \end{itemize}
+\end{itemize}
+
+\subsection*{2.2.1 b)}
+\begin{itemize}
+    \item Global and local variables
+\end{itemize}
+
+\subsection*{2.2.1 c)}
+\begin{itemize}
+    \item Modularity, functions, and procedures
+    \begin{itemize}
+        \item Parameter passing by value
+        \item Parameter passing by reference
+    \end{itemize}
+\end{itemize}
+
+\subsection*{2.2.1 d)}
+\begin{itemize}
+    \item Use of an IDE to develop/debug a program
+\end{itemize}
+
+\section*{Programming Constructs}
+
+A crucial part of solving a problem is simplifying it to represent it in a way that makes it easier to understand and thus program. The following constructs are used to represent a program’s \textbf{control flow} in a popular subsection of procedural programming called \textbf{structured programming}:
+
+\subsection*{Sequence}
+Code is executed \textbf{line-by-line}, from top to bottom.
+
+\subsection*{Branching}
+A certain block of code is run \textbf{if a specific condition is met}, using IF statements. This is also known as ‘selection’.
+
+\subsection*{Iteration}
+A block of code is executed a \textbf{certain number of times} or \textbf{while a condition is met}. Iteration uses FOR, WHILE, or REPEAT UNTIL loops. Iteration can be either:
+
+\subsubsection*{Count-controlled}
+Iteration is repeated a given number of times.
+\begin{verbatim}
+for i in range (0,10): 
+    print(i) 
+\end{verbatim}
+
+\subsubsection*{Condition-controlled}
+Iteration continues until a given condition is met.
+\begin{verbatim}
+while i <= 20:
+    print("Not true")
+    i = i + 1
+\end{verbatim}
+
+\section*{Global and Local Variables}
+
+Variables can be defined with either global or local scope. \textbf{Scope} refers to the section of code in which the variable is available.
+
+\subsection*{Local Variables}
+Local variables have limited scope, which means that they can only be accessed within the block of code in which they were defined. If a local variable is defined within a subroutine, it can only be accessed within that subroutine. Therefore, multiple local variables with the same name can exist in different subroutines and will remain unaffected by each other. Using local variables is considered to be good programming practice because it ensures subroutines are \textbf{self-contained}, with no danger of variables being affected by code outside of the subroutine.
+
+\subsection*{Global Variables}
+Global variables, on the other hand, can be accessed across the whole program. All variables used in the main body of a program are automatically declared to be global. These are useful for values that need to be used by multiple parts of the program. On the whole, however, using global variables is not recommended because they can be \textbf{unintentionally overwritten} and edited. As global variables are not deleted until the program terminates, they \textbf{require more memory} than local variables which are deleted once the subroutine has been completed.
+
+In the event that a local variable exists within a subroutine with the same name as a global variable, the local variable will take precedence.
+
+\section*{Modularity, Functions, and Procedures}
+
+Modular programming is a programming technique used to \textbf{split large, complex programs into smaller, self-contained modules}. Modularity is essential to making a problem easier to understand and approach. A \textbf{modular design} also makes it easier to \textbf{divide tasks between a team} and manage, whilst simplifying the process of testing and maintenance, as each component can be \textbf{dealt with individually}. This improves the \textbf{reusability} of components, as once a module has been tested, it can be reused with confidence.
+
+A popular technique used to modularise programs is called the \textbf{top-down approach}, in which the problem is \textbf{continually broken down into sub-problems}, until each can be represented as an \textbf{individual, self-contained blackbox which performs a certain task}. This process is also known as \textbf{stepwise refinement}. These modules form blocks of code called \textbf{subroutines}, which can be categorised as either functions or procedures.
+
+
+Procedures and functions are both \textbf{named blocks of code that perform a specific task}. While procedures do not have to return a value, functions must always return a value. Procedures can return multiple values whereas a function must return one, single value. Procedures are typically given data as parameters for manipulation while functions commonly make use of \textbf{local variables}. The subroutine below is an example of a function as it always returns a value of either True or False regardless of the input.
+
+\begin{verbatim}
+function isEven(number):
+    if number MOD 2 = 0:
+        return True
+    else:
+        return False
+end function
+\end{verbatim}
+
+When parameters are passed into a subroutine, they can be passed either \textbf{by value} or \textbf{by reference}. When a parameter is passed by value, it is effectively treated as a \textbf{local variable}; a \textbf{copy of the value} is passed to the subroutine and discarded at the end, therefore its value outside of the subroutine will not be affected. Passing by reference means that the \textbf{address of the parameter} is given to the subroutine, so the value of the parameter will be \textbf{updated at the given address}.
+
+In exam questions, you should assume parameters are passed by value unless you are told otherwise. The following format will be used:
+
+\begin{verbatim}
+function multiply(x:byVal, y:byRef)
+\end{verbatim}
+
+\section*{Use of an IDE}
+
+An \textbf{Integrated Development Environment} (IDE) is a \textbf{program} which provides a \textbf{set of tools} to make it easier for programmers to \textbf{write, develop, and debug code}. Examples of IDEs include PyCharm, Eclipse, IDLE, and Microsoft Visual Studio. Common features of IDEs include:
+
+\subsection*{Stepping}
+This allows you to \textbf{monitor the effect of each individual line of code} by executing a single line at a time.
+
+\subsection*{Variable Watch}
+Sometimes used to pinpoint errors, this is a useful feature to observe how the \textbf{contents of a variable change} in real-time through the execution of a program.
+
+\subsection*{Breakpoint}
+IDEs allow users to \textbf{set a point in the program at which the program will stop}. This can either be based on a condition or set to occur at a specific line. This can help to pinpoint where an error is occurring.
+
+\subsection*{Source Code Editor}
+The editor aims to make the coding process easier by providing features such as \textbf{autocompletion} of words, \textbf{indentation}, \textbf{syntax highlighting}, and automatic bracket completion.
+
+\subsection*{Debugging Tools}
+Some IDEs also provide \textbf{run-time detection of errors} with a guide as to where in the code they are likely to have occurred through line numbers and highlighting.
+
+%----------------------------------------------------------------------------------------
+% OVERVIEW
+%----------------------------------------------------------------------------------------
+
+\section*{Specification for programming methodologies}
+
+\subsection*{a) Programming methodologies}
+\begin{itemize}
+    \item Waterfall lifecycle
+    \item Agile methodologies
+    \item Extreme programming
+    \item Spiral model
+    \item Rapid application development
+\end{itemize}
+
+\subsection*{b) Merits, drawbacks and uses of programming methodologies}
+\subsection*{c) Writing and following algorithms}
+\subsection*{d) Test strategies}
+\begin{itemize}
+    \item Black box testing
+    \item Alpha testing
+    \item Beta testing
+\end{itemize}
+
+\subsection*{e) Test programs that solve problems using suitable test data and end user feedback}
+\begin{itemize}
+    \item Justify test strategy for given situation
+\end{itemize}
+
+\section*{Programming Methodologies}
+
+Software can be developed using a variety of approaches. The approach used depends on the type of software being developed but most software development life cycles (SDLCs) have some stages in common, including:
+
+\subsection*{Analysis}
+Stakeholders state what they require from the finished product. This information is used to clearly define the problem and the system requirements. Requirements may be defined by:
+\begin{itemize}
+    \item Analysing strengths and weaknesses with the current way this problem is being solved
+    \item Considering types of data involved including inputs, outputs, stored data, and amount of data
+\end{itemize}
+
+\subsection*{Design}
+The different aspects of the new system are designed, such as:
+\begin{itemize}
+    \item Inputs: volume, methods, frequency
+    \item Outputs: volume, methods, frequency
+    \item Security features: level required, access levels
+    \item Hardware set-up: compatibility
+    \item User interface: menus, accessibility, navigation
+\end{itemize}
+A test plan may also be designed at this stage.
+
+\subsection*{Development}
+The design from the previous stage is used to split the project into individual, self-contained modules, which are allocated to teams for programming.
+
+\subsection*{Testing}
+The program is tested against the test plan formed in the Design stage. There are various types of testing that can be carried out:
+\begin{itemize}
+    \item Alpha testing: carried out in-house by the software development teams within the company. Bugs are pinpointed and fixed.
+    \item Beta testing: carried out by end-users after alpha testing has been completed. Feedback from users is used to inform the next stage of development.
+    \item White box testing: carried out by software development teams in which the test plan is based on the internal structure of the program. All of the possible routes through the program are tested. This is also called structural testing.
+    \item Black box testing: the software is tested without the testers being aware of the internal structure of the software and can be carried out both within the company and by end-users. The test plan traces through inputs and outputs within the software. This is also known as functional testing.
+\end{itemize}
+
+\subsection*{Implementation}
+Once the testing stage has been used to make the appropriate changes to the software, it is installed onto the users’ systems.
+
+\subsection*{Evaluation}
+After the implementation stage, the effectiveness of the software is evaluated against the system requirements defined at the analysis stage to evaluate its suitability in solving the problem. Different criteria are considered, including robustness, reliability, portability, and maintainability.
+
+\subsection*{Maintenance}
+Any errors or improvements that could be made to the software are flagged up by the end-users. Programmers will regularly send out software updates to fix any bugs, security issues, or make any needed improvements.
+
+\section*{Waterfall lifecycle}
+The traditional waterfall model of software development is well-known and well-defined but is now being replaced with more agile models. The waterfall model is based on a series of stages which are completed in sequence, from start to finish.
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+        \node (analysis) [rectangle, draw] {Analysis};
+        \node (design) [rectangle, draw, below of=analysis, node distance=1.5cm] {Design};
+        \node (development) [rectangle, draw, below of=design, node distance=1.5cm] {Development};
+        \node (testing) [rectangle, draw, below of=development, node distance=1.5cm] {Testing};
+        \node (implementation) [rectangle, draw, below of=testing, node distance=1.5cm] {Implementation};
+        \node (evaluation) [rectangle, draw, below of=implementation, node distance=1.5cm] {Evaluation};
+        \node (maintenance) [rectangle, draw, below of=evaluation, node distance=1.5cm] {Maintenance};
+
+        \draw[->] (analysis) -- (design);
+        \draw[->] (design) -- (development);
+        \draw[->] (development) -- (testing);
+        \draw[->] (testing) -- (implementation);
+        \draw[->] (implementation) -- (evaluation);
+        \draw[->] (evaluation) -- (maintenance);
+    \end{tikzpicture}
+    \caption{Waterfall lifecycle stages}
+\end{figure}
+
+The analysis stage includes a feasibility study in which designers evaluate the feasibility of the project using ‘TELOS’:
+\begin{itemize}
+    \item Technical: is the project possible considering the technology available and accessible?
+    \item Economic: can the project be financed in the short-term and the long-term?
+    \item Legal: can the project be solved within the law?
+    \item Operational: can the project be successfully implemented and maintained?
+    \item Scheduling: can the project be completed given the time available?
+\end{itemize}
+
+If a change needs to be made within a project being developed using the waterfall model, programmers must revisit all levels between the current stage and the stage at which a change needs to be made. This makes the model inflexible and so unsuitable to projects with changing requirements. This also means that users have little input as they are only involved at the very beginning and end of the waterfall lifecycle, during the analysis and evaluation stage.
+
+\section*{Agile methodologies}
+This refers to a collection of methodologies which aim to improve the flexibility of software development and adapt to changes in user requirements faster. It is also easier to make improvements or changes to the software.
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+        \node (analysis) [rectangle, draw] {Analysis};
+        \node (design) [rectangle, draw, right of=analysis, node distance=3cm] {Design};
+        \node (development) [rectangle, draw, right of=design, node distance=3cm] {Development};
+        \node (testing) [rectangle, draw, right of=development, node distance=3cm] {Testing};
+        \node (implementation) [rectangle, draw, right of=testing, node distance=3cm] {Implementation};
+        \node (evaluation) [rectangle, draw, below of=development, node distance=1.5cm] {Evaluation};
+
+        \draw[->] (analysis) -- (design);
+        \draw[->] (design) -- (development);
+        \draw[->] (development) -- (testing);
+        \draw[->] (testing) -- (implementation);
+        \draw[->] (implementation) -- (evaluation);
+        \draw[->] (evaluation) -- (analysis);
+    \end{tikzpicture}
+    \caption{Agile methodologies stages}
+\end{figure}
+
+The problem is broken down into sections which are developed in parallel. The design and analysis phase often occur together. Different sections of software can be at different stages of development. A working prototype is delivered early on and prototypes are built upon and improved in an iterative manner so that new prototypes are delivered regularly throughout the course of the development cycle.
+
+In agile development methodologies, there is less of a focus on documentation and more priority is given to user satisfaction.
+
+\section*{Extreme programming}
+This is an agile model in which the development team consists of a pair of programmers alongside a representative end-user. The model is built on ‘user stories’: system requirements are specified by the end-user and used when designing the program. The aim of paired programming is to produce high-quality code, as the code is written by one person and critiqued by the other so it is improved as it is written. Programmers work no longer than forty hours a week with the aim that quality is not compromised. Each iteration through the cycle generates what is called a ‘working version’ of the program which means it could function as the final product.
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+        \node (user) [circle, draw] {User};
+        \node (story) [rectangle, draw, below of=user, node distance=1.5cm] {User Stories};
+        \node (design) [rectangle, draw, below of=story, node distance=1.5cm] {Design};
+        \node (code) [rectangle, draw, below of=design, node distance=1.5cm] {Code};
+        \node (test) [rectangle, draw, below of=code, node distance=1.5cm] {Test};
+        \node (release) [rectangle, draw, below of=test, node distance=1.5cm] {Release};
+
+        \draw[->] (user) -- (story);
+        \draw[->] (story) -- (design);
+        \draw[->] (design) -- (code);
+        \draw[->] (code) -- (test);
+        \draw[->] (test) -- (release);
+        \draw[->] (release) -- (user);
+    \end{tikzpicture}
+    \caption{Extreme programming cycle}
+\end{figure}
+
+The iterative nature of development means that it is hard to produce high quality documentation, which is less of a priority. In order for XP to be effective, programmers must communicate effectively.
+
+\section*{Spiral model}
+The spiral model is built on four key stages with the focus of effectively managing risk-heavy projects:
+\begin{itemize}
+    \item Analysing system requirements
+    \item Pinpointing and mitigating risks
+    \item Development, testing, and implementation
+    \item Evaluating to inform the next iteration
+\end{itemize}
+
+If the project is found to be too risky at any point, the project is terminated. However, hiring risk assessors to analyse the risks involved can be expensive, which makes this methodology suited to only very large-scale projects.
+
+\section*{Rapid application development}
+RAD is an iterative methodology which uses partially functioning prototypes which are continually built upon. User requirements are initially gathered using focus groups and used to develop an ‘incomplete’ version of the solution which is given to the user to trial. User feedback is then used to generate the next, improved prototype and this continues until the prototype matches the requirements of the end-users at which point it becomes the final product.
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+        \node (req) [rectangle, draw] {Requirements};
+        \node (design) [rectangle, draw, right of=req, node distance=3cm] {Design};
+        \node (build) [rectangle, draw, right of=design, node distance=3cm] {Build};
+        \node (review) [rectangle, draw, right of=build, node distance=3cm] {Review};
+
+        \draw[->] (req) -- (design);
+        \draw[->] (design) -- (build);
+        \draw[->] (build) -- (review);
+        \draw[->] (review) -- ++(0,-1) -| (req);
+    \end{tikzpicture}
+    \caption{Rapid application development cycle}
+\end{figure}
+
+This is commonly used where user requirements are incomplete or unclear at the start. However, as requirements change over the course of the project, additions and changes made to the code may be inefficient.
+
+\section*{Writing and following algorithms}
+An algorithm is a set of instructions used to solve a problem. They are core to computer science and can be used to tackle a wide range of problems. Regardless of the problem, all good algorithms have certain key qualities which are highlighted below:
+\begin{itemize}
+    \item Inputs must be clearly defined - what is valid and what is invalid?
+    \item Must always produce a valid output for any defined input
+    \item Must be able to deal with invalid inputs
+    \item Must always reach a stopping condition
+    \item Must be well-documented for reference
+    \item Must be well-commented so modifications can easily be made
+\end{itemize}
+
+\section*{Merits, drawbacks and uses of programming methodologies}
+\begin{tabular}{|p{3cm}|p{4cm}|p{4cm}|p{3cm}|}
+    \hline
+    \textbf{Methodology} & \textbf{Merits} & \textbf{Drawbacks} & \textbf{Uses} \\
+    \hline
+    Waterfall & Straightforward to manage, Clearly documented & Lack of flexibility, No risk analysis, Limited user involvement & Static, low-risk projects which need little user input, such as a piece of general-purpose software \\
+    \hline
+    Agile & Produces high quality code, Flexible to changing requirements, Regular user input & Poor documentation, Requires consistent interaction between user and programmer & Small to medium projects with unclear initial requirements \\
+    \hline
+    Extreme Programming & Produces high quality code, Constant user involvement means high usability & High cost of two people working on one project, Teamwork is essential, End-user may not be able to be present & Small to medium projects with unclear initial requirements requiring excellent usability \\
+    \hline
+    Spiral & Thorough risk-analysis and mitigation, Caters to changing user needs, Produces prototypes throughout & Expensive to hire risk assessors, Lack of focus on code efficiency, High costs due to constant prototyping & Large, risk-intensive projects with a high budget \\
+    \hline
+    Rapid Application Development & Caters to changing user requirements, Highly usable finished product, Focus on core features, reducing development time & Poorer quality documentation, Fast pace may reduce code quality & Small to medium, low-budget projects with short time-frames \\
+    \hline
+\end{tabular}
+
+\section*{Test Strategies}
+The testing stage of software development is designed to pinpoint any flaws in the software. Depending on the type of program, programmers must select the appropriate test strategy. The test strategy chosen will depend on the needs of the company, client, and the project requirements. Software should produce the correct output for any given input and should produce a designated error if the data entered is invalid.
+
+Therefore, in order to check that a program is fully functioning, the data selected for testing should include a wide range of valid and invalid values. When testing, programmers should record the purpose of the test, type of test, the expected result, and the actual result of the test. There are three special types of data that programmers consider when testing:
+\begin{itemize}
+    \item Normal: Data within the range of the data type considered as valid.
+    \item Boundary: Data that falls at either of the ends of the valid data range.
+    \item Erroneous: Data that falls outside of the valid data range.
+\end{itemize}
+
+Another test strategy is performing a dry-run of a program, which is when programmers manually work through the code. A trace table is used to note down the logical flow through the program alongside when and which variables are updated. If an unexpected result is produced, the cause of this can be traced and fixed. The downside to dry-runs is that they cannot pick up on run-time/execution errors.
+
+\vfill
+\end{document}
+
