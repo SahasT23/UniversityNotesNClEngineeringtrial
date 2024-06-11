@@ -1,0 +1,984 @@
+\documentclass[a4paper,12pt]{article}
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES
+%----------------------------------------------------------------------------------------
+\usepackage{url}
+\usepackage{parskip} 	
+
+%other packages for formatting
+\RequirePackage{color}
+\RequirePackage{graphicx}
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage[scale=0.9]{geometry}
+\usepackage{amsmath}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.16}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{tikz}
+\usepackage{array}
+
+\usepackage{geometry}
+\geometry{margin=1in}
+\usepackage{listings}
+\usepackage{xcolor}
+%tabularx environment
+\usepackage{tabularx}
+
+%for lists within experience section
+\usepackage{enumitem}
+
+% centered version of 'X' col. type
+\newcolumntype{C}{>{\centering\arraybackslash}X} 
+
+%to prevent spillover of tabular into next pages
+\usepackage{supertabular}
+\usepackage{tabularx}
+\newlength{\fullcollw}
+\setlength{\fullcollw}{0.47\textwidth}
+
+%custom \section
+\usepackage{titlesec}				
+\usepackage{multicol}
+\usepackage{multirow}
+
+%CV Sections inspired by: 
+%http://stefano.italians.nl/archives/26
+\titleformat{\section}{\large\scshape\raggedright}{}{0em}{}[\titlerule]
+\titlespacing{\section}{0pt}{10pt}{10pt}
+
+%for publications
+\usepackage[style=authoryear,sorting=ynt, maxbibnames=2]{biblatex}
+
+%Setup hyperref package, and colours for links
+\usepackage[unicode, draft=false]{hyperref}
+\definecolor{linkcolour}{rgb}{0,0.2,0.6}
+\hypersetup{colorlinks,breaklinks,urlcolor=linkcolour,linkcolor=linkcolour}
+\addbibresource{citations.bib}
+\setlength\bibitemsep{1em}
+
+%for social icons
+\usepackage{fontawesome5}
+
+%debug page outer frames
+%\usepackage{showframe}
+
+%----------------------------------------------------------------------------------------
+%	BEGIN DOCUMENT
+%----------------------------------------------------------------------------------------
+\begin{document}
+
+% non-numbered pages
+\pagestyle{empty} 
+
+%----------------------------------------------------------------------------------------
+%	TITLE
+%----------------------------------------------------------------------------------------
+\title{Algorithms Part II}
+
+\maketitle
+
+\section*{Analysis, Design and Comparison of Algorithms}
+
+\subsection*{Analysis of Algorithms}
+When developing an algorithm there are two different things to check:
+\begin{itemize}
+   \item Time Complexity
+   \item Space Complexity
+\end{itemize}
+
+\subsubsection*{Time Complexity}
+The time complexity of an algorithm is how much time it requires to solve a particular problem. The time complexity is measured using a notation called big-o notation, which shows the effectiveness of the algorithm. It shows an upper limit for the amount of time taken relative to the number of data elements given as an input. This is good because it allows you to predict the amount of time it takes for an algorithm to finish given the number of data elements.
+
+You can think of this as a graph, as the number of data elements entered against the time taken to complete the algorithm. This will be helpful for showing the relationships between time and the number of elements inputted. These are shown below.
+
+Big-O notation is written in the form $O(n)$, where $n$ is the relationship between $n$: the number of inputted entities, and $O(n)$ is the time relationship. Below are examples of different big o notations:
+
+\begin{itemize}
+   \item $O(1)$ (Constant time complexity): The amount of time taken to complete an algorithm is independent from the number of elements inputted.
+   \item $O(n)$ (Linear time complexity): The amount of time taken to complete an algorithm is directly proportional to the number of elements inputted.
+   \item $O(n^2)$ (Polynomial time complexity example): The amount of time taken to complete an algorithm is directly proportional to the square of the elements inputted.
+   \item $O(n^n)$ (Polynomial time complexity): The amount of time taken to complete an algorithm is directly proportional to the elements inputted to the power of $n$.
+   \item $O(2^n)$ (Exponential time complexity): The amount of time taken to complete an algorithm will double with every additional item.
+   \item $O(\log n)$ (Logarithmic time complexity): The time taken to complete an algorithm will increase at a smaller rate as the number of elements inputted.
+\end{itemize}
+
+When calculating the time complexity, you should think logically through the algorithm. Below are a few examples:
+
+\begin{itemize}
+   \item Constant Time: $O(1)$
+   \begin{verbatim}
+print("hello")
+   \end{verbatim}
+   This example is unrelated to the number of items inputted. This will always take the same amount of time to complete regardless of the number of values inputted.
+   
+   \item Linear Time Complexity: $O(n)$
+   \begin{verbatim}
+inputtedValue = [a,b,c....n]
+for i in range(len(inputedValue)):
+   print("hello")
+   \end{verbatim}
+   This example is directly proportional to the number of items inputted. As you can see, the number of operations completed was proportional to the inputted value.
+   
+   \item Polynomial Time Complexity: $O(n^2)$
+   \begin{verbatim}
+inputtedValue = [a,b,c....n]
+for i in range(len(inputedValue)):
+   for j in range(len(inputedValue)):
+       print("hello")
+   \end{verbatim}
+   This example is proportional to the number of items inputted to the power of $n$, here it is an example of $O(n^2)$. As you can see the power given to the polynomial is the same as the number of embedded for loops.
+   
+   \item Exponential Time Complexity: $O(2^n)$
+   \begin{verbatim}
+# Recursive algorithms that solve a problem of size N
+# by recursively solving two smaller problems of size N-1.
+   \end{verbatim}
+   This example is exponentially proportional to the number of items inputted. The time taken to complete the algorithm is proportional to $2$ to the power of the number of items inputted. This is common with recursive algorithms solving two smaller problems of size $n-1$.
+   
+   \item Logarithmic Time Complexity: $O(\log n)$
+   \begin{verbatim}
+# A divide and conquer algorithm is a good example of this,
+# the number of items you have to search through gets halved every time.
+   \end{verbatim}
+   This example is logarithmically related to the number of items inputted (it's important to understand logs for this, they will be explained later on).
+\end{itemize}
+
+
+\begin{figure}[h!]
+    \centering
+    \begin{tikzpicture}
+        \begin{axis}[
+            xlabel=$n$,
+            ylabel=$T(n)$,
+            xmin=0, xmax=10,
+            ymin=0, ymax=10,
+            axis lines=middle,
+            grid=major,
+            width=8cm,
+            height=6cm
+        ]
+        \addplot[domain=0:10, samples=100, color=blue] {1};
+        \end{axis}
+    \end{tikzpicture}
+    \caption{Constant Time Complexity $O(1)$}
+\end{figure}
+
+\begin{figure}[h!]
+    \centering
+    \begin{tikzpicture}
+        \begin{axis}[
+            xlabel=$n$,
+            ylabel=$T(n)$,
+            xmin=0, xmax=10,
+            ymin=0, ymax=10,
+            axis lines=middle,
+            grid=major,
+            width=8cm,
+            height=6cm
+        ]
+        \addplot[domain=0:10, samples=100, color=blue] {x};
+        \end{axis}
+    \end{tikzpicture}
+    \caption{Linear Time Complexity $O(n)$}
+\end{figure}
+
+\begin{figure}[h!]
+    \centering
+    \begin{tikzpicture}
+        \begin{axis}[
+            xlabel=$n$,
+            ylabel=$T(n)$,
+            xmin=0, xmax=10,
+            ymin=0, ymax=100,
+            axis lines=middle,
+            grid=major,
+            width=8cm,
+            height=6cm
+        ]
+        \addplot[domain=0:10, samples=100, color=blue] {x^2};
+        \end{axis}
+    \end{tikzpicture}
+    \caption{Polynomial Time Complexity $O(n^2)$}
+\end{figure}
+
+\begin{figure}[h!]
+    \centering
+    \begin{tikzpicture}
+        \begin{axis}[
+            xlabel=$n$,
+            ylabel=$T(n)$,
+            xmin=0, xmax=10,
+            ymin=0, ymax=1200,
+            axis lines=middle,
+            grid=major,
+            width=8cm,
+            height=6cm
+        ]
+        \addplot[domain=0:10, samples=100, color=blue] {2^x};
+        \end{axis}
+    \end{tikzpicture}
+    \caption{Exponential Time Complexity $O(2^n)$}
+\end{figure}
+
+\begin{figure}[h!]
+    \centering
+    \begin{tikzpicture}
+        \begin{axis}[
+            xlabel=$n$,
+            ylabel=$T(n)$,
+            xmin=0, xmax=10,
+            ymin=0, ymax=4,
+            axis lines=middle,
+            grid=major,
+            width=8cm,
+            height=6cm
+        ]
+        \addplot[domain=0:10, samples=100, color=blue] {ln(x+1)};
+        \end{axis}
+    \end{tikzpicture}
+    \caption{Logarithmic Time Complexity $O(\log n)$}
+\end{figure}
+
+\begin{figure}[h!]
+    \centering
+    \begin{tikzpicture}
+        \begin{axis}[
+            xlabel=$n$,
+            ylabel=$T(n)$,
+            xmin=0, xmax=10,
+            ymin=0, ymax=1200,
+            axis lines=middle,
+            grid=major,
+            width=8cm,
+            height=6cm,
+            legend pos=north west
+        ]
+        \addplot[domain=0:10, samples=100, color=blue] {1};
+        \addlegendentry{$O(1)$}
+        \addplot[domain=0:10, samples=100, color=red] {x};
+        \addlegendentry{$O(n)$}
+        \addplot[domain=0:10, samples=100, color=green] {x^2};
+        \addlegendentry{$O(n^2)$}
+        \addplot[domain=0:10, samples=100, color=orange] {2^x};
+        \addlegendentry{$O(2^n)$}
+        \addplot[domain=0:10, samples=100, color=purple] {ln(x+1)};
+        \addlegendentry{$O(\log n)$}
+        \end{axis}
+    \end{tikzpicture}
+    \caption{Comparison of Time Complexities}
+\end{figure}
+
+
+As you can see from the graph, the best time complexity for an algorithm as the number of inputted items increases is the linear time complexity. The order goes:
+
+\begin{enumerate}
+   \item $O(\log n)$
+   \item $O(n)$
+   \item $O(n^2)$
+   \item $O(n^n)$
+   \item $O(2^n)$
+\end{enumerate}
+
+\subsubsection*{Logarithms}
+A logarithm is the inverse of an exponential, an operation that determines how many times a certain number (base) is multiplied by itself to reach another number. It might help to check the extra resources for more information on this.
+
+An example is shown below:
+\begin{align*}
+   x^y &= \log_b(x) \\
+   2^0 &= 1 \\
+   2^3 &= 8 \\
+   2^{10} &= 1024
+\end{align*}
+
+\subsubsection*{Space Complexity}
+The space complexity of an algorithm is the amount of storage the algorithm takes. Space complexity is commonly expressed using Big O ($O(n)$) notation. Algorithms store extra data whenever they make a copy, this isn't ideal. When working with lots of data, it's not a good idea to make copies. As this will take lots of storage which is expensive.
+
+\subsection*{Analysing algorithms based on these properties}
+Time complexity and space complexity are the most important things to keep in mind when you're analysing the effectiveness of a program. The time and space complexity have no priority, you need to decide which one is more important to you at the time you design the algorithm.
+
+\subsection*{Designing Algorithms}
+An algorithm is a series of steps that completes a task. When you design an algorithm your main objective is to complete a task, the next objectives are to get the best time complexity and the best space complexity. When you try to minimise the time and space complexity you might get conflicted thinking about which one of the two complexities are more important. It is entirely dependant on the situation, below are some examples:
+
+When developing an algorithm for manipulating data in a large database:
+\begin{itemize}
+   \item If you have a lot of data but need the data to be processed quickly, say for a future update, then you'd pay more attention to the time
+   complexity rather than the space complexity.
+   \item If you have a lot of processing power then your time complexity isn't as important as you might think, therefore you would focus on the space complexity to make sure you aren't wasting lots of data often.
+\end{itemize}
+
+To reduce the space complexity, you make sure you perform all of the changes on the original pieces of data. To reduce the time complexity, try to reduce the number of embedded loops as possible. Try to reduce the number of items you have to complete the operations on, for example the divide a conquer algorithm accomplishes this and results in logarithmic time complexity.
+
+\subsection*{Comparison of Algorithms}
+The exam board will mostly compare the time complexity. Occasionally they will mention space complexity although it's important to just understand the smaller the space complexity the better the algorithm is.
+
+\subsubsection*{Linear Search Algorithm}
+A linear search algorithm is an algorithm which traverses through every item one at a time until it finds the item its searching for, below is the pseudocode for the linear search algorithm. The Big-O notation for a linear search algorithm is $O(n)$.
+
+\begin{verbatim}
+Function linearSearch(list, item)
+   index = -1
+   i = 0
+   found = False
+   while i < length(list) and found = False
+       if list[i] = item then
+           index = i
+           found = True
+       endif
+       i = i + 1
+   endwhile
+   return index
+endfunction
+\end{verbatim}
+
+As you can see, the linear search algorithm has a single while loop in it, this is why it's a linear time complexity algorithm.
+
+\subsubsection*{Binary Search Algorithm}
+A binary search algorithm is a divide and conquer algorithm, this means it splits the list into smaller lists until it finds the item it's searching for, since the size of the list is halved every time it's a Big-O notation of $O(\log(n))$.
+
+\begin{verbatim}
+function binarySearch(list, item)
+   found = False
+   index = -1
+   first = 0
+   last = length(list) - 1
+   while first <= last and found = False
+       midpoint = int ( first + last) / 2 )
+       if list[midpoint] = item then
+           found = True
+           index = midpoint
+       else
+           if list[midpoint] < item then
+               first = midpoint + 1
+           else
+               last = midpoint - 1
+           endif
+       endif
+   endwhile
+   return index
+endfunction
+\end{verbatim}
+
+\subsubsection*{Bubble Sort Algorithm}
+The bubble sort algorithm passes through the list evaluating pairs of items and ensuring the larger value is above the smaller value. It has a polynomial Big-O notation, $O(n^2)$. Below is the algorithm:
+
+\begin{verbatim}
+function bubbleSort(list, item)
+   found = False
+   i = 0
+   while found = False and i < length(item)
+       if list[i] > list[i+1]
+           temp = list[i]
+           list[i] = list[i+1]
+           list[i+1] = temp
+       endif
+       i = i +1
+   endwhile
+   return list
+endfunction
+\end{verbatim}
+
+%----------------------------------------------------------------------------------------
+% OVERVIEW
+%----------------------------------------------------------------------------------------
+\section{Algorithms for the Main Data Structures}
+
+\subsection*{Stacks}
+Stacks are an example of a First In, Last Out (FILO) data structure. They are often implemented as an array and use a single pointer to keep track of the top of the stack (called the top pointer). This points to the element currently at the top of the stack. The top pointer is initialized at -1, indicating an empty stack.
+
+Common stack operations and their corresponding names are shown in the table below:
+
+\begin{center}
+    \begin{tabular}{|l|l|}
+        \hline
+        Operation & Name \\
+        \hline
+        Check size & size() \\
+        Check if empty & isEmpty() \\
+        Return top element (without removing) & peek() \\
+        Add to the stack & push(element) \\
+        Remove top element and return it & pop() \\
+        \hline
+    \end{tabular}
+\end{center}
+
+\subsubsection*{size()}
+The size operation returns the number of elements in the stack by returning the value of the top pointer plus one.
+
+\begin{algorithm}
+    \caption{size()}
+    \begin{algorithmic}[1]
+        \State \Return $top + 1$
+    \end{algorithmic}
+\end{algorithm}
+
+\subsubsection*{isEmpty()}
+To check whether the stack is empty, we check if the top pointer is less than 0.
+
+\begin{algorithm}
+    \caption{isEmpty()}
+    \begin{algorithmic}[1]
+        \If{$top < 0$}
+            \State \Return \textbf{True}
+        \Else
+            \State \Return \textbf{False}
+        \EndIf
+    \end{algorithmic}
+\end{algorithm}
+
+\subsubsection*{peek()}
+To return the item at the top of the stack without removing it, simply return the item at the position indicated by the top pointer. Ensure the stack is not empty before performing this operation.
+
+\begin{algorithm}
+    \caption{peek()}
+    \begin{algorithmic}[1]
+        \If{isEmpty()}
+            \State \Return \textbf{error}
+        \Else
+            \State \Return $A[top]$
+        \EndIf
+    \end{algorithmic}
+\end{algorithm}
+
+\subsubsection*{push(element)}
+To add an item to the stack, update the top pointer and insert the new element at the new top position.
+
+\begin{algorithm}
+    \caption{push(element)}
+    \begin{algorithmic}[1]
+        \State $top \gets top + 1$
+        \State $A[top] \gets element$
+    \end{algorithmic}
+\end{algorithm}
+
+\subsubsection*{pop()}
+To remove an item from the stack, save the top element, decrement the top pointer, and return the saved element. Ensure the stack is not empty before performing this operation.
+
+\begin{algorithm}
+    \caption{pop()}
+    \begin{algorithmic}[1]
+        \If{isEmpty()}
+            \State \Return \textbf{error}
+        \Else
+            \State $toRemove \gets A[top]$
+            \State $A[top] \gets ""$
+            \State $top \gets top - 1$
+            \State \Return $toRemove$
+        \EndIf
+    \end{algorithmic}
+\end{algorithm}
+
+\subsubsection*{Example}
+Consider the following operations on a 3-element stack:
+
+\begin{verbatim}
+push(1)
+push(5)
+push(4)
+peek()
+pop()
+isEmpty()
+push(2)
+push(3)
+pop()
+pop()
+\end{verbatim}
+
+The first three operations push the items 1, 5, and 4 to the stack in that order:
+
+\[
+\begin{array}{c}
+1 \\
+\end{array}
+\rightarrow
+\begin{array}{c}
+5 \\
+1 \\
+\end{array}
+\rightarrow
+\begin{array}{c}
+4 \\
+5 \\
+1 \\
+\end{array}
+\]
+
+The next operation is a peek, returning 4. The pop operation removes and returns 4:
+
+\[
+\begin{array}{c}
+5 \\
+1 \\
+\end{array}
+\]
+
+The isEmpty operation returns False. Push 2 to the stack:
+
+\[
+\begin{array}{c}
+2 \\
+5 \\
+1 \\
+\end{array}
+\]
+
+Pushing 3 results in an error as the stack is full. The next two pops remove and return 2 and 5 respectively:
+
+\[
+\begin{array}{c}
+1 \\
+\end{array}
+\]
+
+The final state of the stack is shown above. The output is:
+
+\begin{verbatim}
+4, 4, False, 2, 5
+\end{verbatim}
+
+\subsection*{Queues}
+Queues are a First In, First Out (FIFO) data structure. They are often represented as arrays, using two pointers: front and back. Front holds the position of the first element, and back stores the next available space.
+
+Common queue operations and their corresponding names are shown in the table below:
+
+\begin{center}
+    \begin{tabular}{|l|l|}
+        \hline
+        Operation & Name \\
+        \hline
+        Check size & size() \\
+        Check if empty & isEmpty() \\
+        Return front element (without removing) & peek() \\
+        Add to the queue & enqueue(element) \\
+        Remove front element and return it & dequeue() \\
+        \hline
+    \end{tabular}
+\end{center}
+
+\subsubsection*{size()}
+To calculate the size of the queue, subtract the value of front from back.
+
+\begin{algorithm}
+    \caption{size()}
+    \begin{algorithmic}[1]
+        \State \Return $back - front$
+    \end{algorithmic}
+\end{algorithm}
+
+\subsubsection*{isEmpty()}
+A queue is empty when front and back point to the same position.
+
+\begin{algorithm}
+    \caption{isEmpty()}
+    \begin{algorithmic}[1]
+        \If{$front == back$}
+            \State \Return \textbf{True}
+        \Else
+            \State \Return \textbf{False}
+        \EndIf
+    \end{algorithmic}
+\end{algorithm}
+
+\subsubsection*{peek()}
+Peek returns the element at the front of the queue without removing it.
+
+\begin{algorithm}
+    \caption{peek()}
+    \begin{algorithmic}[1]
+        \State \Return $A[front]$
+    \end{algorithmic}
+\end{algorithm}
+
+\subsubsection*{enqueue(element)}
+To add an element to the queue, place it at the position of the back pointer and increment the back pointer.
+
+\begin{algorithm}
+    \caption{enqueue(element)}
+    \begin{algorithmic}[1]
+        \State $A[back] \gets element$
+        \State $back \gets back + 1$
+    \end{algorithmic}
+\end{algorithm}
+
+\subsubsection*{dequeue()}
+To remove an element from the queue, save the front element, increment the front pointer, and return the saved element. Ensure the queue is not empty before performing this operation.
+
+\begin{algorithm}
+    \caption{dequeue()}
+    \begin{algorithmic}[1]
+        \If{isEmpty()}
+            \State \Return \textbf{error}
+        \Else
+            \State $toDequeue \gets A[front]$
+            \State $A[front] \gets ""$
+            \State $front \gets front + 1$
+            \State \Return $toDequeue$
+        \EndIf
+    \end{algorithmic}
+\end{algorithm}
+
+\subsection*{Example}
+Consider the following queue:
+
+\begin{center}
+    \begin{tabular}{|c|c|c|c|c|c|c|c|}
+        \hline
+        A[0] & A[1] & A[2] & A[3] & A[4] & A[5] & A[6] & A[7] \\
+        \hline
+        Alex & Rajiv & Sam & Jayden & Charlie &  &  &  \\
+        \hline
+        $\uparrow$ &  &  &  &  & $\uparrow$ &  &  \\
+        Front &  &  &  &  & Back &  &  \\
+        \hline
+    \end{tabular}
+\end{center}
+
+The operations on this queue are:
+
+\begin{verbatim}
+dequeue()
+enqueue("Julia")
+size()
+peek()
+size()
+dequeue()
+isEmpty()
+\end{verbatim}
+
+The first operation dequeue removes Alex and moves the front pointer to Rajiv. Alex is returned. Next, Julia is enqueued.
+
+\begin{center}
+    \begin{tabular}{|c|c|c|c|c|c|c|c|}
+        \hline
+        A[0] & A[1] & A[2] & A[3] & A[4] & A[5] & A[6] & A[7] \\
+        \hline
+        Alex & Rajiv & Sam & Jayden & Charlie & Julia &  &  \\
+        \hline
+        & $\uparrow$ &  &  &  &  & $\uparrow$ &  \\
+        & Front &  &  &  &  & Back &  \\
+        \hline
+    \end{tabular}
+\end{center}
+
+The size is 5 - 1 = 4. Peek returns Rajiv. The next size call again returns 4. Dequeue removes and returns Rajiv, and the front pointer moves to Sam. The final state of the queue is:
+
+\begin{center}
+    \begin{tabular}{|c|c|c|c|c|c|c|c|}
+        \hline
+        A[0] & A[1] & A[2] & A[3] & A[4] & A[5] & A[6] & A[7] \\
+        \hline
+        Alex & Rajiv & Sam & Jayden & Charlie & Julia &  &  \\
+        \hline
+        &  & $\uparrow$ &  &  &  & $\uparrow$ &  \\
+        &  & Front &  &  &  & Back &  \\
+        \hline
+    \end{tabular}
+\end{center}
+
+isEmpty returns False. The output is:
+
+\begin{verbatim}
+Alex, 4, Rajiv, 4, Rajiv, False
+\end{verbatim}
+%----------------------------------------------------------------------------------------
+%	SKILLS
+%----------------------------------------------------------------------------------------
+
+\section{Sorting Algorithms}
+
+\subsection*{Specification}
+\begin{itemize}
+    \item Standard algorithms:
+    \begin{itemize}
+        \item Bubble sort
+        \item Insertion sort
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Sorting Algorithms}
+Sorting algorithms are designed to take a number of elements in any order and output them in a logical order. This is usually numerical or lexicographic (phonebook style ordering).
+
+Most sorting algorithms will output elements in ascending order, but the algorithms can typically be slightly altered (for example, by switching an inequality from less than to greater than) or their output simply reversed in order to produce an output in descending order.
+
+\subsection*{Bubble Sort}
+Bubble sort makes comparisons and swaps between pairs of elements. The largest element in the unsorted part of the input is said to "bubble" to the top of the data with each iteration of the algorithm.
+
+The algorithm starts at the first element in an array and compares it to the second. If they are in the wrong order, the algorithm swaps the pair. Otherwise, the algorithm moves on. The process is then repeated for every adjacent pair of elements in the array until the end of the array is reached (at which point the largest element is in the last position of the array).
+
+This is referred to as one pass of the algorithm. For an array with $n$ elements, the algorithm will perform $n-1$ passes through the data, at which point the input is sorted and can be returned.
+
+\subsubsection*{Pseudocode}
+\begin{verbatim}
+A = Array of data
+for i = 0 to A.length - 1:
+    for j = 0 to A.length - 2:
+        if A[j] > A[j+1]:
+            temp = A[j]
+            A[j] = A[j+1]
+            A[j+1] = temp
+return A
+\end{verbatim}
+
+The three lines highlighted could be written as "swap A[j] and A[j+1]" and indeed in most situations this would be acceptable. The example illustrates how a swap operation would work, making use of a temporary store.
+
+\subsubsection*{Example}
+Use bubble sort to arrange the elements in the array into ascending order.
+
+\centering
+\begin{verbatim}
+4, 9, 1, 6, 7
+\end{verbatim}
+
+1. Initial array: 4, 9, 1, 6, 7
+
+\begin{tikzpicture}
+    \foreach \x/\y in {0/4, 1/9, 2/1, 3/6, 4/7}
+        \node[draw, fill=blue!20, minimum width=1.5cm, minimum height=1.5cm] at (\x, 0) {\y};
+\end{tikzpicture}
+
+2. Compare and swap if needed: (4, 9), (9, 1), (9, 6), (9, 7)
+
+\begin{tikzpicture}
+    \foreach \x/\y in {0/4, 1/1, 2/6, 3/7, 4/9}
+        \node[draw, fill=blue!20, minimum width=1.5cm, minimum height=1.5cm] at (\x, 0) {\y};
+\end{tikzpicture}
+
+3. End of first pass, largest element is at the end: 4, 1, 6, 7, 9
+
+4. Start second pass: compare and swap (4, 1), (4, 6), (6, 7)
+
+\begin{tikzpicture}
+    \foreach \x/\y in {0/1, 1/4, 2/6, 3/7, 4/9}
+        \node[draw, fill=blue!20, minimum width=1.5cm, minimum height=1.5cm] at (\x, 0) {\y};
+\end{tikzpicture}
+
+5. End of second pass: 1, 4, 6, 7, 9
+
+6. Continue until no swaps needed.
+
+7. Sorted array: 1, 4, 6, 7, 9
+
+\begin{tikzpicture}
+    \foreach \x/\y in {0/1, 1/4, 2/6, 3/7, 4/9}
+        \node[draw, fill=green!20, minimum width=1.5cm, minimum height=1.5cm] at (\x, 0) {\y};
+\end{tikzpicture}
+
+\subsection*{Insertion Sort}
+Insertion sort places elements into a sorted sequence. In the $i^{th}$ iteration of the algorithm, the first $i$ elements of the array are sorted. Be careful though, although $i$ elements are sorted, they are not necessarily the $i$ smallest elements in the input!
+
+\subsubsection*{Pseudocode}
+\begin{verbatim}
+A = Array of data
+for i = 1 to A.length - 1:
+    elem = A[i]
+    j = i - 1
+    while j >= 0 and A[j] > elem:
+        A[j+1] = A[j]
+        j = j - 1
+    A[j+1] = elem
+return A
+\end{verbatim}
+
+\subsubsection*{Example}
+1. Initial array: 4, 9, 1, 6, 7
+
+\begin{tikzpicture}
+    \foreach \x/\y in {0/4, 1/9, 2/1, 3/6, 4/7}
+        \node[draw, fill=blue!20, minimum width=1.5cm, minimum height=1.5cm] at (\x, 0) {\y};
+\end{tikzpicture}
+
+2. Start at second element, insert in sorted order: (4, 9)
+
+\begin{tikzpicture}
+    \foreach \x/\y in {0/4, 1/9, 2/1, 3/6, 4/7}
+        \node[draw, fill=blue!20, minimum width=1.5cm, minimum height=1.5cm] at (\x, 0) {\y};
+\end{tikzpicture}
+
+3. Move to third element, insert in sorted order: (4, 9, 1)
+
+\begin{tikzpicture}
+    \foreach \x/\y in {0/4, 1/1, 2/9, 3/6, 4/7}
+        \node[draw, fill=blue!20, minimum width=1.5cm, minimum height=1.5cm] at (\x, 0) {\y};
+\end{tikzpicture}
+
+4. Sorted after insertion: 1, 4, 9, 6, 7
+
+\begin{tikzpicture}
+    \foreach \x/\y in {0/1, 1/4, 2/6, 3/7, 4/9}
+        \node[draw, fill=green!20, minimum width=1.5cm, minimum height=1.5cm] at (\x, 0) {\y};
+\end{tikzpicture}
+
+5. Continue for all elements: (4, 9, 6), (1, 4, 6), (1, 4, 6, 7, 9)
+
+\begin{tikzpicture}
+    \foreach \x/\y in {0/1, 1/4, 2/6, 3/7, 4/9}
+        \node[draw, fill=green!20, minimum width=1.5cm, minimum height=1.5cm] at (\x, 0) {\y};
+\end{tikzpicture}
+
+6. Sorted array: 1, 4, 6, 7, 9
+
+\subsection*{Conclusion}
+Both Bubble Sort and Insertion Sort are simple sorting algorithms with a time complexity of $O(n^2)$. While Bubble Sort repeatedly compares and swaps adjacent elements, Insertion Sort builds the sorted sequence one element at a time by inserting elements into their correct positions.
+
+%----------------------------------------------------------------------------------------
+%	EDUCATION
+%----------------------------------------------------------------------------------------
+\section*{Searching Algorithms:}
+\begin{itemize}
+    \item Standard algorithms
+    \begin{itemize}
+        \item Binary search
+        \item Linear search
+    \end{itemize}
+\end{itemize}
+
+\subsection{Searching Algorithms}
+Searching algorithms are used to find a specified element within a data structure. For example, a searching algorithm could be used to find the name ``Alan Turing'' in an array of names.
+
+Numerous different searching algorithms exist, each of which is suited to a particular data structure or format of data. Different searching algorithms are used depending on each individual scenario.
+
+\subsubsection{Binary Search}
+The binary search algorithm can only be applied on sorted data and works by finding the middle element in a list of data before deciding which side of the data the desired element is to be found in. The unwanted half of the data is then discarded and the process repeated until the desired element is found or until it is known that the desired element doesn't exist in the data.
+
+\begin{lstlisting}[language=Python, caption=Pseudocode for Binary Search]
+A = Array of data
+x = Desired element
+low = 0
+high = A.length - 1
+while low <= high:
+    mid = (low + high) // 2
+    if A[mid] == x:
+        return mid
+    elif A[mid] > x:
+        high = mid - 1
+    else:
+        low = mid + 1
+return "Not found in data"
+\end{lstlisting}
+
+With each iteration of binary search, half of the input data is discarded, making the algorithm very efficient. In fact, the time complexity of binary search is $O(\log n)$.
+
+\subsubsection{Example 1}
+Find the location of ``Dylan'' in the data below.
+
+\begin{verbatim}
+0 1 2 3 4 5 6 7 8
+Alice Bob Charlie Dylan Ellie Franz Gabbie Hugo Ingrid
+\end{verbatim}
+
+To start with, our values for high and low are 8 and 0 respectively.
+
+The first step is to find the middle position. In this case, it's (0 + 8) // 2 = 4.
+
+Next, we inspect the data in position 4: Ellie. This is higher than the desired data and so we discard elements 4-8, setting high as 3.
+
+\begin{verbatim}
+0 1 2 3
+Alice Bob Charlie Dylan
+\end{verbatim}
+
+Again, we calculate the value of the middle position. This time it's (0 + 3) // 2 = 1 (We have to round down to the nearest whole number).
+
+Inspecting the data at this position we find Bob, which is lower than the data we're looking for. We now set low to 2, discarding items 0 to 1.
+
+\begin{verbatim}
+2 3
+Charlie Dylan
+\end{verbatim}
+
+Calculating the middle position, we have (2 + 3) // 2 = 2.
+
+Inspecting the item in position 2, we find Charlie. This is lower than the data we are looking for, so we set low to 3.
+
+\begin{verbatim}
+3
+Dylan
+\end{verbatim}
+
+Now, low equals high, so we check position 3 and find Dylan. This is our desired data and so we return the position 3.
+
+\subsubsection{Example 2}
+Find the location of ``Hattie'' in the data below.
+
+\begin{verbatim}
+0 1 2 3 4 5 6 7 8
+Alice Bob Charlie Dylan Ellie Franz Gabbie Hugo Ingrid
+\end{verbatim}
+
+As before, we calculate the middle position and find Ellie, which is lower than our desired data so we set low to 5 and discard elements 0-4.
+
+\begin{verbatim}
+5 6 7 8
+Franz Gabbie Hugo Ingrid
+\end{verbatim}
+
+Calculating the middle position, we have (5 + 8) // 2 = 6.
+
+The data in position 6 is Gabbie, which is lower than our desired data, so we set low to 7.
+
+\begin{verbatim}
+7 8
+Hugo Ingrid
+\end{verbatim}
+
+Calculating the middle position, we have (7 + 8) // 2 = 7.
+
+The data in position 7 is Hugo, which is higher than our desired data, so we set high to 6.
+
+\begin{verbatim}
+7 8
+\end{verbatim}
+
+At this point, our value for low is 7 and our value for high is 6. This breaks the condition of low being less than or equal to high, and so breaks the while loop in the pseudocode. The algorithm then returns ``Not found in data'' before terminating.
+
+\subsubsection{Example 3}
+Look at how the algorithm finds the letter R in the first 20 characters of the alphabet. It's clear from this example that the algorithm halves the remaining data to be searched with each iteration, gradually reducing the size of the problem to be solved.
+
+\begin{verbatim}
+A B C D E F G H I J K L M N O P Q R S T
+\end{verbatim}
+
+\subsection{Linear Search}
+Linear search is the most basic searching algorithm. You can think of it as going along a bookshelf one by one until you come across the book you're looking for. Sometimes the algorithm gets lucky and finds the desired element almost immediately, while in other situations, the algorithm is incredibly inefficient. Its time complexity is $O(n)$.
+
+There's a lot of pot luck involved with linear search, but it's incredibly easy to implement. Unlike binary search, linear search doesn't require the data to be sorted.
+
+\begin{lstlisting}[language=Python, caption=Pseudocode for Linear Search]
+A = Array of data
+x = Desired element
+i = 0
+while i < A.length:
+    if A[i] == x:
+        return i
+    else:
+        i = i + 1
+return "Not found in data"
+\end{lstlisting}
+
+\subsubsection{Example 1}
+Find the position of Apple in the data.
+
+\begin{verbatim}
+0 1 2 3 4
+Banana Orange Apple Kiwi Mango
+\end{verbatim}
+
+First, we inspect position 0, and find Banana. Not the element we're after.
+
+\begin{verbatim}
+0 1 2 3 4
+Banana Orange Apple Kiwi Mango
+\end{verbatim}
+
+Next, we inspect position 1, finding Orange. Again, not what we're looking for.
+
+\begin{verbatim}
+0 1 2 3 4
+Banana Orange Apple Kiwi Mango
+\end{verbatim}
+
+Next, we look at position 2 and find Apple. This is the data we're looking for and so the algorithm returns 2 and terminates.
+
+\vfill
+\end{document}
