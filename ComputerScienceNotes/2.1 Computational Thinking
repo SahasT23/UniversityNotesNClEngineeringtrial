@@ -1,0 +1,411 @@
+\documentclass[a4paper,12pt]{article}
+
+%----------------------------------------------------------------------------------------
+%	FONT
+%----------------------------------------------------------------------------------------
+
+% % fontspec allows you to use TTF/OTF fonts directly
+% \usepackage{fontspec}
+% \defaultfontfeatures{Ligatures=TeX}
+
+% % modified for ShareLaTeX use
+% \setmainfont[
+% SmallCapsFont = Fontin-SmallCaps.otf,
+% BoldFont = Fontin-Bold.otf,
+% ItalicFont = Fontin-Italic.otf
+% ]
+% {Fontin.otf}
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES
+%----------------------------------------------------------------------------------------
+\usepackage{url}
+\usepackage{parskip} 	
+
+%other packages for formatting
+\RequirePackage{color}
+\RequirePackage{graphicx}
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage[scale=0.9]{geometry}
+\usepackage{amsmath}
+\usepackage{tikz}
+\usepackage{float}
+
+%tabularx environment
+\usepackage{tabularx}
+
+%for lists within experience section
+\usepackage{enumitem}
+
+% centered version of 'X' col. type
+\newcolumntype{C}{>{\centering\arraybackslash}X} 
+
+%to prevent spillover of tabular into next pages
+\usepackage{supertabular}
+\usepackage{tabularx}
+\newlength{\fullcollw}
+\setlength{\fullcollw}{0.47\textwidth}
+
+%custom \section
+\usepackage{titlesec}				
+\usepackage{multicol}
+\usepackage{multirow}
+
+%CV Sections inspired by: 
+%http://stefano.italians.nl/archives/26
+\titleformat{\section}{\large\scshape\raggedright}{}{0em}{}[\titlerule]
+\titlespacing{\section}{0pt}{10pt}{10pt}
+
+%for publications
+\usepackage[style=authoryear,sorting=ynt, maxbibnames=2]{biblatex}
+
+%Setup hyperref package, and colours for links
+\usepackage[unicode, draft=false]{hyperref}
+\definecolor{linkcolour}{rgb}{0,0.2,0.6}
+\hypersetup{colorlinks,breaklinks,urlcolor=linkcolour,linkcolor=linkcolour}
+\addbibresource{citations.bib}
+\setlength\bibitemsep{1em}
+
+%for social icons
+\usepackage{fontawesome5}
+
+%debug page outer frames
+%\usepackage{showframe}
+
+%----------------------------------------------------------------------------------------
+%	BEGIN DOCUMENT
+%----------------------------------------------------------------------------------------
+\begin{document}
+
+% non-numbered pages
+\pagestyle{empty} 
+
+%----------------------------------------------------------------------------------------
+%	TITLE
+%----------------------------------------------------------------------------------------
+\title{OCR Computer Science A Level - 2.1 Computational Thinking}
+\author{}
+
+\maketitle
+
+\section{OCR Computer Science A Level}
+\subsection{2.1.1 Thinking Abstractly}
+
+\subsubsection{Specification}
+\begin{itemize}[leftmargin=*]
+    \item 2.1.1 a)
+    \begin{itemize}
+        \item The nature of abstraction
+    \end{itemize}
+    \item 2.1.1 b)
+    \begin{itemize}
+        \item The need for abstraction
+    \end{itemize}
+    \item 2.1.1 c)
+    \begin{itemize}
+        \item The difference between abstraction and reality
+    \end{itemize}
+    \item 2.1.1 d)
+    \begin{itemize}
+        \item Devise an abstract model for a variety of situations
+    \end{itemize}
+\end{itemize}
+
+\subsubsection{The nature of abstraction}
+Abstraction is one of the most important principles in Computer Science and is a critical part of computational thinking. It is the process of removing excessive details to arrive at a representation of a problem that consists of only the key features. Abstraction often involves analysing what is relevant to a given scenario and simplifying a problem based on this information. This is called \textbf{representational abstraction}.
+
+Another form of abstraction involves grouping together similarities within a problem to identify what kind of problem it is. This is called \textbf{abstraction by generalisation} and allows certain problems to be categorised as being of a particular type. Thus a common solution can be used to solve these problems.
+
+\textbf{Data abstraction} is a subcategory of abstraction in which details about how data is being stored are hidden. As a result, programmers can make use of abstract data structures such as stacks and queues without concerning themselves with how these structures are implemented.
+
+
+Programmers can also perform functions such as pushing and popping items to and from a stack without having any knowledge about the code used to implement this functionality. This is called \textbf{procedural abstraction} and is also used in decomposition. It models what a subroutine does without considering how this is done. Once a procedure has been coded, it can be reused as a black-box.
+
+Very large, complex problems make use of multiple levels of abstraction, where each level performs a different role. The highest levels of abstraction are closest to the user and are usually responsible for providing an interface for the user to interact with hardware whereas the lowest levels of abstraction are responsible for actually performing these tasks through the execution of machine code.
+
+\subsubsection{The need for abstraction}
+At its core, abstraction allows non-experts to make use of a range of systems or models by hiding information that is too complex or irrelevant to the system's purpose.
+
+Abstraction enables more efficient design during software development as programmers can focus on elements that need to be built into the software rather than worrying about unnecessary details. This then reduces the time needed to be spent on the project. Removing wasteful details early on also prevents the program from getting unnecessarily large.
+
+Layers of abstraction are used within networking and programming languages. Programming languages can be separated out into a spectrum of high and low-level languages. Low-level languages such as assembly code and machine code directly interact with computer systems but are more difficult to write. Programming using machine code requires having an understanding of the functions specific binary codes perform and although assembly code is easier to memorise, it still requires programmers to know the mnemonics associated with the instruction set specific to the processor. High-level languages provide an abstraction for the machine code that is in fact executed when a program is run. This makes the process of developing programs easier, as syntax in high-level languages parallels natural language and is considerably easier to learn and use compared to low-level languages. This has also made coding accessible to non-specialists.
+
+
+The TCP/IP model is an abstraction for how networks function, separated into four layers of abstraction: application, transport, internet and link. Each layer deals with a different part of the communication process, and separating these stages out makes them simpler to understand. Each layer does not need to know how other layers work. Outgoing communication is visualised as going down these layers, while incoming information can be imagined as going up these layers.
+
+However, it is also important to ensure compatibility between these layers so standards must be agreed in advance. The TCP/IP model uses a set of protocols which means that each layer can be dealt with individually, with details about other layers being hidden.
+
+\subsubsection{The difference between abstraction and reality}
+Abstraction is a simplified representation of reality. Real-world entities may be represented using computational structures such as tables and databases. Real-world values are often stored as variables.
+
+
+Object-oriented programming makes use of objects, which are also an abstraction for real-world entities. In object-oriented programming, abstraction considers the functionality, interface and properties of entities. Attributes are an abstraction for the characteristics of an object while methods are an abstraction for the actions a real-world object is able to perform.
+
+\subsubsection{Devise an abstract model for a variety of situations}
+When devising an abstract model given a scenario, you must consider:
+
+\begin{itemize}[leftmargin=*]
+    \item What is the problem that needs to be solved by the model?
+    \begin{itemize}
+        \item Can the problem be solved computationally? 
+        \item What are the key features of the problem?
+    \end{itemize}
+    \item How will the model be used?
+    \begin{itemize}
+        \item What sort of format does the model need to be displayed in?
+        \item Consider factors such as convenience, affordability and ease of access.
+    \end{itemize}
+    \item Who will the model be used by?
+    \begin{itemize}
+        \item How many people will be using the model?
+        \item What level of expertise do they have in the subject/discipline associated with the problem?
+    \end{itemize}
+    \item Which parts of the problem are relevant based on the target audience and the purpose of the model?
+    \begin{itemize}
+        \item Remove sections that are not relevant to the problem that needs solving.
+        \item Remove details that will confuse the audience.
+    \end{itemize}
+\end{itemize}
+
+%----------------------------------------------------------------------------------------
+% OVERVIEW
+%----------------------------------------------------------------------------------------
+\section{Reusing and Reworking the code}
+\section{Inputs and Outputs}
+All computational problems involve inputs that are processed to produce outputs. Inputs are data required to solve the problem, often entered by the user, while outputs are the results passed back after processing. Designers must consider:
+\begin{itemize}
+\item Order and method of input
+\item Suitable data types and structures for output
+\end{itemize}
+\subsection{Example: ATM Program}
+\begin{itemize}
+\item Inputs: transaction type, card details, PIN
+\item Outputs: display balance, dispense cash, print receipt
+\end{itemize}
+\section{Preconditions}
+Preconditions are requirements that must be met before a program can execute correctly. They ensure that a subroutine receives arguments meeting certain criteria. Preconditions can be:
+\begin{itemize}
+\item Tested within the code
+\item Included in documentation (reduces code complexity and debugging time)
+\end{itemize}
+\subsection{Example: Stack's pop() Function}
+The function checks if the stack is not empty before removing an item:
+\begin{verbatim}
+function pop():
+if top = 0 then
+print "No items in the stack."
+else:
+element = stack[top]
+top = top-1
+endif
+endfunction
+\end{verbatim}
+\section{Caching}
+Caching stores frequently used instructions or values in cache memory for faster access. It's common in web browsing where frequently accessed pages are cached for quicker loading.
+\subsection{Prefetching}
+Prefetching predicts and loads likely-to-be-used instructions into cache before they're needed. Limitations include:
+\begin{itemize}
+\item Cache size
+\item Accuracy of prefetching algorithms
+\end{itemize}
+\subsection{Reusable Program Components}
+Common functions are packaged into libraries for reuse. Benefits include:
+\begin{itemize}
+\item Reliability (already tested and debugged)
+\item Time and cost savings
+\end{itemize}
+However, integrating third-party components may cause compatibility issues, potentially increasing costs.
+
+\subsection{What is Caching?}
+Caching is a technique used in computing to store frequently accessed data or instructions in a fast-access storage location, called a cache. The primary goal is to improve system performance by reducing the time needed to access data.
+\begin{equation}
+\text{Access Time} = \begin{cases}
+t_{\text{cache}}, & \text{if data in cache (cache hit)} \
+\cr{\text{main memory}}, & \text{if data not in cache (cache miss)}
+\end{cases}
+\end{equation}
+Where $t_{\text{cache}} \ll t_{\text{main memory}}$, meaning cache access is much faster than main memory access.
+\subsubsection{Benefits of Caching}
+\begin{enumerate}
+\item \textbf{Faster Access}: Cache memory is typically faster than main memory (RAM) or disk storage.
+\item \textbf{Reduced Load}: By serving data from cache, it reduces load on main memory and network.
+\item \textbf{Bandwidth Conservation}: In web caching, it reduces the need to re-download resources.
+\end{enumerate}
+\subsubsection{Limitations of Caching}
+\begin{enumerate}
+\item \textbf{Cache Size}: Limited capacity means not all data can be cached.
+\item \textbf{Cache Management}: Algorithms decide what to keep or evict (e.g., Least Recently Used - LRU).
+\item \textbf{Cache Coherence}: Ensuring cached data is up-to-date with main memory.
+\end{enumerate}
+\subsubsection{Example: Web Caching}
+Consider a user visiting a news website:
+\begin{verbatim}
+First Visit:
+
+Request: https://news.com
+Server responds with HTML, CSS, JS, images
+Browser caches these resources
+
+Subsequent Visits:
+
+Request: https://news.com
+Browser checks cache:
+
+If resource in cache and not expired: use cached version
+If expired or not in cache: request from server
+\end{verbatim}
+
+
+
+Mathematically, if there are $n$ resources with sizes $s_1, s_2, ..., s_n$, the total data transferred on first visit is:
+\begin{equation}
+D_{\text{first}} = \sum_{i=1}^{n} s_i
+\end{equation}
+On subsequent visits, if $k$ out of $n$ resources are cached:
+\begin{equation}
+D_{\text{subsequent}} = \sum_{i=k+1}^{n} s_i \ll D_{\text{first}}
+\end{equation}
+This reduction in data transfer leads to faster page loads and reduced bandwidth usage.
+\subsubsection{Advanced Caching: Prefetching}
+Prefetching is a predictive form of caching where the system tries to guess what data will be needed next and loads it into the cache in advance.
+Let $P(d_i)$ be the probability that data item $d_i$ will be needed next. A simple prefetching algorithm might:
+\begin{enumerate}
+\item Calculate $P(d_i)$ for all $d_i$ not in cache.
+\item Prefetch $d_i$ if $P(d_i) > \text{threshold}$.
+\end{enumerate}
+The challenge is in accurately predicting $P(d_i)$, which often involves machine learning or statistical models based on past access patterns.
+%----------------------------------------------------------------------------------------
+%	SKILLS
+%----------------------------------------------------------------------------------------
+\section{Procedural Thinking}
+\subsection{Identify the Components of a Problem}
+Thinking procedurally in software development involves breaking a problem down into smaller parts through a process called problem decomposition. This makes the task of writing a program simpler by dividing a large, complex problem into smaller, more manageable subproblems.
+For example, an adventure game might be broken down as follows:
+\begin{center}
+\begin{tikzpicture}[level distance=1.8cm, level 1/.style={sibling distance=4.5cm}, level 2/.style={sibling distance=2.2cm}]
+\node {Adventure Game}
+child {node {Characters}
+child {node {interactions}}
+child {node {appearance}}
+}
+child {node {Adventures}
+child {node {Levels}}
+child {node {Backgrounds}}
+}
+child {node {Enemies}
+child {node {interactions}}
+child {node {appearance}}
+};
+\end{tikzpicture}
+\end{center}
+Problems are commonly decomposed using top-down design, also known as stepwise refinement:
+\begin{center}
+\begin{tikzpicture}[level distance=1.8cm, level 1/.style={sibling distance=3.5cm}, level 2/.style={sibling distance=1.7cm}]
+\node {Main Problem}
+child {node {Subproblem 1}
+    child {node {Task 1.1}}
+    child {node {Task 1.2}}
+}
+child {node {Subproblem 2}
+    child {node {Task 2.1}}
+    child {node {Task 2.2}}
+}
+child {node {Subproblem 3}
+    child {node {Task 3.1}}
+    child {node {Task 3.2}}
+};
+\end{tikzpicture}
+\end{center}
+
+The aim is to keep splitting problems into subproblems until each can be represented as a single, self-contained module or subroutine.
+\subsection{Identify the Components of a Solution}
+After decomposing the problem, we must build up to its solution by identifying how each component can be implemented. Consider a book reservation system:
+\begin{itemize}
+\item \textbf{Borrower name}: Implement a procedure \texttt{getName()} that checks if a user is signed in, retrieves their name from the library's database, or redirects them to sign in or register.
+\end{itemize}
+During this stage, it's useful to identify tasks that can use existing modules, subroutines, or libraries.
+\subsection{Order of Steps Needed to Solve a Problem}
+The order of operations is crucial. Some programs require certain inputs before processing can occur. Inputs must also be validated before being passed to subroutines.
+Consider which subroutines can run simultaneously and which require data from others. For the book reservation system:
+\begin{center}
+\begin{tikzpicture}[node distance=2.5cm]
+\node (A) {User Input};
+\node (B) [below of=A] {Validate Inputs};
+\node (C) [below of=B] {Process Inputs};
+\node (D) [below of=C] {Display Results};
+\draw[->] (A) -- (B);
+\draw[->] (B) -- (C);
+\draw[->] (C) -- (D);
+\end{tikzpicture}
+\end{center}
+The same principle applies to user experience. For example:
+\begin{itemize}
+\item In an adventure game, users shouldn't access levels they haven't unlocked.
+\item A food delivery app shouldn't let users select food before confirming location, or pay before confirming their order.
+\end{itemize}
+These logical constraints must be explicitly coded into the software.
+
+%----------------------------------------------------------------------------------------
+%	EDUCATION
+%----------------------------------------------------------------------------------------
+
+\section*{Logical Thinking}
+
+\subsection*{2.1.4 a)}
+\begin{itemize}
+    \item Identify the points in a solution where a decision has to be taken.
+\end{itemize}
+
+\subsection*{2.1.4 b)}
+\begin{itemize}
+    \item Determine the logical conditions that affect the outcome of a decision.
+\end{itemize}
+
+\subsection*{2.1.4 c)}
+\begin{itemize}
+    \item Determine how decisions affect flow through a program.
+\end{itemize}
+
+\section*{Decision Making in Problem Solving}
+
+A \textbf{decision} is a result reached after some consideration. When solving problems and designing programs, many decisions have to be made. One of the first and biggest decisions that is made is choosing the approach or \textbf{paradigm} used when developing a piece of software. Another example of decision making within software development is deciding how different pieces of information are collected.
+
+Imagine you were set the task of building a program which switches on a light when a button is pressed. What questions come to mind?
+
+\begin{itemize}
+    \item Which programming paradigm will I use?
+    \item Which programming language will I use?
+    \item What input devices will I need?
+    \item What output devices will I need?
+    \item How can I interact with these devices?
+\end{itemize}
+
+To answer each of these questions, decisions have to be made. To simplify the decision making process, we begin by trying to \textbf{limit the possible solutions} we can pick from. When deciding on a programming language, for example, you should first consider which programming languages it is \textbf{feasible} for you to use. This decision should be based on the language’s suitability to the problem you are solving and whether it provides enough functionality to solve the problem. It is also important to consider which languages you are comfortable with using, or how easy it is to learn a new language given time constraints.
+
+It is important for us to try and identify where decisions will need to be made when building our solutions, as this allows us to gather enough information about our options. This enables for an informed decision to be made.
+
+When drawing \textbf{flow charts}, a decision is usually shown by a diamond-shaped icon. This can have two results, yes or no (\textbf{true/false}).
+
+\section*{Conditions that Affect the Outcome of a Decision}
+
+When you make a decision, there are certain factors which ultimately determine the outcome you choose. There are several key factors that you should take into account:
+\begin{itemize}
+    \item What is most effective?
+    \item What is most convenient?
+    \item Is this option reasonable?
+\end{itemize}
+
+To make an appropriate decision, you need to \textbf{evaluate these conditions} and order them from most important to least important. Once you have done this, it becomes easier to pick the best option for your solution. By prioritising either effectiveness, convenience or feasibility, it should become clearer what sort of approach is best for achieving your solution. This might vary depending on the purpose and end-users of the software.
+
+\section*{Decisions Affecting the Flow of a Program}
+
+Decisions are made to determine how different parts of the program are completed. Say we are tasked with designing a simple runner game. We could design the game to be endless, or make the game level-based.
+
+Again, we would evaluate these conditions using the methods described above. It is important to understand that both decisions produce completely different results, and therefore produce different routes through the program.
+
+Thinking logically also involves identifying where decisions need to be made by the user within the program, and planning out the outcomes of the decision made. The program will follow a different route depending on the decision made by the user.
+
+Putting it all together: Thinking logically allows you to plan and prepare for different scenarios, as it provides a foresight of the decisions made through the whole program. Decision making is one of the most important aspects of \textbf{problem solving}; good decision making is the key to solving problems \textbf{effectively}.
+
+\vfill
+\end{document}
