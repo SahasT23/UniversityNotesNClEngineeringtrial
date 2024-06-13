@@ -1,0 +1,380 @@
+\documentclass[a4paper,12pt]{article}
+
+%----------------------------------------------------------------------------------------
+%	FONT
+%----------------------------------------------------------------------------------------
+
+% % fontspec allows you to use TTF/OTF fonts directly
+% \usepackage{fontspec}
+% \defaultfontfeatures{Ligatures=TeX}
+
+% % modified for ShareLaTeX use
+% \setmainfont[
+% SmallCapsFont = Fontin-SmallCaps.otf,
+% BoldFont = Fontin-Bold.otf,
+% ItalicFont = Fontin-Italic.otf
+% ]
+% {Fontin.otf}
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES
+%----------------------------------------------------------------------------------------
+\usepackage{url}
+\usepackage{parskip} 	
+
+%other packages for formatting
+\RequirePackage{color}
+\RequirePackage{graphicx}
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage[scale=0.9]{geometry}
+\usepackage{amsmath}
+\usepackage{tikz}
+\usepackage{siunitx}
+\usepackage{caption}
+
+%tabularx environment
+\usepackage{tabularx}
+
+%for lists within experience section
+\usepackage{enumitem}
+
+% centered version of 'X' col. type
+\newcolumntype{C}{>{\centering\arraybackslash}X} 
+
+%to prevent spillover of tabular into next pages
+\usepackage{supertabular}
+\usepackage{tabularx}
+\newlength{\fullcollw}
+\setlength{\fullcollw}{0.47\textwidth}
+
+%custom \section
+\usepackage{titlesec}				
+\usepackage{multicol}
+\usepackage{multirow}
+
+%CV Sections inspired by: 
+%http://stefano.italians.nl/archives/26
+\titleformat{\section}{\large\scshape\raggedright}{}{0em}{}[\titlerule]
+\titlespacing{\section}{0pt}{10pt}{10pt}
+
+%for publications
+\usepackage[style=authoryear,sorting=ynt, maxbibnames=2]{biblatex}
+
+%Setup hyperref package, and colours for links
+\usepackage[unicode, draft=false]{hyperref}
+\definecolor{linkcolour}{rgb}{0,0.2,0.6}
+\hypersetup{colorlinks,breaklinks,urlcolor=linkcolour,linkcolor=linkcolour}
+\addbibresource{citations.bib}
+\setlength\bibitemsep{1em}
+
+%for social icons
+\usepackage{fontawesome5}
+
+%debug page outer frames
+%\usepackage{showframe}
+
+%----------------------------------------------------------------------------------------
+%	BEGIN DOCUMENT
+%----------------------------------------------------------------------------------------
+\begin{document}
+
+% non-numbered pages
+\pagestyle{empty} 
+
+%----------------------------------------------------------------------------------------
+%	TITLE
+%----------------------------------------------------------------------------------------
+
+\section*{Electromagnetism Basics}
+
+\subsection*{Electric Field}
+An electric field is a region around a charged particle where a force would be exerted on other charged particles. It can be visualized with field lines that originate from positive charges and terminate on negative charges.
+
+\begin{center}
+\begin{tikzpicture}
+    \draw[thick] (0,0) circle (0.5cm);
+    \node at (0,0) {+};
+    \foreach \angle in {0,45,...,315}
+    {
+        \draw[->] (0,0) -- (\angle:1cm);
+    }
+\end{tikzpicture}
+\end{center}
+
+\subsection*{Magnetic Field}
+A magnetic field is a region around a magnet where magnetic forces can be observed. The field lines exit from the north pole of the magnet and enter at the south pole.
+
+\begin{center}
+\begin{tikzpicture}
+    \draw[thick] (-1.5,0) -- (1.5,0);
+    \node[above] at (-1.5,0) {N};
+    \node[above] at (1.5,0) {S};
+    \foreach \x in {-1.2,-0.8,...,1.2}
+    {
+        \draw[->] (\x,0) -- (\x,0.5);
+        \draw (\x,0.5) arc[start angle=180,end angle=360,radius=0.5];
+        \draw[->] (\x,0.5) arc[start angle=180,end angle=0,radius=0.5];
+    }
+\end{tikzpicture}
+\end{center}
+
+\subsection*{Magnetic Flux and Magnetic Flux Density}
+
+\subsubsection*{Magnetic Flux}
+Magnetic flux ($\Phi$) through a surface is defined as the product of the magnetic field ($B$) and the area ($A$) through which the field lines pass perpendicularly. It is given by:
+\[
+\Phi = B \cdot A \cdot \cos \theta
+\]
+where $\theta$ is the angle between the magnetic field lines and the normal to the surface. The unit of magnetic flux is the Weber (\si{Wb}).
+
+\subsubsection*{Magnetic Flux Density}
+Magnetic flux density ($B$) is the amount of magnetic flux through a unit area taken perpendicular to the direction of the magnetic flux. It is given by:
+\[
+B = \frac{\Phi}{A}
+\]
+The unit of magnetic flux density is the Tesla (\si{T}).
+
+\subsection*{Solenoid}
+A solenoid is a coil of wire that generates a magnetic field when an electric current passes through it. The field inside a long solenoid is uniform and parallel to the axis of the coil.
+
+\begin{center}
+\begin{tikzpicture}
+    \draw[thick] (0,0) -- (5,0);
+    \foreach \x in {0,0.5,...,5}
+    {
+        \draw (\x,0) -- (\x+0.25,0.5) -- (\x+0.5,0);
+    }
+    \draw[->,red] (0.25,-0.5) -- (0.25,1);
+    \draw[->,red] (4.75,-0.5) -- (4.75,1);
+    \node[below] at (0.25,-0.5) {I};
+    \node[below] at (4.75,-0.5) {I};
+    \node[below] at (2.5,-0.7) {Current flow in the solenoid};
+\end{tikzpicture}
+
+\end{center}
+
+%----------------------------------------------------------------------------------------
+% OVERVIEW
+%----------------------------------------------------------------------------------------
+
+\section*{Magnetic Circuits}
+
+\subsection*{Magnetic Circuits and Flux}
+A magnetic circuit is a closed path followed by magnetic flux. It consists of magnetic materials and air gaps through which the magnetic flux travels.
+
+Magnetic flux ($\Phi$) is analogous to electric current in electrical circuits. It is the total magnetic field passing through a given area. The relationship between the flux magnitude in the core and the current in the coil is given by Ampere's Law:
+\[
+\Phi = \frac{N \cdot I}{\mathcal{R}}
+\]
+where $N$ is the number of turns in the coil, $I$ is the current, and $\mathcal{R}$ is the magnetic reluctance of the circuit.
+
+\begin{center}
+\begin{tikzpicture}
+    % Core
+    \draw[thick] (0,0) rectangle (4,4);
+    % Coil
+    \draw[thick] (2,4) -- (2,5);
+    \draw[thick] (1.8,5) -- (2.2,5) -- (2.2,4.6) -- (2.4,4.6) -- (2.4,5) -- (2.6,5) -- (2.6,4.6) -- (2.8,4.6) -- (2.8,5) -- (3,5);
+    % Magnetic field lines
+    \draw[->,red] (2,3) -- (2,1);
+    \draw[->,red] (2,1) -- (0.5,1);
+    \draw[->,red] (0.5,1) -- (0.5,3);
+    \draw[->,red] (0.5,3) -- (2,3);
+    % Labels
+    \node[above] at (2,5) {N turns};
+    \node[left] at (2,2) {$\Phi$};
+    \node[right] at (2,2) {$I$};
+\end{tikzpicture}
+\captionof{figure}{Magnetic circuit with coil}
+\end{center}
+
+\subsection*{Permeance and Reluctance}
+Permeance ($\mathcal{P}$) is the measure of the ease with which a magnetic flux is established in a material. It is given by:
+\[
+\mathcal{P} = \frac{\mu A}{l}
+\]
+where $\mu$ is the permeability of the material, $A$ is the cross-sectional area, and $l$ is the length of the magnetic path.
+
+Reluctance ($\mathcal{R}$) is the measure of the opposition to the magnetic flux in a magnetic circuit. It is given by:
+\[
+\mathcal{R} = \frac{l}{\mu A}
+\]
+
+\subsection*{Permeability of Free Space}
+The permeability of free space ($\mu_0$) is a constant that describes the extent to which a magnetic field can penetrate free space. It is given by:
+\[
+\mu_0 = 4\pi \times 10^{-7} \, \si{H/m}
+\]
+
+\subsection*{Resistance and Reluctance Analogy}
+Resistance in electrical circuits is analogous to reluctance in magnetic circuits. Just as resistances can be combined in series and parallel, so can reluctances.
+
+\begin{center}
+\begin{tikzpicture}
+    % Electrical circuit
+    \draw[thick] (0,0) -- (2,0);
+    \draw[thick] (2,0) -- (2,2);
+    \draw[thick] (2,2) -- (0,2);
+    \draw[thick] (0,2) -- (0,0);
+    \draw[thick] (0,1) -- (2,1);
+    \node[left] at (0,1.5) {$R_1$};
+    \node[left] at (0,0.5) {$R_2$};
+    % Magnetic circuit
+    \draw[thick] (4,0) -- (6,0);
+    \draw[thick] (6,0) -- (6,2);
+    \draw[thick] (6,2) -- (4,2);
+    \draw[thick] (4,2) -- (4,0);
+    \draw[thick] (4,1) -- (6,1);
+    \node[left] at (4,1.5) {$\mathcal{R}_1$};
+    \node[left] at (4,0.5) {$\mathcal{R}_2$};
+\end{tikzpicture}
+\captionof{figure}{Analogy between resistance and reluctance}
+\end{center}
+
+\subsection*{Combining Reluctances}
+Reluctances can be combined in series and parallel just like resistances.
+\[
+\text{Series: } \mathcal{R}_{\text{total}} = \mathcal{R}_1 + \mathcal{R}_2 + \cdots + \mathcal{R}_n
+\]
+\[
+\text{Parallel: } \frac{1}{\mathcal{R}_{\text{total}}} = \frac{1}{\mathcal{R}_1} + \frac{1}{\mathcal{R}_2} + \cdots + \frac{1}{\mathcal{R}_n}
+\]
+
+\subsection*{Toroid Cores}
+To find the flux density ($B$), magnetic field strength ($H$), and mean path length ($l$) in toroid cores:
+\[
+B = \mu H
+\]
+\[
+H = \frac{N I}{l}
+\]
+\[
+l = 2\pi r
+\]
+where $N$ is the number of turns, $I$ is the current, and $r$ is the mean radius of the toroid.
+
+\subsection*{B-H Relationship}
+The relationship between magnetic flux density ($B$) and magnetic field strength ($H$) is typically linear in a non-saturated material:
+\[
+B = \mu H
+\]
+
+%----------------------------------------------------------------------------------------
+%	SKILLS
+%----------------------------------------------------------------------------------------
+
+\section*{Electromagnetic Rules and Forces}
+
+\subsection*{Right-Hand Rule}
+The right-hand rule is used to determine the direction of the magnetic field around a current-carrying conductor. If you point your thumb in the direction of the current, your fingers will curl in the direction of the magnetic field.
+
+\begin{center}
+\begin{tikzpicture}
+    % Right hand
+    \draw[thick] (0,0) -- (2,2);
+    \draw[thick] (0,0) -- (-2,2);
+    \draw[thick] (0,0) -- (0,3);
+    \draw[thick] (0,0) -- (-1,-1);
+    \draw[thick] (0,0) -- (1,-1);
+    % Current direction
+    \draw[thick,->,red] (0,-2) -- (0,0);
+    \node[below] at (0,-2) {Current};
+    % Magnetic field direction
+    \draw[thick,->,blue] (0.5,0.5) arc (0:90:0.5);
+    \node[above right] at (0.5,0.5) {Magnetic Field};
+\end{tikzpicture}
+\captionof{figure}{Right-Hand Rule}
+\end{center}
+
+\subsection*{Left-Hand Rule}
+The left-hand rule is used to determine the direction of the force on a current-carrying conductor in a magnetic field. If you point your first finger in the direction of the magnetic field and your second finger in the direction of the current, your thumb will point in the direction of the force.
+
+\begin{center}
+\begin{tikzpicture}
+    % Left hand
+    \draw[thick] (0,0) -- (2,2);
+    \draw[thick] (0,0) -- (-2,2);
+    \draw[thick] (0,0) -- (0,3);
+    \draw[thick] (0,0) -- (-1,-1);
+    \draw[thick] (0,0) -- (1,-1);
+    % Force direction
+    \draw[thick,->,green] (0,-2) -- (0,0);
+    \node[below] at (0,-2) {Force};
+    % Magnetic field direction
+    \draw[thick,->,blue] (0,2) -- (2,2);
+    \node[right] at (2,2) {Magnetic Field};
+    % Current direction
+    \draw[thick,->,red] (-2,0) -- (0,0);
+    \node[left] at (-2,0) {Current};
+\end{tikzpicture}
+\captionof{figure}{Left-Hand Rule}
+\end{center}
+
+\subsection*{Lorentz Force}
+The Lorentz force is the force experienced by a charged particle moving through an electric and magnetic field. It is given by:
+\[
+\mathbf{F} = q(\mathbf{E} + \mathbf{v} \times \mathbf{B})
+\]
+where $\mathbf{F}$ is the force, $q$ is the charge, $\mathbf{E}$ is the electric field, $\mathbf{v}$ is the velocity of the particle, and $\mathbf{B}$ is the magnetic field.
+
+\begin{center}
+\begin{tikzpicture}
+    % Velocity vector
+    \draw[->,red] (0,0) -- (2,0) node[below] {$\mathbf{v}$};
+    % Magnetic field vector
+    \draw[->,blue] (0,0) -- (0,2) node[left] {$\mathbf{B}$};
+    % Force vector
+    \draw[->,green] (0,0) -- (1.5,1.5) node[above] {$\mathbf{F}$};
+    % Right-angle marker
+    \draw (0.5,0) -- (0.5,0.5) -- (0,0.5);
+\end{tikzpicture}
+\captionof{figure}{Lorentz Force}
+\end{center}
+
+\subsection*{Force on a Current in a Uniform Magnetic Field}
+The force on a current-carrying conductor in a uniform magnetic field is given by:
+\[
+\mathbf{F} = I (\mathbf{L} \times \mathbf{B})
+\]
+where $I$ is the current, $\mathbf{L}$ is the length vector of the conductor, and $\mathbf{B}$ is the magnetic field.
+
+\subsection*{Force Between Two Currents}
+The force between two parallel current-carrying conductors is given by:
+\[
+F = \frac{\mu_0 I_1 I_2 L}{2 \pi d}
+\]
+where $\mu_0$ is the permeability of free space, $I_1$ and $I_2$ are the currents, $L$ is the length of the conductors, and $d$ is the distance between the conductors.
+
+\subsection*{Variants of the Formula $F = BIl$}
+The general formula for the force on a current-carrying conductor in a magnetic field is:
+\[
+F = BIl \sin \theta
+\]
+where $B$ is the magnetic flux density, $I$ is the current, $l$ is the length of the conductor, and $\theta$ is the angle between the conductor and the magnetic field.
+
+\subsection*{Force Between Two Permanent Magnets}
+The force between two permanent magnets can be derived from the magnetic dipole interaction. The force is approximately given by:
+\[
+F = \frac{3 \mu_0 m_1 m_2}{4 \pi d^4}
+\]
+where $m_1$ and $m_2$ are the magnetic moments of the magnets, and $d$ is the distance between them.
+
+\subsection*{Energy Stored Between Two Permanent Magnets}
+The energy stored in the magnetic field between two magnets is given by:
+\[
+E = \frac{1}{2} \int \mathbf{B} \cdot \mathbf{H} \, dV
+\]
+where $\mathbf{B}$ is the magnetic flux density, $\mathbf{H}$ is the magnetic field strength, and $dV$ is the volume element.
+
+%----------------------------------------------------------------------------------------
+%	EDUCATION
+%----------------------------------------------------------------------------------------
+%----------------------------------------------------------------------
+% Projects
+%--------------------------------------------------------------------------------------
+
+%---------------------------------------------------------------------------------------
+%   Volunteering
+
+\vfill
+\end{document}
