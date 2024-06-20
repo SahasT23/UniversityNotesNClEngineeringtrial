@@ -1,0 +1,399 @@
+\documentclass[a4paper,12pt]{article}
+
+%----------------------------------------------------------------------------------------
+%	FONT
+%----------------------------------------------------------------------------------------
+
+% % fontspec allows you to use TTF/OTF fonts directly
+% \usepackage{fontspec}
+% \defaultfontfeatures{Ligatures=TeX}
+
+% % modified for ShareLaTeX use
+% \setmainfont[
+% SmallCapsFont = Fontin-SmallCaps.otf,
+% BoldFont = Fontin-Bold.otf,
+% ItalicFont = Fontin-Italic.otf
+% ]
+% {Fontin.otf}
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES
+%----------------------------------------------------------------------------------------
+\usepackage{url}
+\usepackage{parskip} 	
+
+%other packages for formatting
+\RequirePackage{color}
+\RequirePackage{graphicx}
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage[scale=0.9]{geometry}
+\usepackage{amsmath}
+\usepackage{tikz}
+\usepackage{amsfonts}
+\usepackage{circuitikz}
+
+%tabularx environment
+\usepackage{tabularx}
+
+%for lists within experience section
+\usepackage{enumitem}
+
+% centered version of 'X' col. type
+\newcolumntype{C}{>{\centering\arraybackslash}X} 
+
+%to prevent spillover of tabular into next pages
+\usepackage{supertabular}
+\usepackage{tabularx}
+\newlength{\fullcollw}
+\setlength{\fullcollw}{0.47\textwidth}
+
+%custom \section
+\usepackage{titlesec}				
+\usepackage{multicol}
+\usepackage{multirow}
+
+%CV Sections inspired by: 
+%http://stefano.italians.nl/archives/26
+\titleformat{\section}{\large\scshape\raggedright}{}{0em}{}[\titlerule]
+\titlespacing{\section}{0pt}{10pt}{10pt}
+
+%for publications
+\usepackage[style=authoryear,sorting=ynt, maxbibnames=2]{biblatex}
+
+%Setup hyperref package, and colours for links
+\usepackage[unicode, draft=false]{hyperref}
+\definecolor{linkcolour}{rgb}{0,0.2,0.6}
+\hypersetup{colorlinks,breaklinks,urlcolor=linkcolour,linkcolor=linkcolour}
+\addbibresource{citations.bib}
+\setlength\bibitemsep{1em}
+
+%for social icons
+\usepackage{fontawesome5}
+
+%debug page outer frames
+%\usepackage{showframe}
+
+%----------------------------------------------------------------------------------------
+%	BEGIN DOCUMENT
+%----------------------------------------------------------------------------------------
+\begin{document}
+
+% non-numbered pages
+\pagestyle{empty} 
+
+%----------------------------------------------------------------------------------------
+%	TITLE
+%----------------------------------------------------------------------------------------
+
+\section*{PN Junctions (Diodes)}
+
+\subsection*{Introduction}
+A diode is based on the junction between an N-type and a P-type semiconductor. Diodes are widely used in electronics for processing electric signals and converting physical quantities (e.g., temperature, light intensity) into electric currents. They are also used in LEDs and laser diodes for converting electric signals into optical ones. Understanding PN junctions is crucial as they form the basis for more advanced devices like transistors.
+
+\subsection*{Working of a PN Junction}
+A semiconductor crystal can be doped with foreign atoms to create N-type or P-type semiconductors:
+\begin{itemize}
+    \item \textbf{N-type}: doped with atoms such as arsenic, phosphorus, or antimony. Negative charges (free electrons) are current carriers.
+    \item \textbf{P-type}: doped with atoms such as boron, aluminum, or gallium. Positive charges (holes) are current carriers.
+\end{itemize}
+
+\subsection*{Formation of PN Junction}
+When N-type and P-type silicon are put in contact, a PN junction is formed. At the interface:
+\begin{itemize}
+    \item Electrons from the N-type region diffuse towards the P-type region, leaving behind positive charges in the N-type region.
+    \item Holes from the P-type region diffuse towards the N-type region, leaving behind negative charges in the P-type region.
+\end{itemize}
+This diffusion creates a region around the interface where free electrons and holes recombine, leaving only bound charges. This region is called the depletion or space charge region.
+
+\subsection*{Diagram: Formation of PN Junction}
+\begin{center}
+\begin{tikzpicture}
+    % N-type region
+    \fill[blue!20] (0,0) rectangle (3,2);
+    \node at (1.5, 2.2) {N-type};
+    \foreach \x in {0.5, 1.5, 2.5} {
+        \node at (\x, 1.5) {$\text{e}^-$};
+    }
+    \foreach \x in {0.5, 1.5, 2.5} {
+        \node at (\x, 0.5) {$\text{e}^-$};
+    }
+
+    % P-type region
+    \fill[red!20] (3,0) rectangle (6,2);
+    \node at (4.5, 2.2) {P-type};
+    \foreach \x in {3.5, 4.5, 5.5} {
+        \node at (\x, 1.5) {$\text{h}^+$};
+    }
+    \foreach \x in {3.5, 4.5, 5.5} {
+        \node at (\x, 0.5) {$\text{h}^+$};
+    }
+
+    % Depletion region
+    \draw[dashed] (3,0) -- (3,2);
+    \node at (3, -0.2) {Depletion region};
+\end{tikzpicture}
+\end{center}
+
+\subsection*{Electric Field in Depletion Region}
+The space charge in the depletion region generates a built-in electric field that opposes the diffusion of electrons and holes. An equilibrium is reached when the electric field is strong enough to prevent further diffusion, resulting in no net movement of majority carriers.
+
+\subsection*{Diagram: Electric Field in Depletion Region}
+\begin{center}
+\begin{tikzpicture}
+    % N-type region
+    \fill[blue!20] (0,0) rectangle (3,2);
+    \node at (1.5, 2.2) {N-type};
+    \foreach \x in {0.5, 1.5, 2.5} {
+        \node at (\x, 1.5) {$\text{e}^-$};
+    }
+    \foreach \x in {0.5, 1.5, 2.5} {
+        \node at (\x, 0.5) {$\text{e}^-$};
+    }
+
+    % P-type region
+    \fill[red!20] (3,0) rectangle (6,2);
+    \node at (4.5, 2.2) {P-type};
+    \foreach \x in {3.5, 4.5, 5.5} {
+        \node at (\x, 1.5) {$\text{h}^+$};
+    }
+    \foreach \x in {3.5, 4.5, 5.5} {
+        \node at (\x, 0.5) {$\text{h}^+$};
+    }
+
+    % Depletion region with electric field
+    \draw[dashed] (3,0) -- (3,2);
+    \draw[->] (2.8,1) -- (3.2,1);
+    \node at (3, -0.2) {Depletion region};
+\end{tikzpicture}
+\end{center}
+
+\subsection*{Biasing of PN Junction}
+\subsubsection*{Reverse Bias}
+When a voltage is applied with the highest potential on the N-type material (reverse bias):
+\begin{itemize}
+    \item The external electric field pushes majority carriers away from the PN interface, enlarging the depletion region.
+    \item No significant current flows through the junction, and it behaves like an insulator.
+\end{itemize}
+
+\subsubsection*{Diagram: Reverse Bias}
+\begin{center}
+\begin{tikzpicture}
+    % N-type region
+    \fill[blue!20] (0,0) rectangle (3,2);
+    \node at (1.5, 2.2) {N-type};
+    \node at (1.5, -0.5) {(-)};
+    \foreach \x in {0.5, 1.5, 2.5} {
+        \node at (\x, 1.5) {$\text{e}^-$};
+    }
+    \foreach \x in {0.5, 1.5, 2.5} {
+        \node at (\x, 0.5) {$\text{e}^-$};
+    }
+
+    % P-type region
+    \fill[red!20] (3,0) rectangle (6,2);
+    \node at (4.5, 2.2) {P-type};
+    \node at (4.5, -0.5) {(+)}
+    \foreach \x in {3.5, 4.5, 5.5} {
+        \node at (\x, 1.5) {$\text{h}^+$};
+    }
+    \foreach \x in {3.5, 4.5, 5.5} {
+        \node at (\x, 0.5) {$\text{h}^+$};
+    }
+
+    % Depletion region with reverse bias
+    \draw[dashed] (3,0) -- (3,2);
+    \node at (3, -0.2) {Depletion region};
+\end{tikzpicture}
+\end{center}
+
+\subsubsection*{Forward Bias}
+When the voltage is applied with the highest potential on the P-type material (forward bias):
+\begin{itemize}
+    \item The external electric field pushes majority carriers towards the PN interface, narrowing the depletion region.
+    \item Once the voltage reaches the threshold voltage (Vd), the depletion region disappears, allowing current to flow through the junction.
+\end{itemize}
+
+\subsubsection*{Diagram: Forward Bias}
+\begin{center}
+\begin{tikzpicture}
+    % N-type region
+    \fill[blue!20] (0,0) rectangle (3,2);
+    \node at (1.5, 2.2) {N-type};
+    \node at (1.5, -0.5) {(+)}
+    \foreach \x in {0.5, 1.5, 2.5} {
+        \node at (\x, 1.5) {$\text{e}^-$};
+    }
+    \foreach \x in {0.5, 1.5, 2.5} {
+        \node at (\x, 0.5) {$\text{e}^-$};
+    }
+
+    % P-type region
+    \fill[red!20] (3,0) rectangle (6,2);
+    \node at (4.5, 2.2) {P-type};
+    \node at (4.5, -0.5) {(-)}
+    \foreach \x in {3.5, 4.5, 5.5} {
+        \node at (\x, 1.5) {$\text{h}^+$};
+    }
+    \foreach \x in {3.5, 4.5, 5.5} {
+        \node at (\x, 0.5) {$\text{h}^+$};
+    }
+
+    % Depletion region with forward bias
+    \draw[dashed] (3,0) -- (3,2);
+    \node at (3, -0.2) {Depletion region};
+\end{tikzpicture}
+\end{center}
+
+\subsection*{Threshold Voltage}
+The threshold voltage (Vd) is the minimum voltage needed for the diode to conduct in forward bias:
+\begin{itemize}
+    \item For silicon diodes, Vd is approximately 0.7 volts.
+    \item For germanium diodes, Vd is approximately 0.3 volts.
+\end{itemize}
+
+\subsection*{Current Flow in Forward Bias}
+When the diode is forward-biased and V is approximately Vd:
+\begin{itemize}
+    \item Electrons from the N-type region cross into the P-type region and recombine with holes.
+    \item Holes from the P-type region cross into the N-type region and recombine with electrons.
+    \item The current continues to flow as majority carriers are replenished.
+\end{itemize}
+
+\subsection*{Diagram: Current Flow in Forward Bias}
+\begin{center}
+\begin{tikzpicture}
+    % N-type region
+    \fill[blue!20] (0,0) rectangle (3,2);
+    \node at (1.5, 2.2) {N-type};
+    \node at (1.5, -0.5) {(+)}
+    \foreach \x in {0.5, 1.5, 2.5} {
+        \node at (\x, 1.5) {$\text{e}^-$};
+    }
+    \foreach \x in {0.5, 1.5, 2.5} {
+        \node at (\x, 0.5) {$\text{e}^-$};
+    }
+
+    % P-type region
+    \fill[red!20] (3,0) rectangle (6,2);
+    \node at (4.5, 2.2) {P-type};
+    \node at (4.5, -0.5) {(-)}
+    \foreach \x in {3.5, 4.5, 5.5} {
+        \node at (\x, 1.5) {$\text{h}^+$};
+    }
+    \foreach \x in {3.5, 4.5, 5.5} {
+        \node at (\x, 0.5) {$\text{h}^+$};
+    }
+
+    % Current flow direction
+    \draw[->, thick] (1.5,1) -- (4.5,1);
+    \node at (3, 1.2) {Current};
+\end{tikzpicture}
+\end{center}
+
+\subsection*{Diode Characteristics}
+\begin{itemize}
+    \item In forward bias, the diode conducts current once the applied voltage exceeds Vd.
+    \item In reverse bias, the diode does not conduct current and behaves as an insulator.
+\end{itemize}
+
+\subsection*{Summary}
+A PN junction diode allows current to flow in one direction (forward bias) and blocks it in the reverse direction (reverse bias). The P-type region is called the anode, and the N-type region is called the cathode. The current is defined as flowing from the anode to the cathode.
+
+\section*{Ideal Diode Behavior}
+
+\subsection*{Ideal Diode Characteristics}
+An ideal diode behaves as a perfect conductor when forward-biased and as a perfect insulator when reverse-biased. The current-voltage (\(I\)-\(V\)) characteristics of an ideal diode are depicted as follows:
+
+\subsubsection*{Diagram: Ideal Diode I-V Characteristics}
+\begin{center}
+\begin{tikzpicture}
+    \begin{axis}[
+        axis lines=middle,
+        xlabel={$V_D$},
+        ylabel={$I_D$},
+        xmin=-3, xmax=3,
+        ymin=-3, ymax=3,
+        xtick={-3,-2,-1,0,1,2,3},
+        ytick={-3,-2,-1,0,1,2,3},
+        grid=both,
+        width=10cm,
+        height=10cm,
+        axis equal image
+    ]
+    % Ideal Diode Characteristic Curve
+    \addplot[
+        domain=0:3,
+        samples=100,
+        thick,
+        color=blue
+    ]
+    {x >= 0 ? 3 : 0};
+    \addplot[
+        domain=-3:0,
+        samples=100,
+        thick,
+        color=blue
+    ]
+    {x <= 0 ? 0 : 3};
+    \end{axis}
+\end{tikzpicture}
+\end{center}
+
+\subsection*{Model of an Ideal Diode with a Resistor}
+A common circuit model for analyzing diodes is a series combination of an ideal diode and a resistor. This model helps in understanding how diodes behave in practical circuits.
+
+\subsubsection*{Diagram: Ideal Diode with Resistor}
+\begin{center}
+\begin{circuitikz}
+    \draw
+    (0,0) to[V, l=$V_{in}$] (0,4)
+    (0,4) to[R, l=$R$] (4,4)
+    (4,4) to[D] (4,0)
+    (4,0) -- (0,0);
+    \node at (2,2.5) {Ideal Diode};
+\end{circuitikz}
+\end{center}
+
+\subsection*{Formulae for Working with Diodes}
+The key formulae for analyzing circuits involving diodes are as follows:
+
+\subsubsection*{Forward Bias Condition}
+For an ideal diode in forward bias:
+\[
+V_D = 0 \quad \text{and} \quad I_D = \frac{V_{in} - V_D}{R} = \frac{V_{in}}{R}
+\]
+
+\subsubsection*{Reverse Bias Condition}
+For an ideal diode in reverse bias:
+\[
+I_D = 0 \quad \text{and} \quad V_D = V_{in}
+\]
+
+\subsubsection*{General Diode Equation}
+For a real diode, the diode current \(I_D\) as a function of the voltage \(V_D\) across the diode is given by the Shockley diode equation:
+\[
+I_D = I_S \left( e^{\frac{V_D}{nV_T}} - 1 \right)
+\]
+where:
+\begin{itemize}
+    \item \(I_S\) is the saturation current.
+    \item \(V_T = \frac{kT}{q}\) is the thermal voltage (approximately 26 mV at room temperature).
+    \item \(n\) is the ideality factor (typically between 1 and 2 for silicon diodes).
+\end{itemize}
+
+\subsection*{Example Calculations}
+
+\subsubsection*{Forward Bias Example}
+Given \(V_{in} = 5V\) and \(R = 1k\Omega\):
+\[
+I_D = \frac{V_{in}}{R} = \frac{5V}{1k\Omega} = 5mA
+\]
+
+\subsubsection*{Reverse Bias Example}
+Given \(V_{in} = -5V\):
+\[
+I_D = 0 \quad \text{and} \quad V_D = -5V
+\]
+
+\vfill
+\end{document}
