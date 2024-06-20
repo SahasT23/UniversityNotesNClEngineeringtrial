@@ -1,0 +1,886 @@
+\documentclass[a4paper,12pt]{article}
+
+%----------------------------------------------------------------------------------------
+%	FONT
+%----------------------------------------------------------------------------------------
+
+% % fontspec allows you to use TTF/OTF fonts directly
+% \usepackage{fontspec}
+% \defaultfontfeatures{Ligatures=TeX}
+
+% % modified for ShareLaTeX use
+% \setmainfont[
+% SmallCapsFont = Fontin-SmallCaps.otf,
+% BoldFont = Fontin-Bold.otf,
+% ItalicFont = Fontin-Italic.otf
+% ]
+% {Fontin.otf}
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES
+%----------------------------------------------------------------------------------------
+\usepackage{url}
+\usepackage{parskip} 	
+
+%other packages for formatting
+\RequirePackage{color}
+\RequirePackage{graphicx}
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath}
+\usepackage{tikz}
+\usepackage{circuitikz}
+\usepackage{amsfonts}
+\usepackage{listings}
+\usetikzlibrary{circuits.logic.US, positioning}
+
+%tabularx environment
+\usepackage{tabularx}
+
+%for lists within experience section
+\usepackage{enumitem}
+
+% centered version of 'X' col. type
+\newcolumntype{C}{>{\centering\arraybackslash}X} 
+
+%to prevent spillover of tabular into next pages
+\usepackage{supertabular}
+\usepackage{tabularx}
+\newlength{\fullcollw}
+\setlength{\fullcollw}{0.47\textwidth}
+
+%custom \section
+\usepackage{titlesec}				
+\usepackage{multicol}
+\usepackage{multirow}
+
+%CV Sections inspired by: 
+%http://stefano.italians.nl/archives/26
+\titleformat{\section}{\large\scshape\raggedright}{}{0em}{}[\titlerule]
+\titlespacing{\section}{0pt}{10pt}{10pt}
+
+%for publications
+\usepackage[style=authoryear,sorting=ynt, maxbibnames=2]{biblatex}
+
+%Setup hyperref package, and colours for links
+\usepackage[unicode, draft=false]{hyperref}
+\definecolor{linkcolour}{rgb}{0,0.2,0.6}
+\hypersetup{colorlinks,breaklinks,urlcolor=linkcolour,linkcolor=linkcolour}
+\addbibresource{citations.bib}
+\setlength\bibitemsep{1em}
+
+%for social icons
+\usepackage{fontawesome5}
+
+%debug page outer frames
+%\usepackage{showframe}
+
+%----------------------------------------------------------------------------------------
+%	BEGIN DOCUMENT
+%----------------------------------------------------------------------------------------
+\begin{document}
+
+% non-numbered pages
+\pagestyle{empty} 
+
+%----------------------------------------------------------------------------------------
+%	TITLE
+%----------------------------------------------------------------------------------------
+
+\title{Digital Electronics I}
+\author{}
+\date{}
+
+\maketitle
+
+\section*{Binary Arithmetic}
+
+You don't often need to do binary arithmetic directly, but you need to be very familiar with how it works because you will be designing digital circuits to carry it out. This work builds on the material covered in the lecture, and forms the basis for the next tutorial session. In the meantime, however, answers to the questions are at the end.
+
+\subsection*{Binary Addition}
+
+Computers work in the base-2 binary system, using only two digits, 0 and 1. Binary addition is carried out using a table like the one below.
+
+\begin{center}
+\begin{tabular}{c|cc}
+ + & 0 & 1 \\
+ \hline
+ 0 & 0 & 1 \\
+ 1 & 1 & 10
+\end{tabular}
+\end{center}
+
+E.g.
+Add
+\begin{align*}
+ & 0110 \\
+ & 0111 \\
+ & \underline{1101}
+\end{align*}
+
+\begin{enumerate}
+ \item $0 + 1 = 1$
+ \item $1 + 1 = 0$, with carry to next place
+ \item $1 + 1 + 1 = 1$, with carry to next place
+ \item $1 + 0 + 0 = 1$
+\end{enumerate}
+
+giving 1101.\\
+
+\textbf{Question 1.} Perform the following binary calculations. Identify any cases in which an 'overflow' occurs when the result is too large to fit into the available number of bits (think of this as carrying over in addition/subtraction).\\
+
+\begin{align*}
+ & 01001001 \\
+ & 01011001 \\
+ & \underline{+\;\;\;\;\;\;\;\;\;\;}
+\end{align*}
+
+\begin{align*}
+ & 10110010 \\
+ & 01101110 \\
+ & \underline{+\;\;\;\;\;\;\;\;\;\;}
+\end{align*}
+
+\begin{align*}
+ & 00101101 \\
+ & 01111000 \\
+ & \underline{+\;\;\;\;\;\;\;\;\;\;}
+\end{align*}
+
+\subsection*{Binary - Decimal Conversion}\\
+
+Converting between the two bases is tedious, but you should understand the procedure.\\
+
+Recall the decimal equivalents of the weighting of each bit position, which increase in powers of 2. The weightings of each 1 bit are added to give the result.\\
+
+E.g., the binary value 10110101 represents\\
+\begin{align*}
+ & 1 \times 2^7 + 0 \times 2^6 + 1 \times 2^5 + 1 \times 2^4 + 0 \times 2^3 + 1 \times 2^2 + 0 \times 2^1 + 1 \times 2^0 \\
+ & = 1 \times 128 + 0 \times 64 + 1 \times 32 + 1 \times 16 + 0 \times 8 + 1 \times 4 + 0 \times 2 + 1 \times 1 \\
+ & = 181 \text{ (decimal)}
+\end{align*}
+
+\textbf{Question 2.} Convert the following binary numbers to decimal.
+
+\begin{enumerate}
+ \item 00101111
+ \item 01011010
+\end{enumerate}
+
+Converting from decimal to binary is less straightforward. The example below shows how it can be done
+
+E.g., to convert 57 (decimal) to binary
+\begin{align*}
+ & 2^5 \text{ (32)} \le 57 \\
+ & 2^4 \text{ (16)} \le 25 \\
+ & 2^3 \text{ (8)} \le 9 \\
+ & 2^2 \text{ (4)} > 1 \\
+ & 2^1 \text{ (2)} > 1 \\
+ & 2^0 \text{ (1)} \le 1
+\end{align*}
+
+Set $2^5$ to 1, set $2^4$ to 1, set $2^3$ to 1, set $2^2$ to 0, set $2^1$ to 0, set $2^0$ to 1, subtract 32, subtract 16, subtract 8, subtract 1, rem 0.
+
+The binary equivalent is 111001.
+
+\textbf{Question 3.} Convert the following decimal numbers to binary.
+
+\begin{enumerate}
+ \item 23
+ \item 140
+\end{enumerate}
+
+\subsection*{Hexadecimal}
+
+Computers operate using binary (base-2). Normally, in user interfaces like spreadsheets or programming languages such as C, binary numbers are converted to decimals before displaying them. Users can input decimals, which are then converted to binary for processing.
+
+At the engineering level, direct access to binary values is often necessary (you will learn about this during your C programming). However, dealing with long binary strings can lead to errors. Using decimals instead isn't feasible because there's no direct relationship between decimal and binary.
+
+Hexadecimal (base-16) provides a solution since 16 is a power of 2. Each group of four binary bits corresponds to one hexadecimal digit (0-9, A-F), making it easier to represent and understand binary patterns.
+
+\begin{center}
+\begin{tabular}{c|c}
+ Binary & Hexadecimal \\
+ \hline
+ 0000 & 0 \\
+ 0001 & 1 \\
+ 0010 & 2 \\
+ 0011 & 3 \\
+ 0100 & 4 \\
+ 0101 & 5 \\
+ 0110 & 6 \\
+ 0111 & 7 \\
+ 1000 & 8 \\
+ 1001 & 9 \\
+ 1010 & A \\
+ 1011 & B \\
+ 1100 & C \\
+ 1101 & D \\
+ 1110 & E \\
+ 1111 & F
+\end{tabular}
+\end{center}
+
+A string of binary digits is simply divided into groups of four, with straightforward conversion between groups and their hexadecimal equivalent.
+
+For example
+\begin{align*}
+ 1011\ 0011\ 1110\ 0000 \text{ (binary)} &\equiv B3E0 \text{ (hexadecimal)} \\
+ 39A5 \text{ (hexadecimal)} &\equiv 0011\ 1001\ 1010\ 0101 \text{ (binary)}
+\end{align*}
+
+\textbf{Question 4.}
+\begin{enumerate}
+ \item Convert $1111\ 1100$ (binary) to hexadecimal
+ \item Convert $0000\ 0101\ 1101\ 0001$ (binary) to hexadecimal
+ \item Convert $FB$ (hexadecimal) to binary
+ \item Convert $1A04$ (hexadecimal) to binary
+\end{enumerate}
+
+Although it is not strictly needed in this course, it is possible to do arithmetic directlyin hexadecimal. Consider the following.
+
+Count from zero through the first sixteen hexadecimal values up to F. What comes next?
+
+Now calculate
+\begin{align*}
+  & 01FF \\
+  & 0001 \\
+  & \underline{+\;\;\;\;\;\;\;\;\;\;}
+\end{align*}
+
+\begin{align*}
+  & 23 \\
+  & 4A \\
+  & \underline{+\;\;\;\;\;\;\;\;\;\;}
+\end{align*}
+
+\subsection*{Negative Numbers and Subtraction}
+
+Negative numbers in binary can be represented by adding an extra bit to indicate the sign (positive or negative). Circuits for subtraction can then be designed similarly to those for addition, but this approach has two main issues:\\
+
+Unlike addition, where the table shows the sum and carry for A + B, subtraction in binary shows the difference and borrow when subtracting B from A. For instance, if both A and B are 0, A - B equals 0, as per the subtraction table.\\
+
+For A = 0 and B = 1, akin to decimal subtraction, borrowing occurs from the next place. Thus, A - B equals 1, with a borrow from the adjacent place. This results in a complete subtraction table that operates on these principles.
+
+\begin{center}
+\begin{tabular}{c|cc}
+  - & 0 & 1 \\
+  \hline
+  0 & 0 & 1 \\
+  1 & 11 & 0
+\end{tabular}
+\end{center}
+
+To perform subtraction in binary, a computer would traditionally use separate circuits for addition and subtraction, doubling the hardware complexity. Applying standard arithmetic rules to negative numbers requires dynamic decision-making during operations. For example, when encountering an instruction like A + B, if A turns out to be -3 and B is 4, the operation would need to switch to subtraction (B - A) to yield the correct result of 4 - 3 = 1. This constant decision-making adds significant complexity to arithmetic operations.\\
+
+Due to these challenges, computers use an alternative method for handling negative numbers and performing subtraction using only addition operations. This method leverages the concept of two's complement representation, where negative numbers are represented by complementing the number (flipping the bits) and adding 1. This approach ensures that subtraction operations can be performed using the same circuits as addition, simplifying the hardware implementation.\\
+
+\begin{align*}
+  111 \\
+  001 \\
+  \underline{+\;\;\;\;\;\;\;\;\;\;}
+\end{align*}
+
+The result should be 1000 (decimal 8), but since we only have three bits, the result has overflowed and the counting has reset to 000 (decimal 0). Suppose, however, that instead of using the binary pattern 111 to represent 7, we use it to represent -1. The result of the addition we have just done is now actually correct: (-1) + 1 = 0.
+
+Extend this anticlockwise so that half the available values are negative, and half positive, as shown in the following diagram.
+
+\begin{center}
+\begin{tabular}{ccc}
+  000 (0) &       & 000 (0) \\
+  001 (1) & \ldots & 001 (1) \\
+          &       & 111 (-1) \\
+  111 (7) & \ldots & 110 (-2) \\
+  110 (6) &       & 010 (2) \\
+  010 (2) &       & 011 (3) \\
+  011 (3) &       & 101 (-3) \\
+  101 (5) &       & 100 (-4)
+\end{tabular}
+\end{center}
+
+This half +ve \\
+(L.H. bit = 0)
+
+This half -ve \\
+(L.H. bit = 1)
+
+Using this scheme for representing negative numbers, try some additions of negative numbers yourself. Remember to ignore any carry out from the LH end. For example:
+\begin{align*}
+  & 101 \\
+  & 010 \\
+  & \underline{+\;\;\;\;\;\;\;\;\;\;}
+\end{align*}
+
+\begin{align*}
+  & 110 \\
+  & 110 \\
+  & \underline{+\;\;\;\;\;\;\;\;\;\;}
+\end{align*}
+
+\begin{align*}
+  & 111 \\
+  & 011 \\
+  & \underline{+\;\;\;\;\;\;\;\;\;\;}
+\end{align*}
+
+Computers handle negative numbers using a method called two's complement. To perform subtraction, the computer negates (or complements) the number being subtracted and then adds it. For example, to represent -2 in binary, you flip the bits of +2 (010), which gives you 101, and then add 1, resulting in 110, which represents -2 in decimal.
+
+This process of flipping the bits and adding 1 is known as complementing the number. Negative numbers in two's complement arithmetic are represented this way, while positive numbers are represented in standard binary form. This approach simplifies arithmetic operations because the computer can perform subtraction using addition circuits, eliminating the need for dedicated subtraction hardware.
+
+\begin{align*}
+  & 01101100 \\
+  & 00101101 \\
+  & \underline{-\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;}
+\end{align*}
+
+Take the complement of the second value
+\begin{align*}
+  \text{invert } & 00101101 \\
+  \text{giving } & 11010010 \\
+  \text{add 1 } & 11010011
+\end{align*}
+
+Rewrite the subtraction as an addition of the complement
+\begin{align*}
+  & 01101100 \\
+  & 11010011 \\
+  & \underline{+\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;}
+\end{align*}
+
+\begin{align*}
+  & 00111111 \text{ (result)} \\
+  & \text{ignore carry out}
+\end{align*}
+
+To check, you could convert to decimals.
+\begin{align*}
+  & 01101100 \text{ (decimal 108)} \\
+  & 00101101 \text{ (decimal 45)} \\
+  & \underline{-\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;}\\
+  & 00111111 \text{ (decimal 63)}
+\end{align*}
+
+In two's complement representation, a negative number is identified by its leftmost (LH) bit being 1. However, the magnitude of a negative number is represented differently compared to its positive counterpart. For instance, while +3 is represented as 011 in binary, -3 is not represented as 111. To determine the magnitude of a negative number, you first complement it.\\
+
+For example, to convert the binary 2's complement value 10010000 to its positive equivalent:\\
+
+    Invert all bits: 10010000 becomes 01101111.\\
+    Add 1 to the inverted value: 01101111 + 1 = 01110000.\\
+
+Thus, the binary value 10010000 in 2's complement represents -112 in decimal, and its positive equivalent is 112.
+
+\begin{align*}
+  \text{invert } & 10010000 \\
+  \text{giving } & 01101111 \\
+  \text{add 1 } & 01110000
+\end{align*}
+
+and convert that to a decimal
+\begin{align*}
+  & 01110000 \text{ (decimal 112)}
+\end{align*}
+
+You can now try some examples.
+
+\textbf{Question 4.} Perform the following binary subtractions. Give the decimal equivalent of both values and the result.
+\begin{align*}
+  & 01001101 \\
+  & 00101100 \\
+  & \underline{-\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;}
+\end{align*}
+
+\begin{align*}
+  & 11010011 \\
+  & 10000111 \\
+  & \underline{-\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;}
+\end{align*}
+
+When you write a programme, you decide at the outset whether you will be using unsigned values that are always positive, or signed values that when negative, will be in 2's complement form. The computer makes no distinction between the two number schemes and will carry out exactly the same process in either case. The difference lies only in how you are interpreting the numbers. For example,
+
+\begin{center}
+\begin{tabular}{c|c|c}
+  & interpreted as & interpreted as \\
+  & unsigned positive & signed two's- \\
+  & values & complement \\
+  \hline
+  00111010 & 58 & 58 \\
+  10010001 & 145 & -111 \\
+  \hline
+  11001011 & 203 & -53
+\end{tabular}
+\end{center}
+
+\subsection*{Summary}
+
+Computers use binary addition following a set table. For human convenience, binary numbers are often shown in hexadecimal, where each digit covers four binary bits.
+
+There are two ways computers handle binary numbers: unsigned (for positive values) and signed 2's complement (for both positive and negative). In 2's complement, positive numbers start with 0, while negative numbers start with 1.
+
+Subtraction is done by flipping the bits of the number being subtracted (complementing) and then adding it. This means a subtraction command in programming translates to an addition operation in the computer, avoiding the need for separate subtraction circuitry.
+
+Computations handle numbers of any sign, producing correct results based on whether the operation uses signed or unsigned arithmetic.
+
+\subsection*{Answers}
+
+\textbf{1.} 10100010, 00100000 (overflow), 10100101
+
+\textbf{2.} 47, 90
+
+\textbf{3.} 00010111, 10001100
+
+\textbf{4.} FC, 05D1, 1111 1011, 0001 1010 0000 0100,
+
+After hexadecimal F comes 10, therefore 01FF + 1 = 0200, 6D.
+
+\textbf{5.} 00100001 (77 - 44 = 33), 01001100 ((-45) - (-121) = 76)
+
+
+    \section*{Gate Functions}
+    The following is a list of all the gates you are likely to encounter in practice, together with their Boolean definitions and truth tables. Unless otherwise noted, gates can have two or more inputs.
+
+    \subsection*{AND}
+    \begin{align*}
+        Z &= A \cdot B \text{ (often written } Z = AB)
+    \end{align*}
+
+    \begin{center}
+    \begin{tabular}{|c|c|c|}
+        \hline
+        A & B & Z \\
+        \hline
+        0 & 0 & 0 \\
+        0 & 1 & 0 \\
+        1 & 0 & 0 \\
+        1 & 1 & 1 \\
+        \hline
+    \end{tabular}
+    \end{center}
+
+    Yields an output 1 if all its inputs are 1.
+
+    \begin{center}
+    \begin{circuitikz} 
+        \draw
+        (0,0) node[and port] (and) {}
+        (and.in 1) node[left] {A}
+        (and.in 2) node[left] {B}
+        (and.out) node[right] {Z};
+    \end{circuitikz}
+    \end{center}
+
+    \subsection*{OR}
+    \begin{align*}
+        Z &= A + B
+    \end{align*}
+
+    \begin{center}
+    \begin{tabular}{|c|c|c|}
+        \hline
+        A & B & Z \\
+        \hline
+        0 & 0 & 0 \\
+        0 & 1 & 1 \\
+        1 & 0 & 1 \\
+        1 & 1 & 1 \\
+        \hline
+    \end{tabular}
+    \end{center}
+
+    Yields an output 1 if one or the other, or both, its inputs are 1; in other words, if at least one of its inputs is 1.
+
+    \begin{center}
+    \begin{circuitikz} 
+        \draw
+        (0,0) node[or port] (or) {}
+        (or.in 1) node[left] {A}
+        (or.in 2) node[left] {B}
+        (or.out) node[right] {Z};
+    \end{circuitikz}
+    \end{center}
+
+    \subsection*{NOT}
+    \begin{align*}
+        Z &= \overline{A}
+    \end{align*}
+
+    \begin{center}
+    \begin{tabular}{|c|c|}
+        \hline
+        A & Z \\
+        \hline
+        0 & 1 \\
+        1 & 0 \\
+        \hline
+    \end{tabular}
+    \end{center}
+
+    Also called an inverter. By definition, the NOT has only one input.
+
+    \begin{center}
+    \begin{circuitikz} 
+        \draw
+        (0,0) node[not port] (not) {}
+        (not.in) node[left] {A}
+        (not.out) node[right] {Z};
+    \end{circuitikz}
+    \end{center}
+
+    \subsection*{OR-EXCLUSIVE}
+    \begin{align*}
+        Z &= A \oplus B
+    \end{align*}
+
+    \begin{center}
+    \begin{tabular}{|c|c|c|}
+        \hline
+        A & B & Z \\
+        \hline
+        0 & 0 & 0 \\
+        0 & 1 & 1 \\
+        1 & 0 & 1 \\
+        1 & 1 & 0 \\
+        \hline
+    \end{tabular}
+    \end{center}
+
+    Gives an output 1 if one or the other, but not both, of its inputs is 1; that is, if exactly one input is 1. By definition, it always has two inputs.
+
+    \begin{center}
+    \begin{circuitikz} 
+        \draw
+        (0,0) node[xor port] (xor) {}
+        (xor.in 1) node[left] {A}
+        (xor.in 2) node[left] {B}
+        (xor.out) node[right] {Z};
+    \end{circuitikz}
+    \end{center}
+
+    \subsection*{NAND}
+    \begin{align*}
+        Z &= \overline{A \cdot B}
+    \end{align*}
+
+    \begin{center}
+    \begin{tabular}{|c|c|c|}
+        \hline
+        A & B & Z \\
+        \hline
+        0 & 0 & 1 \\
+        0 & 1 & 1 \\
+        1 & 0 & 1 \\
+        1 & 1 & 0 \\
+        \hline
+    \end{tabular}
+    \end{center}
+
+    The inverse of AND.
+
+    \begin{center}
+    \begin{circuitikz} 
+        \draw
+        (0,0) node[nand port] (nand) {}
+        (nand.in 1) node[left] {A}
+        (nand.in 2) node[left] {B}
+        (nand.out) node[right] {Z};
+    \end{circuitikz}
+    \end{center}
+
+    \subsection*{NOR}
+    \begin{align*}
+        Z &= \overline{A + B}
+    \end{align*}
+
+    \begin{center}
+    \begin{tabular}{|c|c|c|}
+        \hline
+        A & B & Z \\
+        \hline
+        0 & 0 & 1 \\
+        0 & 1 & 0 \\
+        1 & 0 & 0 \\
+        1 & 1 & 0 \\
+        \hline
+    \end{tabular}
+    \end{center}
+
+    The inverse of OR.
+
+    \begin{center}
+    \begin{circuitikz} 
+        \draw
+        (0,0) node[nor port] (nor) {}
+        (nor.in 1) node[left] {A}
+        (nor.in 2) node[left] {B}
+        (nor.out) node[right] {Z};
+    \end{circuitikz}
+    \end{center}
+
+    \section*{Exercise}
+    \begin{enumerate}
+        \item Write down the Boolean expression, and draw the truth table, for the following function.
+        \begin{center}
+        \begin{circuitikz}
+            \draw
+            (0,0) node[nor port] (nor) {}
+            (nor.in 1) node[left] {A}
+            (nor.in 2) node[left] {B}
+            (nor.out) node[right] {Z};
+        \end{circuitikz}
+        \end{center}
+        This network may be simplified to a single gate. From the truth table, identify which of the gates shown earlier is equivalent to this function.
+        
+        \item The following Boolean expression may also be simplified to a single gate. Draw its truth table and identify the simplified equivalent.
+        \begin{align*}
+            Z &= A + \overline{B}
+        \end{align*}
+
+        \begin{center}
+        \begin{tabular}{|c|c|c|}
+            \hline
+            A & B & Z \\
+            \hline
+            0 & 0 & 1 \\
+            0 & 1 & 0 \\
+            1 & 0 & 1 \\
+            1 & 1 & 1 \\
+            \hline
+        \end{tabular}
+        \end{center}
+
+        \item By drawing its truth table, simplify the following function.
+        \begin{align*}
+            Z &= \overline{\overline{A + B} \cdot C}
+        \end{align*}
+
+        \begin{center}
+        \begin{tabular}{|c|c|c|c|}
+            \hline
+            A & B & C & Z \\
+            \hline
+            0 & 0 & 0 & 1 \\
+            0 & 0 & 1 & 1 \\
+            0 & 1 & 0 & 1 \\
+            0 & 1 & 1 & 1 \\
+            1 & 0 & 0 & 1 \\
+            1 & 0 & 1 & 1 \\
+            1 & 1 & 0 & 0 \\
+            1 & 1 & 1 & 0 \\
+            \hline
+        \end{tabular}
+        \end{center}
+
+        This function may be simplified to a single AND gate.
+        \begin{align*}
+            Z &= A \cdot B \cdot C \cdot D
+        \end{align*}
+
+        \begin{center}
+        \begin{circuitikz}
+            \draw
+            (0,0) node[and port] (and) {}
+            (and.in 1) node[left] {A}
+            (and.in 2) node[left] {B}
+            (and.out) node[right] {Z};
+        \end{circuitikz}
+        \end{center}
+
+        \begin{center}
+        \begin{tabular}{|c|c|c|c|c|}
+            \hline
+            A & B & C & D & Z \\
+            \hline
+            0 & 0 & 0 & 0 & 0 \\
+            0 & 0 & 0 & 1 & 0 \\
+            0 & 0 & 1 & 0 & 0 \\
+            0 & 0 & 1 & 1 & 0 \\
+            0 & 1 & 0 & 0 & 0 \\
+            0 & 1 & 0 & 1 & 0 \\
+            0 & 1 & 1 & 0 & 0 \\
+            0 & 1 & 1 & 1 & 0 \\
+            1 & 0 & 0 & 0 & 0 \\
+            1 & 0 & 0 & 1 & 0 \\
+            1 & 0 & 1 & 0 & 0 \\
+            1 & 0 & 1 & 1 & 0 \\
+            1 & 1 & 0 & 0 & 0 \\
+            1 & 1 & 0 & 1 & 0 \\
+            1 & 1 & 1 & 0 & 0 \\
+            1 & 1 & 1 & 1 & 1 \\
+            \hline
+        \end{tabular}
+        \end{center}
+
+    \end{enumerate}
+
+\section{Introduction to Combinational Logic and Boolean Algebra}
+
+Combinational logic refers to circuits whose output is a pure function of the present input only. Unlike sequential logic, it has no memory or feedback loops. Boolean algebra is the mathematical framework used to analyze and simplify these logic circuits.
+
+\section{Boolean Algebra}
+
+Boolean algebra involves variables that take on binary values (0 and 1) and includes operations such as AND, OR, and NOT. These operations are analogous to multiplication, addition, and negation in conventional algebra.
+
+\subsection{Distribution Theorem}
+
+The distribution theorem states:
+\[
+A(B + C) = AB + AC
+\]
+\[
+A + (BC) = (A + B)(A + C)
+\]
+
+\subsubsection{Example}
+
+Simplify the expression \( A(B + \overline{C}) \).
+
+\begin{align*}
+A(B + \overline{C}) &= AB + A\overline{C} \quad \text{(Distribution)} \\
+\end{align*}
+
+\subsection{Complement Theorem}
+
+The complement theorem states:
+\[
+A + \overline{A} = 1
+\]
+\[
+A \cdot \overline{A} = 0
+\]
+
+\subsubsection{Example}
+
+Simplify the expression \( A + \overline{A}B \).
+
+\begin{align*}
+A + \overline{A}B &= A + B \quad \text{(Complement: } A + \overline{A} = 1 \text{)}
+\end{align*}
+
+\section{De Morgan's Laws}
+
+De Morgan's laws provide a way to distribute negation over AND and OR operations:
+\[
+\overline{A \cdot B} = \overline{A} + \overline{B}
+\]
+\[
+\overline{A + B} = \overline{A} \cdot \overline{B}
+\]
+
+\subsubsection{Example}
+
+Simplify the expression \( \overline{A \cdot B} \).
+
+\begin{align*}
+\overline{A \cdot B} &= \overline{A} + \overline{B} \quad \text{(De Morgan's Law)}
+\end{align*}
+
+\section{Commutation and Association}
+
+\subsection{Commutation Theorem}
+
+The commutation theorem states:
+\[
+A + B = B + A
+\]
+\[
+A \cdot B = B \cdot A
+\]
+
+\subsubsection{Example}
+
+Simplify the expression \( A + B \cdot C \).
+
+\begin{align*}
+A + B \cdot C &= A + C \cdot B \quad \text{(Commutation)}
+\end{align*}
+
+\subsection{Association Theorem}
+
+The association theorem states:
+\[
+(A + B) + C = A + (B + C)
+\]
+\[
+(A \cdot B) \cdot C = A \cdot (B \cdot C)
+\]
+
+\subsubsection{Example}
+
+Simplify the expression \( (A + B) + C \).
+
+\begin{align*}
+(A + B) + C &= A + (B + C) \quad \text{(Association)}
+\end{align*}
+
+\section{Idempotency and Redundancy Theorems}
+
+\subsection{Idempotency Theorem}
+
+The idempotency theorem states:
+\[
+A + A = A
+\]
+\[
+A \cdot A = A
+\]
+
+\subsubsection{Example}
+
+Simplify the expression \( A + A \cdot B \).
+
+\begin{align*}
+A + A \cdot B &= A \quad \text{(Idempotency)}
+\end{align*}
+
+\subsection{Redundancy Theorem}
+
+The redundancy theorem states:
+\[
+A + A\overline{B} = A + B
+\]
+\[
+A(A + B) = A
+\]
+
+\subsubsection{Example}
+
+Simplify the expression \( A + A\overline{B} \).
+
+\begin{align*}
+A + A\overline{B} &= A \quad \text{(Redundancy)}
+\end{align*}
+
+\section{Simplifying Logic Networks}
+
+\subsection{Example 1: Simple Network}
+
+Simplify \( A \cdot (A + B) \).
+
+\begin{align*}
+A \cdot (A + B) &= A \cdot A + A \cdot B \quad \text{(Distribution)} \\
+                &= A + A \cdot B \quad \text{(Idempotency)} \\
+                &= A \quad \text{(Absorption)}
+\end{align*}
+
+\subsection{Example 2: Intermediate Network}
+
+Simplify \( A \cdot \overline{A} + B \cdot (A + \overline{A}C) \).
+
+\begin{align*}
+A \cdot \overline{A} + B \cdot (A + \overline{A}C) &= 0 + B \cdot (A + C) \quad \text{(Complement)} \\
+                                                   &= B \cdot A + B \cdot C \quad \text{(Distribution)}
+\end{align*}
+
+\subsection{Example 3: Complex Network}
+
+Simplify \( (A + B)(\overline{A} + B) + A\overline{B} \).
+
+\begin{align*}
+(A + B)(\overline{A} + B) + A\overline{B} &= A\overline{A} + AB + B\overline{A} + BB + A\overline{B} \quad \text{(Distribution)} \\
+    &= 0 + AB + B\overline{A} + B + A\overline{B} \quad \text{(Complement)} \\
+    &= AB + B\overline{A} + B + A\overline{B} \quad \text{(Identity)} \\
+    &= B + A\overline{B} \quad \text{(Absorption)}
+\end{align*}
+
+\vfill
+\end{document}
+
