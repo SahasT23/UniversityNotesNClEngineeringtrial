@@ -1,0 +1,334 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{circuitikz}
+
+\title{Frequency Modulation and Demodulation}
+\author{Newcastle University}
+
+\begin{document}
+\maketitle
+
+\section{Angle Modulation: Frequency Modulation}
+Consider the general carrier signal:
+\[
+v_s(t) = V_c \cos\left( 2\pi f_c t + \phi \right)
+\]
+Where \( \phi \) is the phase of the carrier. There are two ways to vary the angle of the carrier:
+\begin{itemize}
+    \item Frequency Modulation (FM): Varying \( f_c \)
+    \item Phase Modulation (PM): Varying \( \phi \)
+\end{itemize}
+
+\section{Frequency Modulation}
+In FM, the message signal \( m(t) \) controls the carrier frequency \( f_c \). The FM carrier can be expressed as:
+\[
+v_s(t) = V_c \cos \left( 2\pi (f_c + \Delta f m(t)) t \right)
+\]
+Where the frequency deviation \( \Delta f \) depends on the message signal \( m(t) \).
+
+The instantaneous frequency \( f_i \) is given by:
+\[
+f_i(t) = f_c + \Delta f \cdot m(t)
+\]
+The modulation index \( \beta \) is:
+\[
+\beta = \frac{\Delta f}{f_m}
+\]
+Where \( f_m \) is the frequency of the modulating signal.
+
+\section{FM Spectrum}
+An FM signal can be expanded using a Bessel series:
+\[
+v_s(t) = V_c \sum_{n=-\infty}^{\infty} J_n(\beta) \cos\left(2\pi (f_c + nf_m) t \right)
+\]
+Where \( J_n(\beta) \) are Bessel functions of the first kind. The spectrum of an FM signal contains a carrier component and sidebands at frequencies \( f_c \pm nf_m \).
+
+\section{Carson's Rule for Bandwidth}
+The bandwidth of an FM signal is approximated by Carson's Rule:
+\[
+\text{Bandwidth} = 2(\Delta f + f_m)
+\]
+This ensures that 98\% of the total power in the FM signal is included within this bandwidth.
+
+\section{FM Modulator Circuit}
+\begin{figure}[h]
+\centering
+\begin{circuitikz}
+\draw (0,0) node[op amp] (opamp) {}
+    (opamp.-) to[short] (opamp.-) ++(-1,0) node[ground]{}
+    (opamp.out) to[short] ++(2,0) to[short] ++(0,-2) node[ground]{}
+    (opamp.+) -- ++(-1,0) to[R=$R$] ++(0,-2) node[ground]{}
+    (opamp.-) -- ++(0,-2) to[R=$R$] ++(0,-2) node[ground]{};
+\end{circuitikz}
+\caption{FM modulator}
+\end{figure}
+
+\section{Narrowband and Wideband FM}
+FM with a small modulation index \( \beta \leq 0.3 \) is referred to as Narrowband FM (NBFM). In this case, there are only two significant sidebands, and the bandwidth is approximately \( 2f_m \).
+
+For \( \beta > 0.3 \), the number of sidebands increases and the signal is referred to as Wideband FM (WBFM). In this case, the bandwidth is significantly larger, following Carson's Rule.
+
+\section{FM Signal Generation: VCO and V/F Converters}
+A voltage-controlled oscillator (VCO) or a voltage-to-frequency (V/F) converter can be used to generate FM signals. In these devices, the output frequency depends on the input voltage amplitude.
+
+\subsection{V/F Characteristics}
+The output frequency \( f_{\text{OUT}} \) is proportional to the input voltage:
+\[
+f_{\text{OUT}} = f_c + \alpha V_{\text{IN}}
+\]
+Where \( \alpha \) is the frequency conversion factor (Hz/V).
+
+\section{Power in FM Signals}
+The power in an FM signal is determined by the carrier amplitude \( V_c \) and the Bessel functions. The total power is given by:
+\[
+P_T = \frac{V_c^2}{2R_L} = \sum_{n=-\infty}^{\infty} \frac{V_c^2 J_n(\beta)^2}{2R_L}
+\]
+Where \( R_L \) is the load resistance and \( J_n(\beta) \) are the Bessel functions.
+
+\section{FM Signal Spectrum}
+The spectrum of an FM signal includes sidebands at frequencies \( f_c \pm nf_m \), where \( n \) is an integer, and the amplitudes are given by the Bessel functions \( J_n(\beta) \). Sidebands with \( J_n(\beta) < 0.01 \) are considered insignificant and can be ignored.
+
+\section{Carson’s Rule for FM Bandwidth}
+The bandwidth of an FM signal is approximately:
+\[
+\text{Bandwidth} = 2(\Delta f + f_m)
+\]
+This ensures that 98\% of the total power is contained within this bandwidth.
+
+\section{Balanced Discriminator}
+A balanced discriminator can demodulate both narrowband and wideband FM signals. The frequency response of a balanced discriminator has a characteristic “S” shape, which ensures a large linear region around the carrier frequency.
+
+\subsection{Balanced Discriminator Circuit}
+\begin{figure}[h]
+\centering
+\begin{circuitikz}
+\draw (0,0) node[op amp] (opamp) {}
+    (opamp.-) to[short] (opamp.-) ++(-1,0) node[ground]{}
+    (opamp.out) to[short] ++(2,0) to[short] ++(0,-2) node[ground]{}
+    (opamp.+) -- ++(-1,0) to[R=$R$] ++(0,-2) node[ground]{}
+    (opamp.-) -- ++(0,-2) to[R=$R$] ++(0,-2) node[ground]{};
+\end{circuitikz}
+\caption{Balanced Discriminator Circuit}
+\end{figure}
+
+\section{FM Demodulation: General Principles}
+An FM demodulator is a frequency-to-voltage (F/V) converter, which outputs a voltage proportional to the input frequency.
+
+The output voltage \( V_{\text{OUT}} \) is:
+\[
+V_{\text{OUT}} = V_0 + K(f_{\text{IN}} - f_c)
+\]
+Where \( K \) is the voltage conversion factor (V/Hz).
+
+\subsection{Slope Detection}
+Slope detection is a method to demodulate FM signals by converting FM into AM. The amplitude of the output varies linearly with the deviation from the carrier frequency.
+
+\subsection{Balanced Discriminators}
+Balanced discriminators are more complex than slope detectors, with a larger linear region in the frequency response. This allows them to demodulate both narrowband and wideband FM signals.
+
+\section{Summary of Frequency Modulation and Demodulation}
+\begin{itemize}
+    \item Frequency modulation (FM) is the process of varying the carrier frequency based on the message signal amplitude.
+    \item FM signals have a carrier component and an infinite number of sidebands.
+    \item The modulation index \( \beta \) controls the number of significant sidebands.
+    \item The power in an FM signal is distributed across the carrier and sidebands.
+    \item FM demodulation converts frequency variations back into the original message signal.
+\end{itemize}
+
+\section{Distortion in FM Signals}
+Distortion in FM signals can be defined as:
+\[
+D = \frac{P_T - P_{\text{BL}}}{P_T}
+\]
+Where \( P_T \) is the total power and \( P_{\text{BL}} \) is the power in the band-limited spectrum.
+
+\section{FM Modulator: V/F Converter}
+A voltage-to-frequency (V/F) converter is an essential component in generating an FM signal. The output frequency is linearly dependent on the input voltage. The relationship can be expressed as:
+\[
+f_{\text{OUT}} = f_c + \alpha V_{\text{IN}}
+\]
+Where:
+\begin{itemize}
+    \item \( f_c \) is the undeviated or nominal carrier frequency.
+    \item \( \alpha \) is the frequency conversion factor (Hz/V).
+\end{itemize}
+
+\subsection{V/F Characteristics}
+The characteristic of a V/F converter is a straight line where the output frequency varies with the input voltage:
+\[
+f_{\text{OUT}} = f_c + \alpha m(t)
+\]
+Where \( m(t) \) is the message signal.
+
+For a message input, the output frequency varies from \( f_{\text{MAX}} \) to \( f_{\text{MIN}} \). The peak frequency deviation \( \Delta f_c \) is:
+\[
+\Delta f_c = \alpha V_m
+\]
+Where \( V_m \) is the peak amplitude of the input message signal.
+
+\section{FM Signal Waveforms}
+The output frequency \( f_{\text{OUT}} \) varies gradually between the maximum \( f_{\text{MAX}} \) and minimum \( f_{\text{MIN}} \) frequencies, passing through \( f_c \).
+
+The instantaneous frequency is expressed as:
+\[
+f_{\text{i}}(t) = f_c + \Delta f \sin(2\pi f_m t)
+\]
+Where \( f_m \) is the message frequency.
+
+\section{Power in Band-Limited FM Signals}
+For a band-limited FM signal with \( \beta = 0.2 \), the total power in the infinite spectrum is:
+\[
+P_T = \frac{V_c^2}{2R_L}
+\]
+However, only the carrier and two sidebands are significant in this case. The power in these significant components is given by:
+\[
+P_{\text{BL}} = V_c^2 \left[ J_0(\beta)^2 + 2 J_1(\beta)^2 \right] 
+\]
+Using values from the Bessel table:
+\[
+J_0(0.2) = 0.990, \quad J_1(0.2) = 0.0995
+\]
+The distortion in the FM signal is then calculated as:
+\[
+D = 1 - \frac{P_{\text{BL}}}{P_T}
+\]
+
+\section{FM Demodulation}
+Demodulation of FM signals is achieved by converting frequency variations back into a voltage signal that mirrors the original message signal. This is typically done using a frequency-to-voltage (F/V) converter.
+
+\subsection{General Principles of Demodulation}
+An F/V converter outputs a voltage \( V_{\text{OUT}} \) proportional to the input frequency \( f_{\text{IN}} \):
+\[
+V_{\text{OUT}} = V_0 + K(f_{\text{IN}} - f_c)
+\]
+Where:
+\begin{itemize}
+    \item \( V_0 \) is the DC offset.
+    \item \( K \) is the voltage conversion factor (V/Hz).
+\end{itemize}
+
+\subsection{Balanced Discriminator}
+A balanced discriminator splits the incoming signal into two parts, each tuned to frequencies slightly above and below the carrier frequency. The difference in output from the two branches is proportional to the message signal.
+
+The voltage output is:
+\[
+V_{\text{OUT}} = V_U + V_L
+\]
+Where \( V_U \) and \( V_L \) are the voltages from the upper and lower branches, respectively.
+
+\begin{figure}[h]
+\centering
+\begin{circuitikz}
+\draw (0,0) node[op amp] (opamp) {}
+    (opamp.-) to[short] (opamp.-) ++(-1,0) node[ground]{}
+    (opamp.out) to[short] ++(2,0) to[short] ++(0,-2) node[ground]{}
+    (opamp.+) -- ++(-1,0) to[R=$R$] ++(0,-2) node[ground]{}
+    (opamp.-) -- ++(0,-2) to[R=$R$] ++(0,-2) node[ground]{};
+\end{circuitikz}
+\caption{Balanced Discriminator Circuit}
+\end{figure}
+
+\section{Slope Detection}
+Slope detection converts frequency-modulated signals to amplitude-modulated signals. A tuned circuit is set so that the carrier frequency lies on the slope of the circuit's frequency response. The output amplitude varies in proportion to the deviation from the carrier frequency, converting FM into AM.
+
+\subsection{Slope Detector Circuit}
+\begin{figure}[h]
+\centering
+\begin{circuitikz}
+\draw (0,0) node[op amp] (opamp) {}
+    (opamp.-) to[short] (opamp.-) ++(-1,0) node[ground]{}
+    (opamp.out) to[short] ++(2,0) to[short] ++(0,-2) node[ground]{}
+    (opamp.+) -- ++(-1,0) to[R=$R$] ++(0,-2) node[ground]{}
+    (opamp.-) -- ++(0,-2) to[R=$R$] ++(0,-2) node[ground]{};
+\end{circuitikz}
+\caption{Slope Detector Circuit}
+\end{figure}
+
+\section{Balanced Discriminators vs. Slope Detectors}
+Balanced discriminators have a larger linear region than slope detectors, allowing them to handle wideband FM signals without distortion.
+
+\section{Summary}
+\begin{itemize}
+    \item Frequency modulation (FM) involves varying the carrier frequency in response to a message signal.
+    \item FM signals contain a carrier and multiple sidebands.
+    \item The bandwidth of an FM signal can be approximated using Carson’s Rule.
+    \item FM demodulation converts frequency variations back into the original message signal.
+    \item Balanced discriminators and slope detectors are two common methods for demodulating FM signals, with the former offering a larger linear range.
+\end{itemize}
+
+\section{Distortion in FM Signals}
+Distortion in FM signals can be quantified as:
+\[
+D = 1 - \frac{P_{\text{BL}}}{P_T}
+\]
+Where:
+\begin{itemize}
+    \item \( P_T \) is the total power in the infinite spectrum.
+    \item \( P_{\text{BL}} \) is the power in the band-limited spectrum.
+\end{itemize}
+
+For a band-limited FM signal, the number of significant sideband pairs \( a \) depends on the modulation index \( \beta \). The distortion can be calculated using the Bessel function values.
+
+\subsection{Example}
+Consider a narrowband FM (NBFM) signal with \( \beta = 0.2 \). The Bessel function values are:
+\[
+J_0(0.2) = 0.990, \quad J_1(0.2) = 0.0995
+\]
+Then the distortion is:
+\[
+D = 1 - (0.990^2 + 2 \times 0.0995^2) = 0.00999
+\]
+
+\section{Balanced Discriminator for FM Demodulation}
+A balanced discriminator uses two branches tuned to slightly different frequencies \( f_1 \) and \( f_2 \) on either side of the carrier frequency \( f_c \). The output is the difference in voltages across load resistors:
+\[
+V_{\text{OUT}} = V_U + V_L
+\]
+
+\begin{figure}[h]
+\centering
+\begin{circuitikz}
+\draw (0,0) node[op amp] (opamp) {}
+    (opamp.-) to[short] (opamp.-) ++(-1,0) node[ground]{}
+    (opamp.out) to[short] ++(2,0) to[short] ++(0,-2) node[ground]{}
+    (opamp.+) -- ++(-1,0) to[R=$R$] ++(0,-2) node[ground]{}
+    (opamp.-) -- ++(0,-2) to[R=$R$] ++(0,-2) node[ground]{};
+\end{circuitikz}
+\caption{Balanced Discriminator Circuit}
+\end{figure}
+
+\section{FM Signal Spectrum}
+The FM signal spectrum consists of a carrier component and sidebands at frequencies \( f_c \pm n f_m \). The amplitudes are determined by the Bessel functions \( J_n(\beta) \).
+
+\subsection{Carson’s Rule for FM Bandwidth}
+Carson’s rule approximates the bandwidth of an FM signal as:
+\[
+\text{Bandwidth} = 2(\Delta f + f_m)
+\]
+This includes the carrier frequency and the significant sidebands.
+
+\section{Slope Detection}
+Slope detection is used to convert frequency variations in FM signals into amplitude variations, effectively converting FM into AM. The output amplitude is proportional to the deviation from the carrier frequency.
+
+\begin{figure}[h]
+\centering
+\begin{circuitikz}
+\draw (0,0) node[op amp] (opamp) {}
+    (opamp.-) to[short] (opamp.-) ++(-1,0) node[ground]{}
+    (opamp.out) to[short] ++(2,0) to[short] ++(0,-2) node[ground]{}
+    (opamp.+) -- ++(-1,0) to[R=$R$] ++(0,-2) node[ground]{}
+    (opamp.-) -- ++(0,-2) to[R=$R$] ++(0,-2) node[ground]{};
+\end{circuitikz}
+\caption{Slope Detection Circuit}
+\end{figure}
+
+\section{Power in FM Signals}
+The total power in an FM signal can be calculated as:
+\[
+P_T = \sum_{n=-\infty}^{\infty} \frac{V_c^2 J_n(\beta)^2}{2R_L}
+\]
+Where \( V_c \) is the carrier amplitude and \( J_n(\beta) \) are Bessel functions of the first kind.
+
+For a narrowband FM signal with \( \beta = 0.2 \), the significant components are \( J_0(0.2) \) and \( J_1(0.2) \). The total power is distributed across the carrier and sidebands.
+
+\end{document}
