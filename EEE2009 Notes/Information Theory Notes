@@ -1,0 +1,304 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{geometry}
+\geometry{a4paper, margin=1in}
+
+\title{EEE2009 - Signals and Communications II: Information Theory}
+\author{Your Name}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\section{Introduction to Information Theory}
+Communications involves transmitting an information-bearing signal from one location to another over a channel. Claude Shannon introduced the field in 1948, with applications in communications, computer science, physics, and many other areas. Information theory helps determine how much we can compress a signal and the maximum transmission rate over a noisy channel for reliable communication.
+
+\section{Basic Digital Communication System}
+The basic digital communication system includes components such as source encoder, channel encoder, modulator, demodulator, channel decoder, and source decoder. The source encoder minimizes redundancy, while the channel encoder adds redundant bits for error detection and correction.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\linewidth]{communication_system}
+    \caption{Basic Digital Communication System}
+\end{figure}
+
+\section{Binary Symmetric Channel (BSC)}
+The Binary Symmetric Channel is a discrete memoryless channel where each received bit is independent of other bits. The transition probabilities can be described using Bayes' theorem:
+
+\[
+P(X|Y) = \frac{P(X)P(Y|X)}{P(Y)}
+\]
+
+Given a BSC with error probability \(p = 0.2\), the received bit probabilities \(P(Y=0)\) and \(P(Y=1)\), as well as the backward transition probabilities, can be calculated.
+
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}
+        \node (x0) at (0,0) {0};
+        \node (x1) at (0,-2) {1};
+        \node (y0) at (3,0) {0};
+        \node (y1) at (3,-2) {1};
+        
+        \draw[->] (x0) -- node[above] {$1-p$} (y0);
+        \draw[->] (x0) -- node[below] {$p$} (y1);
+        \draw[->] (x1) -- node[above] {$p$} (y0);
+        \draw[->] (x1) -- node[below] {$1-p$} (y1);
+    \end{tikzpicture}
+    \caption{Binary Symmetric Channel Diagram}
+\end{figure}
+
+\section{Binary Erasure Channel (BEC)}
+In the Binary Erasure Channel, an erasure bit \(e\) represents uncertainty, i.e., the bit is labeled as unreliable.
+
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}
+        \node (x0) at (0,0) {0};
+        \node (x1) at (0,-2) {1};
+        \node (y0) at (3,0) {0};
+        \node (y1) at (3,-2) {1};
+        \node (e) at (3,-4) {e};
+
+        \draw[->] (x0) -- node[above] {$1-p$} (y0);
+        \draw[->] (x0) -- node[below] {$p$} (e);
+        \draw[->] (x1) -- node[above] {$p$} (e);
+        \draw[->] (x1) -- node[below] {$1-p$} (y1);
+    \end{tikzpicture}
+    \caption{Binary Erasure Channel Diagram}
+\end{figure}
+
+\section{Information and Entropy}
+Shannon's measure of information for a symbol \(X_i\) is defined as:
+
+\[
+I(X_i) = \log_2 \left( \frac{1}{P(X_i)} \right) \text{ bits}
+\]
+
+Entropy is the average amount of information in a message:
+
+\[
+H(X) = \sum_{i=1}^{M} P(X_i) \log_2 \left( \frac{1}{P(X_i)} \right)
+\]
+
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}
+        \begin{axis}[
+            xlabel={$p$}, ylabel={$H(p)$},
+            domain=0:1, samples=100, smooth, thick]
+            \addplot {(-x*log2(x) - (1-x)*log2(1-x))};
+        \end{axis}
+    \end{tikzpicture}
+    \caption{Entropy of a Binary Source as a Function of \(p\)}
+\end{figure}
+
+\section{Conditional Entropy and Mutual Information}
+Conditional entropy is defined as:
+
+\[
+H(X|Y) = \sum_{j=1}^{N} P(y_j) H(X|Y=y_j)
+\]
+
+Mutual information is the reduction in uncertainty about \(X\) after observing \(Y\):
+
+\[
+I(X,Y) = H(X) - H(X|Y)
+\]
+
+\section{Channel Capacity}
+The capacity of a channel is the maximum rate at which information can be transmitted error-free, measured in bits per second (bps). For a Binary Symmetric Channel (BSC), the capacity is given by:
+
+\[
+C = 1 - H(p)
+\]
+
+For a Binary Erasure Channel (BEC), the capacity is:
+
+\[
+C = 1 - p
+\]
+
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}
+        \begin{axis}[
+            xlabel={$p$}, ylabel={Capacity},
+            legend pos=north west]
+            \addplot[thick, blue] {1 - (-x*log2(x) - (1-x)*log2(1-x))};
+            \addlegendentry{BSC Capacity}
+            \addplot[thick, red, dashed] {1 - x};
+            \addlegendentry{BEC Capacity}
+        \end{axis}
+    \end{tikzpicture}
+    \caption{Comparison of BSC and BEC Channel Capacities}
+\end{figure}
+
+\section{Source Coding and Huffman Coding}
+Source coding aims to represent symbols as binary codewords with minimal redundancy. Huffman coding is a popular algorithm for creating variable-length codes based on the symbol probabilities.
+
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}
+        \node (m3) at (0,0) {m3 (0.4)};
+        \node (m1) at (2,0) {m1 (0.3)};
+        \node (m4) at (0,-1) {m4 (0.2)};
+        \node (m2) at (2,-1) {m2 (0.1)};
+
+        \draw[->] (m3) -- node[above] {0} (m1);
+        \draw[->] (m4) -- node[below] {1} (m2);
+    \end{tikzpicture}
+    \caption{Huffman Code Tree Example}
+\end{figure}
+
+\section{Source Coding}
+Source coding involves representing each symbol in an alphabet as unique binary codewords. The goal is to minimize the average length of these codewords to reduce redundancy in the transmission. Common examples include Morse code, where the codeword lengths depend on the symbol's frequency of occurrence.
+
+\section{Code Efficiency}
+The efficiency of a code is a measure of how well it minimizes the average length of codewords. It is defined as:
+
+\[
+\eta = \frac{L_{\text{min}}}{\bar{L}}
+\]
+
+where \(L_{\text{min}}\) is the minimum possible average length of the codewords and \(\bar{L}\) is the actual average length of the codewords. According to Shannon’s source coding theorem:
+
+\[
+\bar{L} \geq H(X)
+\]
+
+Thus, the code efficiency becomes:
+
+\[
+\eta = \frac{H(X)}{\bar{L}}
+\]
+
+For maximum efficiency, \(\eta\) approaches 1, which indicates minimal redundancy.
+
+\subsection{Example}
+Consider a message \(M\) with four possible symbols: \(m_1\), \(m_2\), \(m_3\), and \(m_4\) with respective probabilities:
+
+\[
+P(m_1) = 0.3, \, P(m_2) = 0.1, \, P(m_3) = 0.4, \, P(m_4) = 0.2
+\]
+
+The source entropy is calculated as:
+
+\[
+H(M) = 0.3 \log_2 \left( \frac{1}{0.3} \right) + 0.1 \log_2 \left( \frac{1}{0.1} \right) + 0.4 \log_2 \left( \frac{1}{0.4} \right) + 0.2 \log_2 \left( \frac{1}{0.2} \right) = 1.84 \text{ bits}
+\]
+
+If we use a fixed-length code where each symbol is assigned 2 bits (e.g., \(m_1 \rightarrow 00\), \(m_2 \rightarrow 01\), \(m_3 \rightarrow 10\), \(m_4 \rightarrow 11\)), then the average codeword length \(\bar{L} = 2\) bits. The code efficiency is:
+
+\[
+\eta = \frac{1.84}{2} = 0.92
+\]
+
+\section{Variable Length Codes}
+Variable length codes assign different lengths of codewords to symbols depending on their probabilities. A common method is using a prefix code, where no codeword is a prefix of another, ensuring that the code can be uniquely decoded.
+
+\subsection{Example: Code I and Code II}
+\begin{itemize}
+    \item \textbf{Code I:} The following code cannot be uniquely decoded:
+    \begin{align*}
+    m_1 & \rightarrow 0 \\
+    m_2 & \rightarrow 1 \\
+    m_3 & \rightarrow 00 \\
+    m_4 & \rightarrow 11
+    \end{align*}
+    For example, the binary sequence \texttt{00110011} can be decoded in multiple ways.
+    
+    \item \textbf{Code II:} This code is uniquely decodable:
+    \begin{align*}
+    m_1 & \rightarrow 0 \\
+    m_2 & \rightarrow 10 \\
+    m_3 & \rightarrow 110 \\
+    m_4 & \rightarrow 111
+    \end{align*}
+    Using a code tree, Code II can be uniquely decoded from any binary sequence.
+\end{itemize}
+
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}
+        % Code Tree for Code II
+        \node (root) at (0,0) {Start};
+        \node (m1) at (-3,-1) {m1};
+        \node (mid1) at (1,-1) {};
+        \node (m2) at (-1.5,-2) {m2};
+        \node (mid2) at (3,-2) {};
+        \node (m3) at (0.5,-3) {m3};
+        \node (m4) at (3,-3) {m4};
+        
+        \draw[->] (root) -- node[above] {0} (m1);
+        \draw[->] (root) -- node[above] {1} (mid1);
+        \draw[->] (mid1) -- node[above] {0} (m2);
+        \draw[->] (mid1) -- node[above] {1} (mid2);
+        \draw[->] (mid2) -- node[above] {0} (m3);
+        \draw[->] (mid2) -- node[above] {1} (m4);
+    \end{tikzpicture}
+    \caption{Code Tree for Variable Length Code II}
+\end{figure}
+
+\section{Huffman Coding}
+Huffman coding is an efficient method of creating variable length codes where the length of each codeword is approximately proportional to the amount of information each symbol conveys.
+
+\subsection{Huffman Coding Algorithm}
+\begin{enumerate}
+    \item List symbols in descending order of probability.
+    \item Combine the two lowest probabilities, add them to form a new probability, and reorder the list.
+    \item Repeat until only two probabilities remain, then assign a 0 or 1 to each pair.
+    \item Continue assigning 0 and 1 as new splits occur.
+\end{enumerate}
+
+\subsection{Example of Huffman Coding}
+Using the same symbol probabilities from the previous example:
+
+\[
+\begin{aligned}
+    P(m_3) &= 0.4, & P(m_1) &= 0.3, & P(m_4) &= 0.2, & P(m_2) &= 0.1
+\end{aligned}
+\]
+
+The Huffman code for this set is derived as shown below:
+
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}
+        % Huffman code tree
+        \node (m3) at (0,0) {m3 (0.4)};
+        \node (m1) at (2,0) {m1 (0.3)};
+        \node (m4) at (0,-1) {m4 (0.2)};
+        \node (m2) at (2,-1) {m2 (0.1)};
+
+        \draw[->] (m3) -- node[above] {0} (m1);
+        \draw[->] (m4) -- node[below] {1} (m2);
+    \end{tikzpicture}
+    \caption{Huffman Code Tree Example}
+\end{figure}
+
+\[
+\bar{L} = 0.3 \times 2 + 0.1 \times 3 + 0.4 \times 1 + 0.2 \times 3 = 1.9 \text{ bits}
+\]
+
+The code efficiency is calculated as:
+
+\[
+\eta = \frac{1.84}{1.9} = 0.97
+\]
+
+Huffman coding increases the efficiency of the source code, bringing it closer to the entropy of the source.
+
+\section{Conclusion}
+In this document, we have explored the basics of Information Theory, focusing on digital communication systems, channel capacities, source coding, and Huffman coding. Through this theoretical framework, we can improve the efficiency and reliability of communication systems by minimizing redundancy and maximizing channel utilization.
+
+\section{Conclusion}
+Information theory is fundamental to understanding communication systems, especially in terms of data compression and maximizing channel capacity. The tools provided by Claude Shannon's theory continue to shape fields from telecommunications to modern computing.
+
+\end{document}
