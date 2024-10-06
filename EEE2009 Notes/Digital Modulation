@@ -1,0 +1,575 @@
+\documentclass{article}
+\usepackage{amsmath, amssymb}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{circuitikz}
+\usepackage{pgfplots} % For plotting graphs
+
+\title{Digital Modulation and Demodulation}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+
+Digital modulation is the mapping of binary data to a sinusoidal carrier signal. In the same way as analogue modulation, the digital message can vary the amplitude, frequency, or phase of the carrier to give different types of digital modulation.
+
+In this course, we will look at:
+\begin{itemize}
+    \item Amplitude Shift Keying (ASK)
+    \item Frequency Shift Keying (FSK)
+    \item Phase Shift Keying (PSK)
+\end{itemize}
+
+\section{Digital Modulators}
+
+\begin{center}
+\begin{tikzpicture}
+    \draw[thick] (-2,0) -- (0,0) -- (0,-1) -- (2,-1) -- (2,1) -- (0,1) -- (0,0);
+    \node at (-2.5,0) {Binary wave (polar form)};
+    \node at (1,-2) {Product Modulator};
+    \draw[->] (-2.5,0) -- (-2,0);
+    \draw[->] (2,0) -- (2.5,0);
+    \node at (3,0) {Modulated Signal};
+\end{tikzpicture}
+\end{center}
+
+\subsection{Amplitude Shift Keying (ASK)}
+
+Amplitude Shift Keying (ASK) is defined as follows:
+
+\[
+v_s(t) = 
+\begin{cases}
+    V_1 \cos(2\pi f_c t) & \text{for binary 1} \\
+    V_0 \cos(2\pi f_c t) & \text{for binary 0}
+\end{cases}
+\]
+
+Where \( V_1 = V_{DC} + V \) and \( V_0 = V_{DC} - V \).
+
+\begin{center}
+\begin{tikzpicture}
+    \draw[->] (-1,0) -- (7,0) node[right] {$t$};
+    \draw[->] (0,-2) -- (0,2) node[above] {$v(t)$};
+
+    % ASK signal representation
+    \draw[thick, domain=0:2, smooth, variable=\x] plot (\x, {sin(2*pi*\x r)});
+    \draw[thick, domain=2:4, smooth, variable=\x] plot (\x, {0});
+    \draw[thick, domain=4:6, smooth, variable=\x] plot (\x, {sin(2*pi*\x r)});
+    \node at (1,1.5) {Binary 1};
+    \node at (3,1.5) {Binary 0};
+    \node at (5,1.5) {Binary 1};
+\end{tikzpicture}
+\end{center}
+
+\section{On-Off Keying (OOK)}
+
+On-Off Keying (OOK) is a form of ASK where the carrier has two possible amplitudes: 2V and 0. The modulated signal can be expressed as:
+
+\[
+v(t) = 
+\begin{cases}
+    2V \cos(2\pi f_c t), & \text{for bit 1} \\
+    0, & \text{for bit 0}
+\end{cases}
+\]
+
+\begin{center}
+\begin{tikzpicture}
+    \draw[->] (-1,0) -- (7,0) node[right] {$t$};
+    \draw[->] (0,-2) -- (0,2) node[above] {$v(t)$};
+
+    % OOK signal representation
+    \draw[thick, domain=0:2, smooth, variable=\x] plot (\x, {2*sin(2*pi*\x r)});
+    \draw[thick, domain=2:4, smooth, variable=\x] plot (\x, {0});
+    \draw[thick, domain=4:6, smooth, variable=\x] plot (\x, {2*sin(2*pi*\x r)});
+    \node at (1,1.5) {Bit 1};
+    \node at (3,1.5) {Bit 0};
+    \node at (5,1.5) {Bit 1};
+\end{tikzpicture}
+\end{center}
+
+\section{Phase Shift Keying (PSK)}
+
+The signal for PSK is represented by:
+
+\[
+v_s(t) = 
+\begin{cases}
+    V \cos(2\pi f_c t), & \text{for binary 1} \\
+    -V \cos(2\pi f_c t), & \text{for binary 0}
+\end{cases}
+\]
+
+\begin{center}
+\begin{tikzpicture}
+    \draw[->] (-1,0) -- (7,0) node[right] {$t$};
+    \draw[->] (0,-2) -- (0,2) node[above] {$v(t)$};
+
+    % PSK signal representation
+    \draw[thick, domain=0:2, smooth, variable=\x] plot (\x, {sin(2*pi*\x r)});
+    \draw[thick, domain=2:4, smooth, variable=\x] plot (\x, {-sin(2*pi*\x r)});
+    \draw[thick, domain=4:6, smooth, variable=\x] plot (\x, {sin(2*pi*\x r)});
+    \node at (1,1.5) {Binary 1};
+    \node at (3,1.5) {Binary 0};
+    \node at (5,1.5) {Binary 1};
+\end{tikzpicture}
+\end{center}
+
+\section{Frequency Shift Keying (FSK)}
+
+Frequency Shift Keying (FSK) involves shifting the carrier frequency between two values \( f_1 \) and \( f_0 \), depending on the binary input:
+
+\[
+v_s(t) = 
+\begin{cases}
+    V \cos(2\pi f_1 t), & \text{for binary 1} \\
+    V \cos(2\pi f_0 t), & \text{for binary 0}
+\end{cases}
+\]
+
+\begin{center}
+\begin{tikzpicture}
+    \draw[->] (-1,0) -- (7,0) node[right] {$t$};
+    \draw[->] (0,-2) -- (0,2) node[above] {$v(t)$};
+
+    % FSK signal representation
+    \draw[thick, domain=0:2, smooth, variable=\x] plot (\x, {sin(2*pi*1*\x r)});
+    \draw[thick, domain=2:4, smooth, variable=\x] plot (\x, {sin(2*pi*0.5*\x r)});
+    \draw[thick, domain=4:6, smooth, variable=\x] plot (\x, {sin(2*pi*1*\x r)});
+    \node at (1,1.5) {Binary 1};
+    \node at (3,1.5) {Binary 0};
+    \node at (5,1.5) {Binary 1};
+\end{tikzpicture}
+\end{center}
+
+\section{Demodulation}
+
+\subsection{ASK Demodulation}
+
+The ASK demodulator receives the signal as shown below:
+
+\begin{center}
+\begin{tikzpicture}
+    \draw[->] (-1,0) -- (7,0) node[right] {$t$};
+    \draw[->] (0,-2) -- (0,2) node[above] {$v(t)$};
+
+    % ASK received signal
+    \draw[thick, domain=0:2, smooth, variable=\x] plot (\x, {sin(2*pi*\x r)});
+    \draw[thick, domain=2:4, smooth, variable=\x] plot (\x, {0});
+    \draw[thick, domain=4:6, smooth, variable=\x] plot (\x, {sin(2*pi*\x r)});
+    \node at (1,1.5) {Binary 1};
+    \node at (3,1.5) {Binary 0};
+    \node at (5,1.5) {Binary 1};
+\end{tikzpicture}
+\end{center}
+
+After mixing with the local oscillator, the signal is processed as follows:
+
+\begin{center}
+\begin{tikzpicture}
+    \draw[->] (-1,0) -- (7,0) node[right] {$t$};
+    \draw[->] (0,-2) -- (0,2) node[above] {$v(t)$};
+
+    % Mixed ASK signal
+    \draw[thick, domain=0:2, smooth, variable=\x] plot (\x, {sin(2*pi*\x r)});
+    \draw[thick, domain=2:4, smooth, variable=\x] plot (\x, {0});
+    \draw[thick, domain=4:6, smooth, variable=\x] plot (\x, {sin(2*pi*\x r)});
+    \node at (1,1.5) {Binary 1};
+    \node at (3,1.5) {Binary 0};
+    \node at (5,1.5) {Binary 1};
+    \draw[dashed, thick, domain=0:6, smooth, variable=\x] plot (\x, {0.5});
+    \draw[dashed, thick, domain=0:6, smooth, variable=\x] plot (\x, {-0.5});
+\end{tikzpicture}
+\end{center}
+
+\subsection{PSK Demodulation}
+
+The PSK signal is received and mixed similarly, resulting in phase shifts at \( 0^\circ \) and \( 180^\circ \).
+
+\begin{center}
+\begin{tikzpicture}
+    \draw[->] (-1,0) -- (7,0) node[right] {$t$};
+    \draw[->] (0,-2) -- (0,2) node[above] {$v(t)$};
+
+    % PSK received signal
+    \draw[thick, domain=0:2, smooth, variable=\x] plot (\x, {sin(2*pi*\x r)});
+    \draw[thick, domain=2:4, smooth, variable=\x] plot (\x, {-sin(2*pi*\x r)});
+    \draw[thick, domain=4:6, smooth, variable=\x] plot (\x, {sin(2*pi*\x r)});
+    \node at (1,1.5) {Binary 1};
+    \node at (3,1.5) {Binary 0};
+    \node at (5,1.5) {Binary 1};
+\end{tikzpicture}
+\end{center}
+
+\subsection{FSK Demodulation}
+
+The FSK demodulator compares two frequencies \( f_1 \) and \( f_0 \), and determines the binary values based on the dominant frequency.
+
+\begin{center}
+\begin{tikzpicture}
+    \draw[->] (-1,0) -- (7,0) node[right] {$t$};
+    \draw[->] (0,-2) -- (0,2) node[above] {$v(t)$};
+
+    % FSK received signal
+    \draw[thick, domain=0:2, smooth, variable=\x] plot (\x, {sin(2*pi*1*\x r)});
+    \draw[thick, domain=2:4, smooth, variable=\x] plot (\x, {sin(2*pi*0.5*\x r)});
+    \draw[thick, domain=4:6, smooth, variable=\x] plot (\x, {sin(2*pi*1*\x r)});
+    \node at (1,1.5) {Binary 1};
+    \node at (3,1.5) {Binary 0};
+    \node at (5,1.5) {Binary 1};
+\end{tikzpicture}
+\end{center}
+
+\section{ASK and PSK Demodulation}
+
+The demodulation of both ASK and PSK signals can be performed using an integrator followed by a decision device. The demodulated signal is compared to a threshold to decide whether the received bit is a binary 1 or binary 0.
+
+\begin{center}
+\begin{tikzpicture}
+    % Block diagram for demodulation
+    \draw[->] (-2,0) -- (0,0);
+    \draw (0, -1) rectangle (2, 1) node[midway] {Integrator};
+    \draw[->] (2,0) -- (4,0);
+    \draw (4, -1) rectangle (6, 1) node[midway] {Decision};
+    \draw[->] (6,0) -- (8,0);
+    
+    % Labels
+    \node at (-3, 0) {Received Signal};
+    \node at (8.5, 0) {Output};
+\end{tikzpicture}
+\end{center}
+
+The decision device will output a binary 1 if the integrated signal exceeds a threshold, and a binary 0 otherwise.
+
+\[
+\text{Output} = 
+\begin{cases}
+    1, & \text{if } \int_0^T v_{\text{in}}(t) dt > \text{Threshold} \\
+    0, & \text{if } \int_0^T v_{\text{in}}(t) dt \leq \text{Threshold}
+\end{cases}
+\]
+
+\subsection{Demodulation of ASK Signal}
+
+An ASK signal can be demodulated by mixing it with the carrier wave (using a product modulator) and then integrating the signal over one bit period.
+
+\begin{center}
+\begin{tikzpicture}
+    \draw[->] (-1,0) -- (7,0) node[right] {$t$};
+    \draw[->] (0,-2) -- (0,2) node[above] {$v(t)$};
+
+    % Mixed ASK signal
+    \draw[thick, domain=0:2, smooth, variable=\x] plot (\x, {sin(2*pi*\x r)});
+    \draw[thick, domain=2:4, smooth, variable=\x] plot (\x, {0});
+    \draw[thick, domain=4:6, smooth, variable=\x] plot (\x, {sin(2*pi*\x r)});
+    \draw[dashed, thick, domain=0:6, smooth, variable=\x] plot (\x, {0.5});
+    \draw[dashed, thick, domain=0:6, smooth, variable=\x] plot (\x, {-0.5});
+
+    \node at (1,1.5) {Bit 1};
+    \node at (3,1.5) {Bit 0};
+    \node at (5,1.5) {Bit 1};
+\end{tikzpicture}
+\end{center}
+
+After mixing the signal with a local oscillator, the output of the mixer is integrated, and the average value over the bit period \(T\) is compared with a threshold to recover the original bit stream.
+
+\subsection{Demodulation of PSK Signal}
+
+For PSK demodulation, the received signal is also mixed with the carrier wave (using a product modulator) and integrated over the bit period.
+
+\begin{center}
+\begin{tikzpicture}
+    \draw[->] (-1,0) -- (7,0) node[right] {$t$};
+    \draw[->] (0,-2) -- (0,2) node[above] {$v(t)$};
+
+    % Mixed PSK signal
+    \draw[thick, domain=0:2, smooth, variable=\x] plot (\x, {sin(2*pi*\x r)});
+    \draw[thick, domain=2:4, smooth, variable=\x] plot (\x, {-sin(2*pi*\x r)});
+    \draw[thick, domain=4:6, smooth, variable=\x] plot (\x, {sin(2*pi*\x r)});
+    
+    \node at (1,1.5) {Bit 1};
+    \node at (3,1.5) {Bit 0};
+    \node at (5,1.5) {Bit 1};
+\end{tikzpicture}
+\end{center}
+
+\subsection{FSK Demodulation}
+
+For FSK, the demodulation process involves using two local oscillators, one tuned to \( f_1 \) and the other to \( f_0 \). The received signal is mixed with both frequencies, and the integrator produces two outputs, \( V_1 \) and \( V_0 \). The binary decision is made based on which value is larger.
+
+\begin{center}
+\begin{tikzpicture}
+    \draw[->] (-1,0) -- (7,0) node[right] {$t$};
+    \draw[->] (0,-2) -- (0,2) node[above] {$v(t)$};
+
+    % FSK signal representation
+    \draw[thick, domain=0:2, smooth, variable=\x] plot (\x, {sin(2*pi*1*\x r)});
+    \draw[thick, domain=2:4, smooth, variable=\x] plot (\x, {sin(2*pi*0.5*\x r)});
+    \draw[thick, domain=4:6, smooth, variable=\x] plot (\x, {sin(2*pi*1*\x r)});
+
+    \node at (1,1.5) {Bit 1};
+    \node at (3,1.5) {Bit 0};
+    \node at (5,1.5) {Bit 1};
+\end{tikzpicture}
+\end{center}
+
+The integrators for \( f_1 \) and \( f_0 \) produce average values, and the decision device compares them to determine if the bit is 1 or 0.
+
+\section{Theoretical Performance}
+
+The performance of digital communication systems in the presence of noise can be quantified by the Bit-Error Rate (BER) as a function of the signal-to-noise ratio (SNR). The noise in the system is typically modeled as Additive White Gaussian Noise (AWGN).
+
+\subsection{Bit-Error Rate (BER)}
+
+The Bit-Error Rate \(P_b\) is defined as the ratio of the number of bit errors to the total number of transmitted bits:
+
+\[
+P_b = \frac{\text{Number of bit errors}}{\text{Total number of transmitted bits}}
+\]
+
+For different modulation schemes, the BER performance is calculated as follows:
+
+\subsection{Gaussian Distribution}
+
+The probability of a bit error in an AWGN channel can be derived using the Gaussian distribution, which is given by:
+
+\[
+p(x) = \frac{1}{\sqrt{2\pi\sigma^2}} \exp\left(-\frac{(x - \mu)^2}{2\sigma^2}\right)
+\]
+
+where \( \mu \) is the mean and \( \sigma^2 \) is the variance of the Gaussian distribution.
+
+\begin{center}
+\begin{tikzpicture}
+    \begin{axis}[
+        axis lines = left,
+        xlabel = $x$,
+        ylabel = {$p(x)$},
+        domain=-5:5, samples=100,
+        width=10cm, height=6cm
+    ]
+    \addplot[thick,blue] {exp(-x^2/2)/sqrt(2*pi)};
+    \end{axis}
+\end{tikzpicture}
+\end{center}
+
+\subsection{Error Function and Q Function}
+
+To evaluate the probability of a Gaussian distributed variable, we use the error function \( \text{erf}(x) \) and its complementary function \( \text{erfc}(x) \), which are defined as:
+
+\[
+\text{erf}(x) = \frac{2}{\sqrt{\pi}} \int_0^x \exp(-t^2) dt
+\]
+\[
+\text{erfc}(x) = 1 - \text{erf}(x)
+\]
+
+The Q function is related to the complementary error function and is used to express the probability of bit errors for digital modulation schemes:
+
+\[
+Q(x) = \frac{1}{2} \text{erfc}\left( \frac{x}{\sqrt{2}} \right)
+\]
+
+\subsection{Performance of PSK in AWGN Channel}
+
+The probability of bit error for Binary Phase Shift Keying (BPSK) in an AWGN channel is given by:
+
+\[
+P_b = Q\left( \sqrt{\frac{2E_b}{N_0}} \right)
+\]
+
+where \(E_b\) is the energy per bit and \(N_0\) is the noise power spectral density.
+
+\subsection{Performance of OOK in AWGN Channel}
+
+%For On-Off Keying (OOK), the BER performance is given by:
+%
+%\[
+%P_b = \frac{1}{2} \text{
+
+\section{Modulation Schemes}
+
+In digital communication, several modulation schemes can be employed, each with its own characteristics, advantages, and disadvantages. Here we discuss the modulation techniques in more detail.
+
+\subsection{Amplitude Shift Keying (ASK)}
+
+In Amplitude Shift Keying (ASK), the amplitude of the carrier wave is varied according to the binary data signal. The formula for an ASK signal can be expressed as:
+
+\[
+v(t) = 
+\begin{cases}
+    A \cos(2 \pi f_c t), & \text{if bit = 1} \\
+    0, & \text{if bit = 0}
+\end{cases}
+\]
+
+The spectrum of an ASK signal can be represented as:
+
+\begin{center}
+\begin{tikzpicture}
+    \begin{axis}[
+        xlabel={Frequency (Hz)},
+        ylabel={Magnitude},
+        grid=major,
+        domain=0:100,
+        samples=100,
+        ytick=\empty,
+    ]
+    \addplot[thick] {sin(deg(x))};
+    \end{axis}
+\end{tikzpicture}
+\end{center}
+
+\subsection{Frequency Shift Keying (FSK)}
+
+In Frequency Shift Keying (FSK), the frequency of the carrier wave is changed according to the digital signal. The signal can be expressed as:
+
+\[
+v(t) = 
+\begin{cases}
+    A \cos(2 \pi f_1 t), & \text{if bit = 1} \\
+    A \cos(2 \pi f_0 t), & \text{if bit = 0}
+\end{cases}
+\]
+
+The frequency spectrum of an FSK signal can be depicted as:
+
+\begin{center}
+\begin{tikzpicture}
+    \begin{axis}[
+        xlabel={Frequency (Hz)},
+        ylabel={Magnitude},
+        grid=major,
+        domain=0:100,
+        samples=100,
+        ytick=\empty,
+    ]
+    \addplot[thick, blue] {sin(deg(2*x))};
+    \addplot[thick, red] {sin(deg(3*x))};
+    \legend{Frequency 1, Frequency 0}
+    \end{axis}
+\end{tikzpicture}
+\end{center}
+
+\subsection{Phase Shift Keying (PSK)}
+
+In Phase Shift Keying (PSK), the phase of the carrier signal is varied to represent the data. The signal can be written as:
+
+\[
+v(t) = A \cos(2 \pi f_c t + \phi)
+\]
+
+Where \( \phi \) represents the phase shift depending on the transmitted bit. The PSK constellation diagram is an essential tool for visualizing PSK performance.
+
+%\begin{center}
+%\begin{tikzpicture}
+%    \draw[->] (-1.5,0) -- (1.5,0) node[right] {$I$};
+%    \draw[->] (0,-1.5) --
+
+\subsection{Performance Comparison of Modulation Schemes}
+
+To compare the performance of different modulation schemes, we look at their Bit Error Rate (BER) as a function of the signal-to-noise ratio (SNR). 
+
+The BER performance curves for different modulation schemes can be plotted as follows:
+
+\begin{center}
+\begin{tikzpicture}
+    \begin{axis}[
+        xlabel={$\frac{E_b}{N_0}$ (dB)},
+        ylabel={BER},
+        xmode=log,
+        ymode=log,
+        grid=major,
+        legend style={at={(1,1)}, anchor=south east},
+        title={BER vs $E_b/N_0$ for Different Modulation Schemes}
+    ]
+    % PSK
+    \addplot[blue, thick] {0.5*exp(-x)};
+    % OOK
+    \addplot[red, thick] {0.5*exp(-0.5*x)};
+    % FSK
+    \addplot[green, thick] {0.5*exp(-0.2*x)};
+    
+    \legend{PSK, OOK, FSK}
+    \end{axis}
+\end{tikzpicture}
+\end{center}
+
+From the graph, we observe that PSK has a lower BER for the same \(E_b/N_0\) compared to OOK and FSK. This indicates that PSK is more resilient to noise, making it preferable for digital communication systems.
+
+\section{Signal Space Representation}
+
+Signal space representation is a powerful tool used to visualize and analyze the performance of different modulation schemes. In this representation, signals are treated as points in a multi-dimensional space.
+
+\subsection{Constellation Diagrams}
+
+Constellation diagrams represent the possible signal states for a given modulation scheme. For example, the constellation diagram for BPSK is shown below:
+
+\begin{center}
+\begin{tikzpicture}
+    % BPSK Constellation
+    \draw[->] (-2,0) -- (2,0) node[right] {$I$};
+    \draw[->] (0,-2) -- (0,2) node[above] {$Q$};
+    \filldraw[black] (1,0) circle (2pt) node[anchor=west] {1};
+    \filldraw[black] (-1,0) circle (2pt) node[anchor=east] {0};
+\end{tikzpicture}
+\end{center}
+
+In BPSK, there are two constellation points representing binary 0 and binary 1, which are located at opposite ends of the \(I\)-axis.
+
+\subsection{Signal Space for QPSK}
+
+Quadrature Phase Shift Keying (QPSK) uses four different phase shifts, represented as points on the constellation diagram:
+
+\begin{center}
+\begin{tikzpicture}
+    % QPSK Constellation
+    \draw[->] (-2,0) -- (2,0) node[right] {$I$};
+    \draw[->] (0,-2) -- (0,2) node[above] {$Q$};
+    \filldraw[black] (1,1) circle (2pt) node[anchor=south east] {00};
+    \filldraw[black] (-1,1) circle (2pt) node[anchor=south west] {01};
+    \filldraw[black] (-1,-1) circle (2pt) node[anchor=north west] {10};
+    \filldraw[black] (1,-1) circle (2pt) node[anchor=north east] {11};
+\end{tikzpicture}
+\end{center}
+
+The four points correspond to the combinations of two bits, providing a more efficient use of bandwidth compared to BPSK.
+
+\section{Advanced Topics in Digital Modulation}
+
+In addition to basic modulation schemes, several advanced techniques can enhance performance, such as:
+
+\subsection{Differential Phase Shift Keying (DPSK)}
+
+In Differential Phase Shift Keying, the information is conveyed by the difference between successive signal phases rather than their absolute values. This approach can simplify demodulation in certain scenarios.
+
+\subsection{Orthogonal Frequency Division Multiplexing (OFDM)}
+
+OFDM divides the data stream into multiple smaller sub-streams, which are transmitted simultaneously over different frequencies. This technique is robust against multipath fading and improves spectral efficiency.
+
+\begin{center}
+\begin{tikzpicture}
+    \draw[->] (0,0) -- (7,0) node[right] {$t$};
+    \draw[->] (0,-1) -- (0,1) node[above] {$v(t)$};
+
+    % OFDM representation
+    \foreach \i in {0,1,2,3,4,5} {
+        \draw[thick] (\i,0.5) -- (\i+1,0.5) -- (\i+1,0) -- (\i,0) -- cycle;
+    }
+    \node at (3,-0.5) {Subcarrier 1};
+    \node at (4.5,-0.5) {Subcarrier 2};
+\end{tikzpicture}
+\end{center}
+
+\section{Conclusion}
+
+In summary, digital modulation techniques play a crucial role in the effective transmission of data in communication systems. Understanding their performance characteristics, including BER in various noise conditions, is vital for selecting the appropriate modulation scheme for a given application.
+
+The comparison of modulation schemes demonstrates that while PSK is generally more efficient in terms of error performance, OOK and FSK also have their advantages in specific scenarios. Advanced techniques like DPSK and OFDM further enhance the capabilities of digital communication systems, providing robustness and higher data rates.
+
+\end{document}
