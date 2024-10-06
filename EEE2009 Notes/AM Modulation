@@ -1,0 +1,453 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{graphicx}
+
+\title{Introduction to Modulation and Demodulation}
+\author{Dr. Martin Johnston}
+\date{EEE2009 - Signals and Communications II}
+
+\begin{document}
+\maketitle
+
+\section{Course Outline}
+\begin{itemize}
+    \item Introduction to a Communication System
+    \item Analogue Modulation and Demodulation
+    \item Digital Modulation and Demodulation
+    \item Information Theory
+    \item Introduction to Signal Processing
+    \item Laplace Transforms
+    \item Fourier Transforms
+    \item Z Transforms
+\end{itemize}
+
+\section{Timetable}
+\begin{itemize}
+    \item Week 1 -- Amplitude Modulation and Demodulation
+    \item Week 2 -- Frequency Modulation and Demodulation
+    \item Week 3 -- Digital Modulation/Demodulation
+    \item Week 4 -- Information Theory
+    \item Week 5 -- Introduction to Signal Processing
+    \item Week 6 -- Laplace Transforms 1
+    \item Week 7 -- Buffer Week
+    \item Week 8 -- Laplace Transforms 2
+    \item Week 9 -- Fourier Transforms
+    \item Week 10 -- Z Transforms 1
+    \item Week 11 -- Z Transforms 2
+    \item Week 12 -- Revision Week
+\end{itemize}
+
+\section{Assessment Methods}
+\begin{itemize}
+    \item 2-hour closed-book exam – 85\%
+    \item 1 lab report on frequency modulation and demodulation – 15\%
+\end{itemize}
+
+\section{Introduction to a Communication System}
+The purpose of a communication system is to transfer messages from a source to a destination. Some challenges in baseband transmissions include:
+\begin{itemize}
+    \item \textbf{Noise in the system} – External and circuit noise reduces the signal-to-noise ratio (S/N) at the receiver and lowers the quality of the output.
+    \item \textbf{Utilisation of available bandwidth} – For instance, telephone quality speech has a bandwidth of approximately 3 kHz, while a co-axial cable has a bandwidth in the hundreds of MHz.
+\end{itemize}
+
+\subsection{General Digital Communication System Model}
+\section{Modulation}
+Modulation is the process of using a message signal to control the parameters of a carrier signal, thus impressing the information onto the carrier. A carrier signal could be a sinusoidal wave represented as:
+
+\[
+v_s(t) = V_c \cos\left(2 \pi f_c t + \phi_c\right)
+\]
+
+where $V_c$ is the amplitude, $f_c$ is the frequency, and $\phi_c$ is the phase of the carrier.
+
+\subsection{Types of Modulation}
+\begin{itemize}
+    \item \textbf{Amplitude Modulation (AM)}: The message signal $m(t)$ varies the amplitude of the carrier.
+    \item \textbf{Frequency Modulation (FM)}: The message signal $m(t)$ varies the frequency of the carrier.
+    \item \textbf{Phase Modulation (PM)}: The message signal $m(t)$ varies the phase of the carrier.
+\end{itemize}
+
+The modulated signal is given by:
+
+\[
+v_s(t) = \left(V_{DC} + m(t)\right) \cos(2\pi f_c t)
+\]
+
+\subsection{Amplitude Modulation Example}
+Consider a message $m(t) = V_m \cos(2\pi f_m t)$, where $V_m$ is the amplitude and $f_m$ is the frequency. The modulated signal becomes:
+
+\[
+v_s(t) = \left(V_{DC} + V_m \cos(2 \pi f_m t)\right) \cos(2 \pi f_c t)
+\]
+
+Using the trigonometric identity:
+\[
+\cos(A) \cos(B) = \frac{1}{2} [\cos(A+B) + \cos(A-B)]
+\]
+We get:
+\[
+v_s(t) = V_{DC} \cos(2 \pi f_c t) + \frac{V_m}{2} \left[ \cos(2 \pi (f_c + f_m) t) + \cos(2 \pi (f_c - f_m) t) \right]
+\]
+
+\section{Amplitude Modulation Example: Simulink}
+
+\subsection{Simulink Example 1: Amplitude Modulator}
+
+Build an amplitude modulator on Simulink. The following blocks are required:
+\begin{itemize}
+    \item Constant
+    \item Product
+    \item Scope
+    \item Sum
+\end{itemize}
+For the scope, set the number of input ports to 2.
+
+\subsection{Amplitude Modulated Signal: Equations for DSB-AM}
+Using the trigonometric identity:
+
+\[
+\cos(A) \cos(B) = \frac{1}{2} [\cos(A+B) + \cos(A-B)]
+\]
+
+We get the equation for Double Sideband Amplitude Modulation (DSB-AM):
+
+\[
+v_s(t) = V_{DC} \cos(2 \pi f_c t) + \frac{V_m}{2} \left[ \cos(2 \pi (f_c + f_m) t) + \cos(2 \pi (f_c - f_m) t) \right]
+\]
+
+The components of this signal are as follows:
+\begin{itemize}
+    \item Carrier frequency: $f_c$
+    \item Upper sideband (USB): $f_c + f_m$
+    \item Lower sideband (LSB): $f_c - f_m$
+\end{itemize}
+
+\section{Modulation Depth}
+The modulation depth, $m$, is defined as the ratio of the message amplitude to the carrier amplitude:
+
+\[
+m = \frac{V_m}{V_{DC}}
+\]
+
+From an oscilloscope display, the modulation depth for DSB-AM may be determined. For example:
+
+\[
+v_s(t) = \left(V_{DC} + V_m \cos(2 \pi f_m t)\right) \cos(2 \pi f_c t)
+\]
+
+Simplifying, we have:
+
+\[
+v_s(t) = V_{DC} \left(1 + m \cos(2 \pi f_m t)\right) \cos(2 \pi f_c t)
+\]
+
+\section{Double Sideband Modulation Types}
+There are three main types of DSB modulation:
+\begin{itemize}
+    \item Double Sideband Amplitude Modulation (DSB-AM) with carrier
+    \item Double Sideband Diminished (Pilot) Carrier (DSB-DimC)
+    \item Double Sideband Suppressed Carrier (DSB-SC)
+\end{itemize}
+
+\section{Power Considerations in DSB-AM}
+The total power of a DSB-AM signal is given by:
+
+\[
+P_T = P_c \left(1 + \frac{m^2}{2}\right)
+\]
+
+Where $P_c$ is the carrier power. For small values of modulation depth $m$, most of the power is in the carrier. For DSB-SC, all the transmitted power is useful power, since the carrier is suppressed.
+
+\section{Single Sideband Amplitude Modulation (SSB-AM)}
+In SSB-AM, one of the sidebands (either USB or LSB) is removed, reducing the bandwidth required by half. The SSB signal is represented by:
+
+\[
+v_s(t) = V_m \cos(2 \pi (f_c + f_m) t)
+\]
+
+\subsection{Simulink Example: SSB-AM}
+A bandpass filter can be used to remove one of the sidebands, leaving only the desired SSB-AM signal. In this example, a bandpass filter with a lower passband edge frequency of 995 Hz and an upper passband edge frequency of 1020 Hz is used to filter out the lower sideband.
+
+\section{Demodulation of Amplitude Modulated Signals}
+There are two main methods of AM demodulation:
+\begin{itemize}
+    \item Envelope or non-coherent detection/demodulation
+    \item Synchronous or coherent demodulation
+\end{itemize}
+
+For example, an envelope detector demodulates DSB-AM signals by rectifying and filtering the AM signal. However, this method cannot be used for DSB-SC or SSB-SC signals.
+
+\section{Synchronous Demodulation}
+Synchronous demodulation involves multiplying the AM input signal by a local oscillator that is coherent (i.e., synchronized) with the carrier signal. The resulting signal is passed through a low-pass filter to recover the message signal.
+
+\subsection{Frequency and Phase Errors in Synchronous Demodulation}
+If there is a frequency offset $\Delta f$ or a phase offset $\Delta \phi$ between the local oscillator and the carrier, the demodulated signal may contain unwanted distortions. The output signal will be modulated by a low-frequency sinusoid, known as the beating effect, if the frequency offset is significant.
+
+\section{Power Considerations in DSB-AM}
+
+For a DSB-AM signal, the total power $P_T$ is given by:
+
+\[
+P_T = P_c \left( 1 + \frac{m^2}{2} \right)
+\]
+
+where $P_c$ is the carrier power and $m$ is the modulation depth.
+
+\subsection{Power Considerations in DSB-SC}
+
+For Double Sideband Suppressed Carrier (DSB-SC), all transmitted power is useful since there is no carrier. The total power is distributed between the Upper Sideband (USB) and Lower Sideband (LSB):
+
+\[
+P_{T,\text{DSB-SC}} = P_{\text{USB}} + P_{\text{LSB}}
+\]
+
+If the message is a simple tone $m(t) = V_m \cos(2\pi f_m t)$, the power in each sideband is:
+
+\[
+P_{\text{USB}} = P_{\text{LSB}} = \frac{V_m^2}{8 R_L}
+\]
+
+\section{Single Sideband Amplitude Modulation (SSB-AM)}
+
+In SSB-AM, one of the sidebands is removed, effectively halving the bandwidth of the signal. The signal for SSB is:
+
+\[
+v_s(t) = V_m \cos(2\pi(f_c + f_m)t)
+\]
+
+This technique is more power-efficient than DSB-AM since it only transmits one sideband.
+
+\subsection{Power in SSB Signals}
+
+The total power in an SSB-AM signal is:
+
+\[
+P_{T,\text{SSB}} = \frac{V_m^2}{4 R_L}
+\]
+
+This is half the power of a DSB-AM signal since one sideband is removed.
+
+\section{Demodulation of Amplitude Modulated Signals}
+
+There are two main methods for demodulating AM signals:
+
+\begin{itemize}
+    \item \textbf{Envelope Detection:} A simple, low-cost method that demodulates DSB-AM signals when $m < 1$.
+    \item \textbf{Synchronous Detection:} A more complex method that requires a coherent local oscillator (LO) but works for all types of AM signals, including DSB-SC and SSB-SC.
+\end{itemize}
+
+\subsection{Envelope Detector}
+An envelope detector rectifies the incoming AM signal and uses a low-pass filter to extract the message signal. This method works well for DSB-AM signals but cannot demodulate DSB-SC or SSB signals.
+
+\subsection{Synchronous Detection}
+In synchronous detection, the received AM signal is multiplied by a local oscillator (LO) that is synchronized in frequency and phase with the carrier. The resulting signal is passed through a low-pass filter to extract the message signal.
+
+\subsubsection{Coherent Demodulation Equation}
+If the received DSB-AM signal is:
+
+\[
+v_s(t) = \left(V_{DC} + m(t)\right)\cos(2\pi f_c t)
+\]
+
+Multiplying this by a coherent local oscillator $\cos(2\pi f_c t)$, we get:
+
+\[
+v_x(t) = \left(V_{DC} + m(t)\right)\cos(2\pi f_c t) \cdot \cos(2\pi f_c t)
+\]
+
+Using the identity $\cos^2 \theta = \frac{1}{2} (1 + \cos(2\theta))$, this simplifies to:
+
+\[
+v_x(t) = \frac{1}{2} \left(V_{DC} + m(t)\right) \left( 1 + \cos(4\pi f_c t) \right)
+\]
+
+Passing this signal through a low-pass filter removes the $4\pi f_c t$ component, leaving:
+
+\[
+v_{\text{out}}(t) = \frac{1}{2} \left(V_{DC} + m(t)\right)
+\]
+
+\section{Frequency and Phase Errors in Synchronous Detection}
+
+If there is a frequency offset $\Delta f$ or a phase offset $\Delta \phi$ between the LO and the carrier, the demodulated signal will be distorted. Specifically, a frequency offset results in the signal being modulated by a low-frequency sinusoid, while a phase offset reduces the amplitude of the demodulated signal.
+
+\subsection{Frequency Offset Error}
+If the LO has a frequency offset $\Delta f$, the resulting demodulated signal will be:
+
+\[
+v_{\text{out}}(t) = \frac{1}{2} m(t) \cos(2\pi \Delta f t)
+\]
+
+This leads to a low-frequency beating effect that causes distortion.
+
+\subsection{Phase Offset Error}
+If there is a phase offset $\Delta \phi$, the demodulated signal is:
+
+\[
+v_{\text{out}}(t) = \frac{1}{2} m(t) \cos(\Delta \phi)
+\]
+
+The amplitude of the demodulated signal is reduced by a factor of $\cos(\Delta \phi)$. In the worst case, if $\Delta \phi = \pm 90^\circ$, the message signal is completely lost.
+
+\section{Comparison of DSB and SSB}
+
+\begin{itemize}
+    \item \textbf{DSB-AM:} Can be demodulated using a simple envelope detector but is less power-efficient.
+    \item \textbf{DSB-SC:} More power-efficient but requires synchronous detection for demodulation.
+    \item \textbf{SSB-AM:} Uses half the bandwidth of DSB-AM and is more power-efficient, but also requires synchronous detection.
+\end{itemize}
+
+\section{Summary}
+
+\begin{itemize}
+    \item Modulation translates a message signal to a higher frequency to reduce antenna dimensions.
+    \item In amplitude modulation (AM), the amplitude of the message signal varies the amplitude of the carrier signal.
+    \item DSB-AM contains the carrier frequency and both upper and lower sidebands.
+    \item SSB-AM removes one of the sidebands, reducing bandwidth and power usage.
+    \item Non-coherent detection (e.g., envelope detection) can demodulate DSB-AM signals but not DSB-SC or SSB-SC signals.
+    \item Coherent detection can demodulate all AM signals but requires a synchronized local oscillator.
+    \item Frequency and phase offsets in synchronous detection lead to signal distortion, especially in DSB-SC signals.
+\end{itemize}
+
+\section{Fourier Transforms}
+The Fourier Transform is used to analyze signals in the frequency domain. For a time-domain signal $x(t)$, the Fourier Transform $X(f)$ is given by:
+
+\[
+X(f) = \int_{-\infty}^{\infty} x(t) e^{-j 2 \pi f t} dt
+\]
+
+The inverse Fourier Transform is given by:
+
+\[
+x(t) = \int_{-\infty}^{\infty} X(f) e^{j 2 \pi f t} df
+\]
+
+Fourier Transforms are critical in analyzing the frequency components of modulated signals.
+
+\subsection{Fourier Transform of AM Signals}
+Consider an AM signal $v_s(t) = \left( V_{DC} + m(t) \right) \cos(2 \pi f_c t)$. The Fourier Transform of this signal consists of a delta function at the carrier frequency $f_c$, along with sidebands at $f_c \pm f_m$, where $f_m$ is the message frequency. The spectrum of this signal is given by:
+
+\[
+V_s(f) = \frac{V_{DC}}{2} \left[ \delta(f - f_c) + \delta(f + f_c) \right] + \frac{V_m}{4} \left[ \delta(f - (f_c + f_m)) + \delta(f + (f_c + f_m)) \right]
+\]
+
+This shows the carrier and sideband components in the frequency domain.
+
+\section{Laplace Transforms}
+The Laplace Transform is widely used in system analysis, especially in control systems and signal processing. For a time-domain signal $x(t)$, the Laplace Transform $X(s)$ is defined as:
+
+\[
+X(s) = \int_0^{\infty} x(t) e^{-s t} dt
+\]
+
+where $s$ is a complex variable.
+
+\subsection{Laplace Transform of Basic Signals}
+\begin{itemize}
+    \item The Laplace Transform of a unit step function $u(t)$ is given by:
+
+    \[
+    U(s) = \frac{1}{s}
+    \]
+    
+    \item The Laplace Transform of a decaying exponential $e^{-at}$ is:
+
+    \[
+    X(s) = \frac{1}{s + a}
+    \]
+    
+    \item The Laplace Transform of $\cos(\omega t)$ is:
+
+    \[
+    X(s) = \frac{s}{s^2 + \omega^2}
+    \]
+    
+    \item The Laplace Transform of $\sin(\omega t)$ is:
+
+    \[
+    X(s) = \frac{\omega}{s^2 + \omega^2}
+    \]
+\end{itemize}
+
+\section{Z-Transforms}
+The Z-Transform is used to analyze discrete-time signals. The Z-Transform of a discrete signal $x[n]$ is defined as:
+
+\[
+X(z) = \sum_{n=-\infty}^{\infty} x[n] z^{-n}
+\]
+
+The inverse Z-Transform is given by:
+
+\[
+x[n] = \frac{1}{2\pi j} \oint X(z) z^{n-1} dz
+\]
+
+\subsection{Properties of Z-Transform}
+\begin{itemize}
+    \item Linearity: $a x_1[n] + b x_2[n] \longrightarrow a X_1(z) + b X_2(z)$
+    \item Time shifting: $x[n-k] \longrightarrow z^{-k} X(z)$
+    \item Convolution: $x[n] * h[n] \longrightarrow X(z) H(z)$
+\end{itemize}
+
+\section{Digital Modulation and Demodulation}
+Digital modulation refers to modulating a digital signal onto a carrier. There are various types of digital modulation techniques:
+
+\subsection{Types of Digital Modulation}
+\begin{itemize}
+    \item \textbf{Amplitude Shift Keying (ASK):} The amplitude of the carrier is varied according to the digital signal.
+    \item \textbf{Frequency Shift Keying (FSK):} The frequency of the carrier is varied between discrete values according to the digital signal.
+    \item \textbf{Phase Shift Keying (PSK):} The phase of the carrier is varied according to the digital signal.
+\end{itemize}
+
+\subsection{Demodulation of Digital Signals}
+Demodulation of digital signals can be achieved by coherent or non-coherent detection methods. For coherent detection, the receiver must be synchronized with the transmitter.
+
+\section{Information Theory}
+Information theory quantifies the amount of information in a signal and the efficiency of transmission.
+
+\subsection{Shannon's Theorem}
+Shannon's theorem defines the maximum possible data rate of a communication channel. It is given by:
+
+\[
+C = B \log_2 \left( 1 + \frac{S}{N} \right)
+\]
+
+where:
+\begin{itemize}
+    \item $C$ is the channel capacity in bits per second (bps)
+    \item $B$ is the bandwidth of the channel in Hz
+    \item $S/N$ is the signal-to-noise ratio
+\end{itemize}
+
+This theorem provides a fundamental limit on the amount of information that can be reliably transmitted over a communication channel.
+
+\section{Simulink Examples}
+In this course, you will be using Simulink to simulate various modulation and demodulation techniques.
+
+\subsection{Simulink Example: Frequency Spectrum of AM Waveforms}
+Add a Zero-Order Hold block and a Spectrum Analyzer block to the Simulink model. Set the Sample Time in the Zero-Order Hold block to $1e^{-4}$. In the Spectrum Analyzer, adjust the resolution bandwidth (RBW) to 1 Hz and uncheck the two-sided spectrum option. Run the simulation and observe the frequency spectrum of the AM waveform.
+
+\subsection{Simulink Example: Power in AM Signals}
+To calculate the power in an AM signal, use the following equation for power in a frequency component with an RMS amplitude $V_{\text{RMS}}$:
+
+\[
+P = \frac{V_{\text{RMS}}^2}{R_L}
+\]
+
+Where $R_L$ is the load resistance.
+
+\section{Single Sideband Modulation (SSB)}
+SSB modulation is a method of modulation where one of the sidebands is filtered out. This technique reduces the bandwidth and power requirements compared to DSB-AM.
+
+\subsection{Simulink Example: SSB Modulation}
+Build the SSB modulator in Simulink. The filter block is set to a bandpass filter with a lower passband edge frequency of $995 \times 2 \pi$ rads/s and an upper passband edge frequency of $1020 \times 2 \pi$ rads/s.
+
+\section{Comparison of Modulation Types}
+
+\begin{itemize}
+    \item \textbf{DSB-AM:} Simple to demodulate with an envelope detector but requires more power.
+    \item \textbf{DSB-SC:} More power-efficient but requires synchronous demodulation.
+    \item \textbf{SSB-AM:} Uses half the bandwidth and requires less power but also needs synchronous demodulation.
+\end{itemize}
+
+\end{document}
