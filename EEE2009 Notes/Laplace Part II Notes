@@ -1,0 +1,385 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{circuitikz}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usetikzlibrary{positioning}
+
+\title{Comprehensive Laplace Transforms and Circuit Analysis}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section{Laplace Transform of Derivatives and Integrals}
+
+\begin{align*}
+\mathcal{L}\{f'\} &= sF(s) - f(0) \\
+\mathcal{L}\{f''\} &= s^2F(s) - sf(0) - f'(0) \\
+\mathcal{L}\left\{\int_0^t f(t) dt\right\} &= \frac{1}{s}F(s)
+\end{align*}
+
+To solve differential equations, we need to know the Laplace transforms of derivatives. Let $f(t)$ be a function of $t$. Then $f'$ is the first derivative $\frac{df(t)}{dt}$, and $f''$ is the second derivative $\frac{d^2f(t)}{dt^2}$.
+
+\section{Example: Differential Equation}
+
+Given the differential equation $\frac{d^2x}{dt^2} + 4\frac{dx}{dt} + x$, where $x(0) = 1$ and $x'(0) = -3$, write an expression for the Laplace transform.
+
+\begin{align*}
+\mathcal{L}\{x'\} &= sX(s) - x(0) = sX(s) - 1 \\
+\mathcal{L}\{x''\} &= s^2X(s) - sx(0) - x'(0) = s^2X(s) - s + 3
+\end{align*}
+
+Therefore, the Laplace transform of the differential equation is:
+
+\begin{align*}
+\mathcal{L}\{x'' + 4x' + x\} &= s^2X(s) - s + 3 + 4(sX(s) - 1) + X(s) \\
+&= s^2X(s) - s + 3 + 4sX(s) - 4 + X(s) \\
+&= X(s)(s^2 + 4s + 1) - s - 1
+\end{align*}
+
+\section{Capacitor Discharging}
+
+\begin{circuitikz}
+\draw
+  (0,0) to[C, l=$C$] (2,0)
+  to[R, l=$R$] (2,2)
+  to[short] (0,2)
+  to[short] (0,0);
+\draw (1,1) node[]{$v_C$};
+\draw (2.5,1) node[]{$v_R$};
+\draw (1,2.5) node[]{$i$};
+\end{circuitikz}
+
+At $t = 0$, the voltage across the capacitor is $v_C(0) = V$. When the switch is closed, the capacitor will discharge through the resistor. From Kirchhoff's voltage law:
+
+\begin{align*}
+v_C + v_R &= 0 \\
+v_C + iR &= 0 \\
+i &= C\frac{dv_C}{dt}
+\end{align*}
+
+Therefore, the first-order differential equation describing this circuit is:
+
+\[RC\frac{dv_C}{dt} + v_C = 0\]
+
+Taking the Laplace transform:
+
+\[RC(sV_C(s) - v_C(0)) + V_C(s) = 0\]
+
+\[V_C(s)(1 + sRC) = RCv_C(0)\]
+
+\[V_C(s) = \frac{RCv_C(0)}{1 + sRC} = \frac{v_C(0)}{\frac{1}{RC} + s}\]
+
+From the table of common Laplace transforms, we find the inverse Laplace transform of $F(s) = \frac{1}{s+a}$ is $f(t) = e^{-at}$, so letting $a = \frac{1}{RC}$:
+
+\[v_C(t) = v_C(0)e^{-\frac{t}{RC}} = Ve^{-\frac{t}{RC}}\]
+
+\section{LCR Circuit}
+
+\begin{circuitikz}
+\draw
+  (0,0) to[V, l=$v(t)$] (0,2)
+  to[L, l=$L$] (2,2)
+  to[R, l=$R$] (4,2)
+  to[C, l=$C$] (4,0)
+  to[short] (0,0);
+\draw (2,1) node[]{$i(t)$};
+\end{circuitikz}
+
+The circuit shows a capacitor, inductor and resistor in series with a voltage source. We will determine the current $i(t)$ when the input, $v(t)$, is a delta function, $\delta(t)$.
+
+From Kirchhoff's Voltage law:
+
+\begin{align*}
+v(t) &= v_C + v_L + v_R \\
+v(t) &= \frac{1}{C}\int_0^t i(t)dt + L\frac{di(t)}{dt} + i(t)R
+\end{align*}
+
+Taking the Laplace transform:
+
+\[V(s) = \frac{1}{sC}I(s) + L(sI(s) - i(0)) + RI(s)\]
+
+With zero initial conditions, i.e., $i(0) = 0$:
+
+\[V(s) = I(s)\left(\frac{1}{sC} + sL + R\right)\]
+
+\[I(s) = \frac{V(s)}{\frac{1}{sC} + sL + R} = \frac{sCV(s)}{s^2LC + sRC + 1}\]
+
+Let $C = \frac{1}{2}F$, $L = 2H$ and $R = 5\Omega$, so that:
+
+\[I(s) = \frac{sV(s)}{2s^2 + 5s + 2} = \frac{sV(s)}{(2s + 1)(s + 2)}\]
+
+Now express $I(s)$ as partial fractions:
+
+\[I(s) = V(s)\left(\frac{A}{2s + 1} + \frac{B}{s + 2}\right)\]
+
+Multiplying both sides by $(2s + 1)(s + 2)$:
+
+\[s = A(s + 2) + B(2s + 1)\]
+
+Substituting $s = -\frac{1}{2}$ to find $A$ and then $s = -2$ to find $B$:
+
+\[I(s) = V(s)\left(\frac{2}{3(s + 2)} - \frac{1}{6(s + \frac{1}{2})}\right)\]
+
+Using the table of common Laplace transforms, the inverse Laplace transform of $F(s) = \frac{1}{s+a}$ is $f(t) = e^{-at}$, so:
+
+\[i(t) = \frac{2}{3}e^{-2t} - \frac{1}{6}e^{-\frac{t}{2}}\]
+
+We can now use this expression to find $i(t)$ if $v(t) = \delta(t)$.
+
+\[V(s) = \mathcal{L}\{\delta(t)\} = 1\]
+
+\section{Transfer Function}
+
+The transfer function, $H(s)$ of a system is the Laplace transform of the output, $Y(s)$, divided by the Laplace transform of the input, $X(s)$. It shows the relationship between the input and the output.
+
+\begin{tikzpicture}
+\node[draw,rectangle] (H) {$H(s)$};
+\draw[->] (H.west) -- ++(-1,0) node[left] {$X(s)$};
+\draw[->] (H.east) -- ++(1,0) node[right] {$Y(s)$};
+\end{tikzpicture}
+
+Example: The low-pass filter shown below is described by the following differential equation:
+
+\begin{circuitikz}
+\draw
+  (0,0) to[R, l=$R$] (2,0)
+  to[short] (2,-2)
+  to[C, l=$C$] (0,-2)
+  to[short] (0,0);
+\draw (-1,0) to[short] (0,0);
+\draw (2,0) to[short] (3,0);
+\draw (-1,-0.5) node[]{$v_{IN}(t)$};
+\draw (3,-0.5) node[]{$v_{OUT}(t)$};
+\draw (1,-1) node[]{$i(t)$};
+\end{circuitikz}
+
+\[v_{IN}(t) = RC\frac{dv_{OUT}(t)}{dt} + v_{OUT}(t)\]
+
+Take the Laplace transform:
+
+\[V_{IN}(s) = sRCV_{OUT}(s) + V_{OUT}(s) = V_{OUT}(s)(1 + sRC)\]
+
+Then the transfer function is:
+
+\[H(s) = \frac{V_{OUT}(s)}{V_{IN}(s)} = \frac{1}{1 + sRC}\]
+
+\section{Combining Transfer Functions}
+
+If two systems with transfer functions $H_1(s)$ and $H_2(s)$ are in series, then the overall transfer function is $H_1(s)H_2(s)$.
+
+% First diagram: Two interconnected systems
+\begin{tikzpicture}
+    \node[draw, rectangle] (H1) {$H_1(s)$};
+    \node[draw, rectangle, right=1cm of H1] (H2) {$H_2(s)$};
+    
+    \draw[->] (H1.west) -- ++(-1,0) node[left] {$X(s)$};
+    \draw[->] (H1.east) -- (H2.west);
+    \draw[->] (H2.east) -- ++(1,0) node[right] {$Y(s)$};
+\end{tikzpicture}
+
+\vspace{1cm} % Add vertical space between diagrams
+
+% Second diagram: Negative feedback loop
+\begin{tikzpicture}
+    \node[draw, circle, inner sep=1pt] (sum) at (0,0) {$+$};
+    \node[draw, rectangle, right=1cm of sum] (G) {$G(s)$};
+    \node[draw, rectangle, below=1cm of G] (H) {$H(s)$};
+    
+    \draw[->] (sum.east) -- (G.west);
+    \draw[->] (G.east) -- ++(1,0) node[right] {$Y(s)$} coordinate (out);
+    \draw[->] (out) |- (H.east);
+    \draw[->] (H.west) -| (sum.south) node[left, pos=0.25] {$-$};
+    \draw[->] ++(-1,0) -- (sum.west) node[left] {$X(s)$};
+\end{tikzpicture}
+
+\vspace{1cm} % Add vertical space between diagrams
+
+% Example: System with negative feedback loop
+\begin{tikzpicture}
+    \node[draw, circle, inner sep=1pt] (sum) at (0,0) {$+$};
+    \node[draw, rectangle, right=1cm of sum] (G) {$\frac{1}{s}$};
+    \node[draw, rectangle, below=1cm of G] (H) {$2$};
+    
+    \draw[->] (sum.east) -- (G.west);
+    \draw[->] (G.east) -- ++(1,0) node[right] {$Y(s)$} coordinate (out);
+    \draw[->] (out) |- (H.east);
+    \draw[->] (H.west) -| (sum.south) node[left, pos=0.25] {$-$};
+    \draw[->] ++(-1,0) -- (sum.west) node[left] {$X(s)$};
+\end{tikzpicture}
+
+% Transfer function
+\[
+\frac{Y(s)}{X(s)} = \frac{G(s)}{1 + G(s)H(s)}
+\]
+
+
+We have $G(s) = \frac{1}{s}$ and $H(s) = 2$. Therefore, the single transfer function is:
+
+\[\frac{G(s)}{1 + G(s)H(s)} = \frac{\frac{1}{s}}{1 + \frac{2}{s}} = \frac{1}{s + 2}\]
+
+\section{Poles and Zeros}
+
+We can express most transfer functions in the form of:
+
+\[H(s) = \frac{Y(s)}{X(s)} = \frac{(s - z_1)(s - z_2)\cdots(s - z_m)}{(s - p_1)(s - p_2)\cdots(s - p_n)}\]
+
+The values of $s$ that make $H(s) = 0$ are called zeros, i.e., $s = z_1, z_2, \ldots, z_m$.
+The values of $s$ that make $H(s) = \infty$ are called poles, i.e., $s = p_1, p_2, \ldots, p_n$.
+
+Let $X(s) = \frac{1}{s - p}$ where $p$ is a complex pole defined as $a + jb$. The inverse Laplace transform of $X(s)$ is:
+
+\begin{align*}
+x(t) &= e^{pt} = e^{(a+jb)t} = e^{at}e^{jbt} \\
+&= e^{at}(\cos(bt) + j\sin(bt))
+\end{align*}
+
+There is an exponential term $e^{at}$ and a sinusoidal (oscillating) term $e^{jbt}$.
+If $a$ is negative, then $x(t)$ will decrease to zero as $t \to \infty$.
+The effect of the poles is called a transient response because it decreases with time.
+
+\begin{tikzpicture}
+\begin{axis}[
+    xlabel={$\Re\{s\}$},
+    ylabel={$\Im\{s\}$},
+    xmin=-5,xmax=5,
+    ymin=-5,ymax=5,
+    axis lines=center,
+    xtick=\empty,
+    ytick=\empty,
+    xlabel style={right},
+    ylabel style={above},
+]
+\addplot[only marks,mark=x,mark size=5pt] coordinates {(-2,2) (-2,-2)};
+\node[above right] at (axis cs:-2,2) {Poles};
+\end{axis}
+\end{tikzpicture}
+
+\begin{tikzpicture}
+\begin{axis}[
+    xlabel={$\Re\{s\}$},
+    ylabel={$\Im\{s\}$},
+    xmin=-5,xmax=5,
+    ymin=-5,ymax=5,
+    axis lines=center,
+    xtick=\empty,
+    ytick=\empty,
+    xlabel style={right},
+    ylabel style={above},
+]
+\addplot[only marks,mark=x,mark size=5pt] coordinates {(-2,2) (-2,-2)};
+\node[above right] at (axis cs:-2,2) {Poles};
+\end{axis}
+\end{tikzpicture}
+
+The real part of a pole must be negative for the response caused by that pole to decay with time. If a pole is further to the left on the x-axis of the s-plane diagram, then the transient response will decay quicker.
+
+\begin{tikzpicture}
+\begin{axis}[
+    xlabel={Time},
+    ylabel={Transient Response},
+    xmin=0,xmax=10,
+    ymin=-1,ymax=1,
+    axis lines=left,
+    xlabel style={right},
+    ylabel style={above},
+]
+\addplot[domain=0:10,samples=100,smooth,thick,blue] {exp(-0.5*x)*sin(deg(x))};
+\end{axis}
+\end{tikzpicture}
+
+\section{Additional Examples and Applications}
+
+\subsection{Step Response of RC Circuit}
+
+Consider an RC circuit with a step input voltage:
+
+\begin{circuitikz}
+\draw
+  (0,0) to[V, l=$V_s$] (0,2)
+  to[R, l=$R$] (2,2)
+  to[short] (2,0)
+  to[C, l=$C$] (0,0);
+\draw (2,1) node[right] {$v_c(t)$};
+\end{circuitikz}
+
+The differential equation for this circuit is:
+
+\[RC\frac{dv_c}{dt} + v_c = V_s\]
+
+Taking the Laplace transform (assuming zero initial conditions):
+
+\[RCs V_c(s) + V_c(s) = \frac{V_s}{s}\]
+
+Solving for $V_c(s)$:
+
+\[V_c(s) = \frac{V_s}{s(RCs + 1)} = \frac{V_s}{s} - \frac{V_s}{s + \frac{1}{RC}}\]
+
+Taking the inverse Laplace transform:
+
+\[v_c(t) = V_s\left(1 - e^{-t/RC}\right)\]
+
+This represents the charging of the capacitor in response to a step input.
+
+\subsection{Resonance in RLC Circuit}
+
+For an RLC circuit, the transfer function is of the form:
+
+\[H(s) = \frac{1}{Ls^2 + Rs + \frac{1}{C}}\]
+
+The natural frequency $\omega_n$ and damping ratio $\zeta$ are given by:
+
+\begin{align*}
+\omega_n &= \sqrt{\frac{1}{LC}} \\
+\zeta &= \frac{R}{2}\sqrt{\frac{C}{L}}
+\end{align*}
+
+The system is underdamped when $0 < \zeta < 1$, critically damped when $\zeta = 1$, and overdamped when $\zeta > 1$.
+
+\subsection{Bode Plots}
+
+Bode plots are useful for visualizing the frequency response of a system. They consist of two graphs:
+\begin{itemize}
+    \item Magnitude plot: $20 \log_{10} |H(j\omega)|$ vs. $\log_{10} \omega$
+    \item Phase plot: $\angle H(j\omega)$ vs. $\log_{10} \omega$
+\end{itemize}
+
+For example, the Bode plot for a low-pass RC filter with transfer function $H(s) = \frac{1}{1 + sRC}$:
+
+\begin{tikzpicture}
+\begin{semilogxaxis}[
+    xlabel={Frequency (rad/s)},
+    ylabel={Magnitude (dB)},
+    xmin=0.1, xmax=100,
+    ymin=-40, ymax=5,
+    grid=both,
+    width=12cm,
+    height=6cm,
+]
+\addplot[domain=0.1:100,samples=100,smooth,thick,blue] {20*log10(1/sqrt(1+(x)^2))};
+\end{semilogxaxis}
+\end{tikzpicture}
+
+\begin{tikzpicture}
+\begin{semilogxaxis}[
+    xlabel={Frequency (rad/s)},
+    ylabel={Phase (degrees)},
+    xmin=0.1, xmax=100,
+    ymin=-90, ymax=5,
+    grid=both,
+    width=12cm,
+    height=6cm,
+]
+\addplot[domain=0.1:100,samples=100,smooth,thick,red] {-atan(x)*180/pi};
+\end{semilogxaxis}
+\end{tikzpicture}
+
+\section{Conclusion}
+
+Laplace transforms provide a powerful method for analyzing linear time-invariant systems, particularly in electrical engineering. They allow us to convert differential equations into algebraic equations, simplify the analysis of complex circuits, and understand system behavior in the frequency domain. The concepts of transfer functions, poles and zeros, and frequency response are fundamental to control systems and signal processing.
+
+\end{document}
