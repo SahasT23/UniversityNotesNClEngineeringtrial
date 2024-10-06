@@ -1,0 +1,143 @@
+\documentclass{article}
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{graphicx}
+\usepackage{tikz}
+
+\title{EEE2009 Z Transforms}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction to Z Transforms}
+
+The Z transform can be considered as the discrete-time equivalent of the Laplace Transform. It is used to characterize systems using the transfer function and solve difference equations with non-zero initial conditions.
+
+\subsection{Difference Equation}
+
+A difference equation is the discrete equivalent of a differential equation. For example:
+\begin{equation}
+    y[k] = 2x[k] - x[k-1]
+\end{equation}
+
+\section{Definition of the Z Transform}
+
+For a sequence $f[k]$, its Z transform is defined as:
+\begin{equation}
+    F(z) = \mathcal{Z}\{f[k]\} = \sum_{k=0}^{\infty} f[k]z^{-k}
+\end{equation}
+This is an infinite series that we can expand as:
+\begin{equation}
+    \mathcal{Z}\{f[k]\} = \frac{f[0]}{z^0} + \frac{f[1]}{z^1} + \frac{f[2]}{z^2} + \dots
+\end{equation}
+
+In most cases, this series can be expressed in a closed form within the Region of Convergence (ROC).
+
+\subsection{Example}
+
+Find the Z transform of $x[k] = a^k$:
+\begin{equation}
+    \mathcal{Z}\{a^k\} = a^0 + \frac{a^1}{z^1} + \frac{a^2}{z^2} + \dots
+\end{equation}
+
+This is an infinite geometric series with a common ratio of $\frac{a}{z}$, which converges to:
+\begin{equation}
+    \mathcal{Z}\{a^k\} = \frac{1}{1 - \frac{a}{z}} = \frac{z}{z - a}
+\end{equation}
+
+The ROC is $|z| > |a|$. The region of convergence can be visualized as:
+
+\begin{center}
+    \begin{tikzpicture}
+        \draw[->] (-3,0) -- (3,0) node[right] {$Re\{z\}$};
+        \draw[->] (0,-3) -- (0,3) node[above] {$Im\{z\}$};
+        \draw (0,0) circle(2);
+        \node at (2.2,2.2) {Unit Circle};
+        \node at (1,1) {ROC};
+    \end{tikzpicture}
+\end{center}
+
+\section{Common Z Transforms}
+
+The table below provides common Z transforms:
+
+\begin{equation}
+    \begin{array}{c|c}
+        f[k] & F(z) \\
+        \hline
+        \delta[k] & 1 \\
+        u[k] & \frac{z}{z-1} \\
+        a^k & \frac{z}{z-a} \\
+        k a^k & \frac{az}{(z-a)^2} \\
+        \sin(ak) & \frac{z \sin a}{z^2 - 2z \cos a + 1} \\
+        \cos(ak) & \frac{z(z - \cos a)}{z^2 - 2z \cos a + 1} \\
+    \end{array}
+\end{equation}
+
+\section{Properties of the Z Transform}
+
+\subsection{Linearity}
+
+The Z transform is linear:
+\begin{equation}
+    \mathcal{Z}\{f[k] + g[k]\} = \mathcal{Z}\{f[k]\} + \mathcal{Z}\{g[k]\}
+\end{equation}
+\begin{equation}
+    \mathcal{Z}\{\alpha f[k]\} = \alpha \mathcal{Z}\{f[k]\}
+\end{equation}
+
+Example: Determine the Z transform of $f[k] = 2u[k] + 4k$:
+\begin{equation}
+    \mathcal{Z}\{f[k]\} = 2\mathcal{Z}\{u[k]\} + 4\mathcal{Z}\{k\}
+\end{equation}
+
+Using the table of transforms:
+\begin{equation}
+    F(z) = 2\frac{z}{z-1} + 4\frac{z}{(z-1)^2}
+\end{equation}
+
+\section{Inverse Z Transforms}
+
+To find inverse Z transforms, we manipulate $F(z)$ to match known transforms from the table.
+
+Example: Find the inverse Z transform of:
+\begin{equation}
+    F(z) = \frac{z+4}{z-3}
+\end{equation}
+
+We split this into:
+\begin{equation}
+    F(z) = \frac{z}{z-3} + \frac{4}{z-3}
+\end{equation}
+
+The inverse transform of $\frac{z}{z-3}$ is $3^k$, and applying the second shift theorem to the second term, we get the solution.
+
+\section{Solving Difference Equations using Z Transforms}
+
+Example: Solve the difference equation $x[k+1] - 3x[k] = 0, x[0] = 1$.
+
+Taking the Z transform of both sides:
+\begin{equation}
+    zX(z) - z - 3X(z) = 0
+\end{equation}
+
+Solving for $X(z)$:
+\begin{equation}
+    X(z) = \frac{z}{z-3}
+\end{equation}
+
+The inverse Z transform gives:
+\begin{equation}
+    x[k] = 3^k
+\end{equation}
+
+\section{Stability of LTI Systems}
+
+A linear time-invariant system is stable if all poles of $H(z)$ lie inside the unit circle. For a system with:
+\begin{equation}
+    H(z) = \frac{1}{1 + a(z-5)}
+\end{equation}
+
+The system is stable if the pole satisfies $|z| < 1$.
+
+\end{document}
