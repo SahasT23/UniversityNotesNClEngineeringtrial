@@ -1,0 +1,268 @@
+\documentclass[a4paper, 12pt]{article}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{pgfplots}
+\pgfplotsset{compat=newest}
+
+\title{PN Junctions and Semiconductor Physics}
+\author{EEE2014: Problem Notes}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\section{Introduction to PN Junctions}
+
+PN junctions are key components in semiconductor devices, used primarily as rectifiers and transistors. The current-voltage characteristics and carrier behavior under forward and reverse bias are fundamental to their operation. In this document, we will go through the Shockley equation, carrier concentration derivations, and breakdown mechanisms in detail.
+
+\section{Shockley's Equation}
+The Shockley equation describes the current-voltage relationship for a PN junction. It is expressed as:
+\[
+I = I_0 \left( \exp \left( \frac{eV}{k_B T} \right) - 1 \right)
+\]
+where:
+\begin{itemize}
+    \item \(I\) is the total current,
+    \item \(I_0\) is the reverse saturation current,
+    \item \(e\) is the electronic charge,
+    \item \(V\) is the applied voltage,
+    \item \(k_B\) is Boltzmann's constant,
+    \item \(T\) is the temperature.
+\end{itemize}
+
+\section{Current-Voltage Characteristics}
+
+In the following plot, we will visualize the I-V characteristics of a PN junction using Shockley's equation:
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+        xlabel={$V$ (Voltage) [V]},
+        ylabel={$I$ (Current) [A]},
+        grid=major,
+        width=12cm, height=8cm,
+        title={Shockley's Diode I-V Characteristics},
+        legend pos=north west,
+        ytick={-0.1,0,0.1,0.2,0.3,0.4,0.5},
+        xtick={-0.2,0,0.2,0.4,0.6,0.8,1},
+    ]
+        % Shockley's Equation I = I0 (exp(V/Vt) - 1)
+        \addplot[color=blue, thick, samples=100, domain=-0.2:1] 
+        {0.000001 * (exp(40*x) - 1)}; 
+        \addlegendentry{Shockley's Equation (Ideal Diode)}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{I-V Characteristics of a PN Junction using Shockley's equation}
+\end{figure}
+
+\section{Carrier Concentrations}
+
+Carrier concentrations in a PN junction depend on both majority and minority carriers. The concentration of electrons and holes varies depending on the doping and the applied bias.
+
+\subsection{Forward Bias Carrier Concentration}
+In forward bias (\(V_a > 0\)), minority carriers increase near the junction:
+
+\[
+n_p = n_{p0} \exp \left( \frac{eV_a}{k_B T} \right), \quad p_n = p_{n0} \exp \left( \frac{eV_a}{k_B T} \right)
+\]
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+        xlabel={Distance from Junction (x) [µm]},
+        ylabel={Carrier Concentration [cm$^{-3}$]},
+        width=12cm, height=8cm,
+        title={Carrier Concentrations in Forward Bias},
+        legend pos=north east,
+        ymode=log,
+        grid=major,
+    ]
+        % Majority Carrier (p-side)
+        \addplot[color=blue, thick, samples=100, domain=-5:0] 
+        {1e16}; 
+        \addlegendentry{Majority carriers (p-side)}
+        
+        % Minority Carrier (n_p increasing with bias)
+        \addplot[color=red, thick, samples=100, domain=-5:0] 
+        {1e4 * exp(0.1*x)};
+        \addlegendentry{Minority carriers (n$_p$)}
+        
+        % Majority Carrier (n-side)
+        \addplot[color=blue, thick, samples=100, domain=0:5] 
+        {1e15}; 
+        \addlegendentry{Majority carriers (n-side)}
+        
+        % Minority Carrier (p_n increasing with bias)
+        \addplot[color=red, thick, samples=100, domain=0:5] 
+        {1e4 * exp(-0.1*x)};
+        \addlegendentry{Minority carriers (p$_n$)}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Carrier Concentration Distribution under Forward Bias}
+\end{figure}
+
+\section{Breakdown Mechanisms}
+
+When a large reverse bias is applied to a PN junction, breakdown mechanisms such as Zener breakdown and Avalanche breakdown can occur.
+
+\subsection{Zener Breakdown}
+
+Zener breakdown occurs when the electric field in the depletion region becomes so large that it allows electrons to tunnel through the potential barrier. This happens at high doping levels and low breakdown voltages.
+
+The following plot represents the reverse I-V characteristic, showing Zener breakdown at high reverse voltage:
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+        xlabel={$V$ (Voltage) [V]},
+        ylabel={$I$ (Current) [A]},
+        grid=major,
+        width=12cm, height=8cm,
+        title={Zener Breakdown Characteristic},
+        legend pos=south east,
+        ytick={-10,-5,0,5,10},
+        xtick={-10,-5,0,5},
+    ]
+        % Zener Breakdown reverse characteristic
+        \addplot[color=blue, thick, samples=100, domain=-10:5] 
+        {x < -6 ? -10 : 1e-6 * (exp(20*x) - 1)}; 
+        \addlegendentry{Zener Breakdown}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Zener Breakdown in Reverse Bias}
+\end{figure}
+
+\subsection{Avalanche Breakdown}
+
+Avalanche breakdown occurs when the electric field is large enough to accelerate carriers, causing them to ionize atoms and create additional electron-hole pairs. This process causes a multiplication of current, leading to a sharp increase in the current at the breakdown voltage.
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+        xlabel={Distance through Depletion Region (x) [µm]},
+        ylabel={Carrier Multiplication (M)},
+        width=12cm, height=8cm,
+        title={Carrier Multiplication in Avalanche Breakdown},
+        legend pos=north west,
+        grid=major,
+    ]
+        % Carrier multiplication in depletion region
+        \addplot[color=red, thick, samples=100, domain=0:5] 
+        {exp(0.5*x)};
+        \addlegendentry{Carrier Multiplication}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Avalanche Breakdown: Carrier Multiplication across the Depletion Region}
+\end{figure}
+
+\section{Example Problems and Solutions}
+
+Here are some example problems based on the theory and derivations discussed, along with their solutions.
+
+\subsection{Problem 1: Relative Increase in Minority Carrier Concentration}
+
+\textbf{Problem:} Calculate the relative increase in minority carrier concentration at a PN junction under a forward bias of 0.2 V.
+
+\textbf{Solution:}
+
+The increase in minority carrier concentration \(n_p\) in the p-region is given by:
+\[
+n_p = n_{p0} \exp \left( \frac{eV_a}{k_B T} \right)
+\]
+
+For room temperature (\(T = 300 \, \text{K}\)):
+\[
+\frac{e}{k_B T} = \frac{1.6 \times 10^{-19}}{1.38 \times 10^{-23} \times 300} = 38.7 \, \text{V}^{-1}
+\]
+Substituting \(V_a = 0.2 \, \text{V}\):
+\[
+n_p = n_{p0} \exp(38.7 \times 0.2) = n_{p0} \exp(7.74)
+\]
+\[
+n_p \approx n_{p0} \times 2300
+\]
+
+Thus, the minority carrier concentration increases by a factor of approximately 2300 under a forward bias of 0.2 V.
+
+\subsection{Problem 2: Why is a PN Junction Diode a Minority Carrier Device?}
+
+\textbf{Solution:}
+
+A PN junction diode is considered a minority carrier device because the current in the diode under both forward and reverse bias is largely determined by the movement of minority carriers. In forward bias, the diffusion of minority carriers (holes in the n-region and electrons in the p-region) dominates the conduction. Similarly, in reverse bias, the leakage current is due to the minority carriers. Hence, minority carrier behavior controls the current.
+
+\subsection{Problem 3: Reverse Saturation Current Density}
+
+\textbf{Problem:} Estimate the reverse saturation current density for a large Si PN junction, if the acceptor doping is \(10^{18} \, \text{cm}^{-3}\), the donor doping is \(10^{16} \, \text{cm}^{-3}\), and the minority carrier relaxation times are \(10^{-8} \, \text{s}\).
+
+\textbf{Solution:}
+
+The reverse saturation current density \(I_0\) depends on the minority carrier concentrations, and it can be approximated using:
+\[
+I_0 = \frac{q n_i^2}{N_A \tau_n + N_D \tau_p}
+\]
+where:
+\begin{itemize}
+    \item \(q = 1.6 \times 10^{-19} \, \text{C}\),
+    \item \(n_i = 1.45 \times 10^{10} \, \text{cm}^{-3}\),
+    \item \(N_A = 10^{18} \, \text{cm}^{-3}\),
+    \item \(N_D = 10^{16} \, \text{cm}^{-3}\),
+    \item \(\tau_n = \tau_p = 10^{-8} \, \text{s}\).
+\end{itemize}
+
+Substitute the values:
+\[
+I_0 = \frac{1.6 \times 10^{-19} \times (1.45 \times 10^{10})^2}{10^{18} \times 10^{-8} + 10^{16} \times 10^{-8}}
+\]
+\[
+I_0 \approx \frac{3.364 \times 10^{-7}}{10^{10}} = 3.36 \times 10^{-17} \, \text{A/cm}^2
+\]
+
+Thus, the reverse saturation current density is approximately \(3.36 \times 10^{-17} \, \text{A/cm}^2\).
+
+\subsection{Problem 4: Built-in Electric Field Direction}
+
+\textbf{Problem:} Is the built-in electric field at a PN junction directed towards the n-region or the p-region?
+
+\textbf{Solution:}
+
+The built-in electric field is directed from the n-region to the p-region. This is because, at equilibrium, electrons from the n-side diffuse into the p-side and holes from the p-side diffuse into the n-side, leading to an electric field that opposes further diffusion. Hence, the field points towards the p-region.
+
+\subsection{Problem 5: Depletion Region under Forward Bias}
+
+\textbf{Problem:} Does the depletion region shrink or grow under forward bias?
+
+\textbf{Solution:}
+
+Under forward bias, the depletion region shrinks. This is because the forward bias reduces the potential barrier, allowing more carriers to recombine at the junction, and thus, the space charge region (depletion region) becomes narrower.
+
+\subsection{Problem 6: Electron Diffusion Current and Electric Field}
+
+\textbf{Problem:} For a PN junction doped with \(p = 10^{16} \, \text{cm}^{-3}\) and \(n = 10^{17} \, \text{cm}^{-3}\), and having a depletion width of 0.3 µm, calculate the magnitude of the electron diffusion current present, and estimate the magnitude of a uniform built-in electric field necessary to oppose such current.
+
+\textbf{Solution:}
+
+The diffusion current for electrons in the p-region is given by:
+\[
+J_n = -q D_n \frac{dn}{dx}
+\]
+Assuming \(D_n \approx 25 \, \text{cm}^2/\text{s}\) for silicon and using \(dn/dx \approx \frac{n}{L_n}\), where \(L_n\) is the diffusion length (typically \(L_n \approx 10^{-4} \, \text{cm}\)):
+\[
+J_n = -1.6 \times 10^{-19} \times 25 \times \frac{10^{10}}{10^{-4}} = 4 \times 10^{-5} \, \text{A/cm}^2
+\]
+
+The built-in electric field \(E\) required to oppose this current is:
+\[
+E = \frac{J_n}{q n_n \mu_n} = \frac{4 \times 10^{-5}}{1.6 \times 10^{-19} \times 10^{17} \times 1400} \approx 1.79 \, \text{V/cm}
+\]
+
+Thus, the electric field necessary to oppose the electron diffusion current is approximately \(1.79 \, \text{V/cm}\).
+
+\end{document}
