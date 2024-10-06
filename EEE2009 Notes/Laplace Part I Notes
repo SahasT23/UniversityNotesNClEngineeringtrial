@@ -1,0 +1,290 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{geometry}
+\geometry{a4paper, margin=1in}
+\usetikzlibrary{arrows.meta}
+
+\title{EEE2009 - Signals and Communications: Introduction to Signals}
+\author{Your Name}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\section{Introduction}
+This document introduces the basic concepts of continuous and discrete-time signals and systems, focusing on the following key topics:
+\begin{itemize}
+    \item Energy, Power, and Root-Mean-Square (RMS) values
+    \item Sampling
+    \item Finite and Infinite Impulse Response Systems
+    \item Convolution
+\end{itemize}
+
+\section{Continuous-Time Signals}
+A continuous-time signal is defined for all values of time \(t\) and can take continuous values.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.6\textwidth]{continuous_signal}
+    \caption{Continuous-Time Signal}
+\end{figure}
+
+\section{Discrete-Time Signals}
+Discrete-time signals are only defined at specific intervals of time \(n\), and can either have continuous values or discrete values (digital signals).
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.6\textwidth]{discrete_signal}
+    \caption{Discrete-Time Signal}
+\end{figure}
+
+\section{Signal Operations}
+\subsection{Amplification}
+Amplification scales the amplitude of a signal \(v(t)\) by a factor \(A\). If \(A\) is negative, the signal will be flipped along the time axis.
+
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}
+        \draw[->] (-2,0) -- (4,0) node[right] {$t$};
+        \draw[->] (0,-2) -- (0,4) node[above] {$v(t)$};
+        \draw[domain=-2:2,smooth,variable=\x,blue,thick] plot ({\x},{\x*\x});
+    \end{tikzpicture}
+    \caption{Signal Amplification}
+\end{figure}
+
+\subsection{Time Shifting}
+Time shifting moves the signal along the time axis. The signal \(v(t+\tau)\) is shifted to the left for positive \(\tau\) and to the right for negative \(\tau\).
+
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}
+        \draw[->] (-4,0) -- (4,0) node[right] {$t$};
+        \draw[->] (0,-2) -- (0,4) node[above] {$v(t)$};
+        \draw[domain=-2:2,smooth,variable=\x,blue,thick] plot ({\x},{exp(-\x)});
+        \draw[domain=-3:1,smooth,variable=\x,red,thick,dashed] plot ({\x},{exp(-(\x+2))});
+    \end{tikzpicture}
+    \caption{Time Shifting Example}
+\end{figure}
+
+\subsection{Time Scaling}
+Time scaling compresses or stretches the signal on the time axis. The signal \(v(at)\) compresses for \(a>1\) and stretches for \(a<1\).
+
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}
+        \draw[->] (-4,0) -- (4,0) node[right] {$t$};
+        \draw[->] (0,-2) -- (0,4) node[above] {$v(t)$};
+        \draw[domain=-2:2,smooth,variable=\x,blue,thick] plot ({\x},{exp(-\x)});
+        \draw[domain=-4:2,smooth,variable=\x,red,thick,dashed] plot ({\x},{exp(-0.5*\x)});
+    \end{tikzpicture}
+    \caption{Time Scaling Example}
+\end{figure}
+
+\section{Common Functions in Signal Processing}
+Some commonly used functions include the impulse function \(\delta(t)\), the step function \(u(t)\), and the ramp function \(R(t)\). These functions are fundamental to system analysis and signal processing.
+
+\begin{align*}
+\delta(t) & = 
+\begin{cases}
+1, & t = 0 \\
+0, & t \neq 0
+\end{cases} \\
+u(t) & = 
+\begin{cases}
+1, & t \geq 0 \\
+0, & t < 0
+\end{cases} \\
+R(t) & = 
+\begin{cases}
+t, & t \geq 0 \\
+0, & t < 0
+\end{cases}
+\end{align*}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\linewidth]{common_functions}
+    \caption{Impulse, Step, and Ramp Functions}
+\end{figure}
+
+\section{Energy and Power of a Signal}
+The energy \(E\) of a signal \(v(t)\) is the area under the squared signal:
+
+\[
+E = \int_{-\infty}^{\infty} v^2(t) dt
+\]
+
+For discrete-time signals, the energy is computed as:
+
+\[
+E = \sum_{n=-\infty}^{\infty} |v(n)|^2
+\]
+
+If a signal has finite energy, it is known as an energy signal. Signals with infinite energy and finite average power are called power signals. The average power \(P_{\text{av}}\) of a signal is:
+
+\[
+P_{\text{av}} = \lim_{T \to \infty} \frac{1}{2T} \int_{-T}^{T} v^2(t) dt
+\]
+
+\section{Root Mean Square (RMS) Value}
+The RMS value of a signal is defined as the square root of the mean square value:
+
+\[
+v_{\text{RMS}} = \sqrt{\frac{1}{t_2 - t_1} \int_{t_1}^{t_2} v^2(t) dt}
+\]
+
+For example, the RMS value of a cosine wave \(v(t) = A \cos(2 \pi f t)\) is:
+
+\[
+v_{\text{RMS}} = \frac{A}{\sqrt{2}}
+\]
+
+\section{Signals in the Frequency Domain}
+All signals in the time domain can be represented in the frequency domain using Fourier transforms. A sinusoidal signal can be expressed as:
+
+\[
+v(t) = A \sin(2\pi f_0 t)
+\]
+
+In the frequency domain, this corresponds to a delta function:
+
+\[
+V(f) = A \delta(f - f_0)
+\]
+
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}
+        \begin{axis}[xlabel={$f$}, ylabel={$V(f)$}, axis lines=middle]
+            \addplot[domain=-5:5, samples=100, thick] {exp(-x^2)};
+        \end{axis}
+    \end{tikzpicture}
+    \caption{Time Domain vs Frequency Domain}
+\end{figure}
+
+\section{Analogue-to-Digital (A/D) Conversion}
+Analogue-to-digital conversion involves three steps:
+\begin{enumerate}
+    \item Sampling: Convert the analogue signal \(v(t)\) to a discrete-time signal \(v(n)\).
+    \item Quantisation: Map the sampled values to discrete levels, forming the quantised signal \(v_q(n)\).
+    \item Coding: Represent the quantised values as binary numbers.
+\end{enumerate}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.7\textwidth]{ad_conversion}
+    \caption{Analogue-to-Digital Conversion}
+\end{figure}
+
+\section{Sampling Theorem}
+To prevent aliasing, the Sampling Theorem states that an analogue signal must be sampled at a rate \(f_s \geq 2f_{\text{max}}\), where \(f_{\text{max}}\) is the highest frequency present in the signal. The minimum sampling rate required to recover the original signal is called the Nyquist rate \(f_N = 2f_{\text{max}}\).
+
+\section{Convolution}
+Convolution is a mathematical operation that describes the output of an LTI system given its impulse response \(h(n)\) and input signal \(x(n)\). The convolution of \(x(n)\) and \(h(n)\) is:
+
+\[
+y(n) = x(n) * h(n) = \sum_{k=-\infty}^{\infty} x(k) h(n - k)
+\]
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\linewidth]{convolution}
+    \caption{Convolution Example}
+\end{figure}
+
+\section{Impulse Response of LTI Systems}
+The impulse response \(h(n)\) of a system describes how the system responds to an impulse \(\delta(n)\). For Finite Impulse Response (FIR) systems, the output depends only on current and past input values. For Infinite Impulse Response (IIR) systems, the output depends on current inputs, past inputs, and past outputs.
+
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}
+        % x(k)
+        \draw[->] (-3, 0) -- (7, 0) node[right] {$n$};
+        \draw[->] (0, -3) -- (0, 3) node[above] {$x(k)$};
+        
+        % x(k) values
+        \draw[thick, blue] (1, 0) -- (1, 1) node[above] {1};
+        \draw[thick, blue] (2, 0) -- (2, 1) node[above] {1};
+        \draw[thick, blue] (3, 0) -- (3, 1) node[above] {1};
+        
+        % h(-k)
+        \draw[thick, red, dashed] (4, -3) -- (4, 0) -- (4, 3);
+        
+        \node at (4, -1.5) [below] {$h(n-k)$};
+
+        % Axis labels
+        \node at (5, 2) {Multiplication Step};
+        \node at (5, -2) {Summation Step};
+    \end{tikzpicture}
+    \caption{Convolution Example: $x(k)$ and $h(n-k)$}
+\end{figure}
+
+\section{Filters in Signal Processing}
+There are three types of digital filters: low-pass, high-pass, and band-pass filters. These filters allow certain frequency components of a signal to pass while attenuating others.
+
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}
+
+        % Low-pass filter
+        \draw[->] (0,0) -- (6,0) node[right] {$f$};
+        \draw[->] (0,0) -- (0,4) node[above] {$V(f)$};
+        \draw[thick, blue] (0,3) -- (2,3) -- (4,0) node[below] {$f_c$};
+        \node at (2,3.5) {Low-pass}; % Centered label for Low-pass
+        
+        % High-pass filter (shifted below low-pass)
+        \draw[->] (0,-6) -- (6,-6) node[right] {$f$};
+        \draw[->] (0,-6) -- (0,-2) node[above] {$V(f)$};
+        \draw[thick, red] (2,-6) -- (4,-4) -- (6,-4) node[above] {$f_c$};
+        \node at (2.5,-3.5) {High-pass}; % Centered label for High-pass
+        
+        % Band-pass filter (shifted further down)
+        \draw[->] (0,-12) -- (6,-12) node[right] {$f$};
+        \draw[->] (0,-12) -- (0,-8) node[above] {$V(f)$};
+        \draw[thick, green] (1,-12) -- (2,-9) -- (4,-9) -- (5,-12) node[below] {$f_2$};
+        \node at (2.5,-8.5) {Band-pass}; % Centered label for Band-pass
+
+    \end{tikzpicture}
+    \caption{Low-Pass, High-Pass, and Band-Pass Filters (Centered)}
+\end{figure}
+
+\section{Multipath Fading Channel}
+Multipath fading occurs when a transmitted signal reaches the receiver via multiple paths. This effect can be modeled as an FIR filter. The impulse response of the channel shows how the original signal is spread over time due to these multiple paths.
+
+
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}[>=Stealth]
+
+        % Transmitter and Receiver
+        \node at (0, 0) [left] {Transmitter};
+        \node at (10, 0) [right] {Receiver};
+
+        % Main path (first path)
+        \draw[->, thick] (0, 0) -- (10, 0) node[pos=0.5, above] {0.83};
+        
+        % First reflected path (second path)
+        \draw[->, dashed, thick] (0, 0) -- (3, 3) -- (7, 3) -- (10, 0) node[pos=0.5, above] {0.50, delay = 1 $\mu$s};
+
+        % Second reflected path (third path)
+        \draw[->, dotted, thick] (0, 0) -- (4, 4) -- (6, 4) -- (10, 0) node[pos=0.5, above] {0.25, delay = 2 $\mu$s};
+
+        % Ionosphere layer or buildings reflection
+        \draw[thick] (3, 3.5) -- (7, 3.5);
+        \node at (5, 4) {Ionosphere/Obstacles};
+
+        % Label for delays and amplitudes
+        \node at (5, -1) {Impulse response: 0.83, 0.50 (1$\mu$s), 0.25 (2$\mu$s)};
+        
+    \end{tikzpicture}
+    \caption{Multipath Fading Channel Model}
+\end{figure}
+
+\end{document}
