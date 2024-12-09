@@ -1,0 +1,1582 @@
+\documentclass[a4paper,12pt]{article}
+
+%----------------------------------------------------------------------------------------
+%	FONT
+%----------------------------------------------------------------------------------------
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES
+%----------------------------------------------------------------------------------------
+\usepackage{url}
+\usepackage{parskip} 	
+\usepackage{tabularx}
+
+%other packages for formatting
+\RequirePackage{color}
+\RequirePackage{graphicx}
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage[scale=0.9]{geometry}
+\usepackage{amsmath}
+\usepackage{tikz}
+\usetikzlibrary{shapes,arrows}
+\usepackage{rotating}
+\usetikzlibrary{shapes.geometric, arrows}
+\usepackage{float}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
+\tikzstyle{startstop} = [rectangle, rounded corners, minimum width=3cm, minimum height=1cm,text centered, draw=black, fill=red!30]
+\tikzstyle{process} = [rectangle, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=blue!30]
+\tikzstyle{decision} = [diamond, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=green!30]
+\tikzstyle{arrow} = [thick,->,>=stealth]
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\usepackage{listings}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+
+
+%tabularx environment
+\usepackage{tabularx}
+
+%for lists within experience section
+\usepackage{enumitem}
+
+% centered version of 'X' col. type
+\newcolumntype{C}{>{\centering\arraybackslash}X} 
+
+%to prevent spillover of tabular into next pages
+\usepackage{supertabular}
+\usepackage{tabularx}
+\newlength{\fullcollw}
+\setlength{\fullcollw}{0.47\textwidth}
+
+%custom \section
+\usepackage{titlesec}				
+\usepackage{multicol}
+\usepackage{multirow}
+
+%CV Sections inspired by: 
+%http://stefano.italians.nl/archives/26
+\titleformat{\section}{\large\scshape\raggedright}{}{0em}{}[\titlerule]
+\titlespacing{\section}{0pt}{10pt}{10pt}
+
+%for publications
+\usepackage[style=authoryear,sorting=ynt, maxbibnames=2]{biblatex}
+
+%Setup hyperref package, and colours for links
+\usepackage[unicode, draft=false]{hyperref}
+\definecolor{linkcolour}{rgb}{0,0.2,0.6}
+\hypersetup{colorlinks,breaklinks,urlcolor=linkcolour,linkcolor=linkcolour}
+\addbibresource{citations.bib}
+\setlength\bibitemsep{1em}
+
+%for social icons
+\usepackage{fontawesome5}
+
+%debug page outer frames
+%\usepackage{showframe}
+%----------------------------------------------------------------------------------------
+%	BEGIN DOCUMENT
+%----------------------------------------------------------------------------------------
+\begin{document}
+
+% non-numbered pages
+\pagestyle{empty} 
+
+%----------------------------------------------------------------------------------------
+%	TITLE
+%----------------------------------------------------------------------------------------
+
+
+
+%----------------------------------------------------------------------------------------
+% OVERVIEW
+%----------------------------------------------------------------------------------------
+\section{What is a programming language?}
+\begin{itemize}
+    \item Programming languages are a way of communicating with a computer and we can do nearly anything with them (on a computer).
+    \item Languages are on a scale: from binary up to Python. Binary is the 'lowest level' programming language, then Assembly and then C++ and C. What does 'low level' and 'high level' actually mean?\\
+    Low level means that we have to specify exactly what we need to the computer to do. We will use C (low level, procedural language) and C++ (low level, object-oriented language), (we will get onto those terms later). Below I have an example of C++ (low level) compared to Python (high level).    
+
+\begin{lstlisting}[language=C++]
+
+#include <iostream>
+
+void fibonacci(int n) {
+    int a = 0, b = 1;
+    while (a < n) {
+        std::cout << a << " ";
+        int temp = a + b;
+        a = b;
+        b = temp;
+    }
+    std::cout << std::endl;
+}
+
+int main() {
+    fibonacci(10);
+    return 0;
+}
+\end{lstlisting}
+
+\text{Fibonacci Sequence in C++ (Low Level)}\\
+
+\lstset{language=Python}
+\begin{lstlisting}
+def fibonacci(n):
+    a, b = 0, 1
+    while a < n:
+        print(a, end=' ')
+        a, b = b, a + b
+    print()
+
+fibonacci(10)
+\end{lstlisting}
+
+\text{Fibonacci Sequence in Python (High Level)}
+
+As we can see, Python code is much easier to read than C++ and C. 
+
+\end{itemize}
+
+\section{How does the language work?}
+
+\subsection{Compilers}
+C and C++ use a special program called a compiler. This is very important because this is the best way to 'view' the code. The compiler can be a weird program as well, sometimes certain parts of the code might work one time correctly or not. If we can understand how the compiler works, we can write code effectively, because we will start to think like the computer, along with cleaner code with less bugs, (saving time in your assessment).\\ 
+
+So how does it work?\\
+
+Step 1: Lexical Analysis:\\ The compiler breaks the code into individual 'tokens', such as keywords, identifiers, literals, and symbols from top to bottom. This is like reading a sentence and breaking it down into individual words.
+
+Step 2: Syntax Analysis:\\ The compiler checks the 'tokens' for syntax errors (or spelling mistakes), ensuring that they follow the rules of the programming language. This is like checking if the sentence is grammatically correct.
+
+Step 3: Semantic Analysis:\\ The compiler analyses the syntax-checked tokens to ensure that they make sense in the context of the program. This is like understanding the meaning of the sentence.
+
+Step 4: Intermediate Code Generation:\\ The compiler generates intermediate code, which is a platform-independent representation of the source code. We translate it into a language the computer understands. 
+
+Step 5: Optimization The Compiler:\\ optimizes the intermediate code to improve its performance, such as reducing memory usage or reordering instructions. This is like editing the sentence to make it more concise and efficient. This is the most 'random' part of the process, because the compiler can optimise some things and not others.
+
+Step 6: Code Generation The compiler generates machine code that can be executed directly by the computer’s processor. This is like translating the sentence into the native language of the computer, which is binary (1s and 0s).
+
+Step 7: Output The compiler produces an executable file or object code that can be linked with other object files to create a final executable program.
+
+\subsection{Building your first program}
+Let's look at the structure of a simple 'Hello World' program to understand how the compiler processes everything.
+
+\lstset{language=C}
+\begin{lstlisting}
+#include <stdio.h>  // Preprocessor directive to include library
+
+#define PI 3.14159  // Macro definition - creates a constant
+
+// Function declaration - tells compiler about the function's existence
+int add(int a, int b);
+
+int main() {
+    // Main function - program's entry point
+    int result = add(5, 3);  // Call the add function
+    printf("Result: %d\n", result);  // Print the result
+    return 0;  // Exit the program successfully
+}
+
+// Function definition - actual implementation of the function
+int add(int a, int b) {
+    return a + b;  // Simple addition and return of the result
+}
+\end{lstlisting}
+
+Now, lets look at what each comment ('//' used for single line comments) means.
+\begin{itemize}
+    \item \textbf{Preprocessor: '\#'}\\
+    This allows us to use the standard library, or standard packages that we might install, with the help of the keyword 'include'.
+    \item \textbf{Keyword 'define':}\\
+    We use this for header files and defining global constants (key values that we will use through out a program). 
+    \item \textbf{The main() function:}\\
+    This is the entry point for the program to start executing. Remember the compiler? This is where it starts converting the code after checking it for errors.
+    \item \textbf{Functions:}\\
+    They are small snippets of code that are not in the main() function, but I will explain this later.
+\end{itemize}
+
+\subsection{Basic Types and Format Specifiers}
+
+Now that we have an idea of what our program should look like, lets start looking at what we can use. We will start with the basic types that you might see in a simple program.
+
+\lstset{language=C}
+\begin{lstlisting}
+    #include <stdio.h>
+    #include <stdbool.h>
+    #include <math.h>
+    
+    int main() {
+    // Integer: whole numbers
+    int age = 25;  // Typically 4 bytes, range: -2,147,483,648 to 2,147,483,647
+    
+    // Floating-point: decimal numbers
+    float height = 1.75f;  // Single-precision, 4 bytes
+    double precise_pi = 3.14159;  // Double-precision, 8 bytes
+    
+    // Character: single letter or symbol
+    char grade = 'A';  // Uses single quotes, typically 1 byte
+    
+    // Boolean (in C, using integer)
+    _Bool is_student = 1;  // 1 is true, 0 is false
+
+    bool isAdmin = true;  // equivalent to int isAdmin = 1; // We can do this as well
+    bool isUser = false;  // equivalent to int isUser = 0;
+    
+    // Type casting: converting between types
+    int x = 10;
+    float y = (float)x / 3;  // Explicit conversion to avoid integer division
+    
+    return 0;
+}
+\end{lstlisting}
+
+Quick Refresher:\\
+(A bit is simply a 1 or a 0, a byte is 8 bits.)\\
+
+Type-casting:\\
+This is something we haven't really talked about in the lectures. If we look at the last example in the code above, we see \verb|float y = (float)x / 3|. This means that we will \textbf{temporarily} convert an integer into a float so we get the correct answer.\\
+
+Format Specifiers and Escape Sequences:\\
+Next, we will look at format specifiers tell the compiler about the type of data to expect, preventing errors and ensuring correct interpretation.
+
+\%d for integers\\
+\%f for floating-point numbers\\
+\%s for strings, etc.\\
+
+Precision and Alignment: They allow customization of output, such as setting decimal precision or field width.
+
+Example: \verb|printf("%.2f", 3.14159); outputs 3.14|
+Type Safety: Using the wrong specifier can lead to undefined behavior. For instance, passing a float to \verb|%d can yield incorrect results|.
+
+Escape Sequences:\\
+Represent Non-Printable Characters: They allow inclusion of characters that cannot be typed directly, such as newlines \verb|(\n) or tabs (\t)|.
+
+Example: \verb|printf("Hello\tWorld\n");| outputs:\\
+
+\verb|Hello   World|\\
+
+String Formatting: They enable precise control of text layout, aiding in creating visually structured outputs.
+
+Example: Adding a newline or tab for better readability in console output.
+Escape Special Characters: Some characters, like the double quote \verb|(") and backslash (\)|, have special meanings in C. Escape sequences allow their literal inclusion in strings. In C, when you declare a string literal using double quotes ("..."), the compiler automatically adds a null character \verb|(\0)| at the end of the string. This null character marks the end of the string and is used by the C runtime library to determine the length of the string, adding +1 to the length of a string.
+
+Example: \verb|printf("She said, \"Hello!\"\n");|.
+
+\subsection{Operators}
+
+\lstset{language=C}
+\begin{lstlisting}
+    #include <stdio.h>
+    
+    int main() {
+    int a = 10, b = 5;
+    
+    // Arithmetic Operators
+    int sum = a + b;        // Addition: 15
+    int difference = a - b; // Subtraction: 5
+    int product = a * b;    // Multiplication: 50
+    int quotient = a / b;   // Division: 2 (integer division)
+    int remainder = a % b;  // Modulus (remainder): 0
+    
+    // Comparison Operators
+    int is_equal = (a == b);     // Equal to: 0 (false)
+    int is_not_equal = (a != b); // Not equal to: 1 (true)
+    int is_greater = (a > b);    // Greater than: 1 (true)
+    
+    // Logical Operators
+    int both_true = (a > 0) && (b > 0);  // Logical AND: 1 (true)
+    int either_true = (a > 20) || (b > 0); // Logical OR: 1 (true)
+    int negation = !(a == b);   // Logical NOT: 1 (true)
+    
+    return 0;
+}
+\end{lstlisting}
+
+These operators are the basic building blocks for a lot of our functions, that we will use in conjunction with data structures.
+
+\subsection{Control Flow}
+
+\subsubsection{If-Else and Switch Statements}
+
+\lstset{language=C}
+\begin{lstlisting}
+    #include <stdio.h>
+    
+    int main() {
+    int score = 75;
+    
+    // If-else Ladder: Checks multiple conditions
+    if (score >= 90) {
+        printf("Grade A: Excellent performance!\n");
+    } else if (score >= 80) {
+        printf("Grade B: Very good work!\n");
+    } else if (score >= 70) {
+        printf("Grade C: Good job!\n");
+    } else {
+        printf("Needs improvement. Keep studying!\n");
+    }
+    
+    // Switch Case: Efficient for multiple discrete values
+    switch (score / 10) {
+        case 9:  // 90-99
+            printf("Top tier performance\n");
+            break;  // Prevents falling through to next case
+        case 8:  // 80-89
+            printf("Strong performance\n");
+            break;
+        case 7:  // 70-79
+            printf("Satisfactory performance\n");
+            break;
+        default:  // Catches all other cases
+            printf("Needs work\n");
+    }
+    
+    return 0;
+}
+\end{lstlisting}
+
+If-Else and Switch Statements:\\
+
+The if-else control flow is a way of checking conditions to see if something happens or not. \textbf{If} something happens, do x, \textbf{else} do y. You might be wondering why we have switch-case statements, because they are better at checking for \textbf{values}, whereas if-else is used for \textbf{conditions}. Switch-case statements are a bit faster and memory efficient if used correctly.
+
+\newpage
+
+\subsubsection{For, While, Do-While Loops}
+
+\lstset{language=C}
+\begin{lstlisting}
+    #include <stdio.h>
+    #include <stdlib.h>
+    
+    int main() {
+    // For Loop: Used when iteration count is known (1)
+    printf("For Loop: ");
+    for (int i = 0; i < 5; i++) {
+        printf("%d ", i);  // Prints: 0 1 2 3 4
+    }
+    printf("\n");
+    
+    // While Loop: Continues while condition is true (2)
+    int count = 0;
+    while (count < 3) {
+        printf("While Loop Count: %d\n", count);
+        count++;  // Must increment to avoid infinite loop
+    }
+    
+    // Do-While Loop: Guarantees at least one execution (3)
+    int x;
+    do {
+        x = rand() % 10;  // Generate random number
+        printf("Random number: %d\n", x);
+    } while (x != 0);  // Repeat if x is not zero
+    
+    return 0;
+}
+\end{lstlisting}
+
+What do these loops do?\\
+
+For loop:\\
+This loop is used iterate over a known number or a sequence, until we have reached the end of said sequence. This is one of the most useful and common loops that we will use, providing the basis for a lot of the searching functions you will create.
+
+While loop:\\
+This loop is somewhat similar, but instead of looking for a discrete value, it iterates until a specific \textbf{condition} has been fulfilled. We have to be careful to end the statement properly or we get an infinite loop. This can cause problems if we aren't careful. Look at the code below and try it out for yourself. Below, I will explain the importance of infinite loops and the errors they can cause.
+
+\lstset{language=C}
+\begin{lstlisting}
+    #include <stdio.h>
+
+    int main() {
+        while (1) {
+            printf("This is an infinite loop.\n");
+        }
+
+        return 0;
+    }
+
+\end{lstlisting}
+
+And another example on the next page:
+
+\newpage
+
+\lstset{language=C}
+\begin{lstlisting}
+    #include <stdbool.h>
+    #include <stdio.h>
+
+    int main() {
+        while (true) {
+            printf("This is another infinite loop.\n");
+        }
+
+        return 0;
+    }
+
+\end{lstlisting}
+
+And here's a better solution:
+
+\lstset{language=C}
+\begin{lstlisting}
+    #include <stdio.h>
+
+    int main() {
+        int count = 0;
+
+        while (1) {
+            printf("Count: %d\n", count);
+            count++;
+            if (count > 10) {  // Stop the loop after 10 iterations
+                break;
+            }
+        }
+
+        return 0;
+    }
+
+\end{lstlisting}
+
+Do-While loops:\\
+Lastly, Do-while loops are used to perform an \textbf{action} before checking the \textbf{condition}. It is similar to a while loop, but the condition is evaluated after the loop body, whereas in a while loop, the condition is evaluated before the loop body. They can be thought of as a 'safety measure', because they run the loop at least once. 
+
+
+\subsubsection{Flowcharts for Control Flow}
+
+% IF-ELSE Flowchart
+\begin{figure}[H]
+    \centering
+\begin{tikzpicture}[node distance=2.5cm]
+
+\node (start) [startstop] {Start};
+\node (decision) [decision, below of=start] {Condition?};
+\node (true) [process, right of=decision, xshift=3cm] {If-True Process};
+\node (false) [process, left of=decision, xshift=-3cm] {If-False Process};
+\node (end) [startstop, below of=decision, yshift=-3cm] {End};
+
+\draw [arrow] (start) -- (decision);
+\draw [arrow] (decision.east) -- node[anchor=south] {True} (true.west);
+\draw [arrow] (decision.west) -- node[anchor=south] {False} (false.east);
+\draw [arrow] (true.south) |- (end.north);
+\draw [arrow] (false.south) |- (end.north);
+
+\end{tikzpicture}
+    \caption{This is an example of an If-Else flowchart}
+    \label{fig:ifelse}
+\end{figure}
+
+\vspace{1cm}
+
+% SWITCH-CASE Flowchart
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[node distance=2.5cm]
+
+\node (start) [startstop] {Start};
+\node (decision) [decision, below of=start] {Condition};
+\node (case1) [process, below left of=decision, xshift=-3cm, yshift=-2cm] {Case 1 Process};
+\node (case2) [process, below of=decision, yshift=-2cm] {Case 2 Process};
+\node (caseN) [process, below right of=decision, xshift=3cm, yshift=-2cm] {Case N Process};
+\node (end) [startstop, below of=case2, yshift=-4cm] {End};
+
+\draw [arrow] (start) -- (decision);
+\draw [arrow] (decision) -- node[anchor=south] {Case 1} (case1.north);
+\draw [arrow] (decision) -- node[anchor=east] {Case 2} (case2.north);
+\draw [arrow] (decision) -- node[anchor=south] {Case N} (caseN.north);
+\draw [arrow] (case1.south) |- (end.north);
+\draw [arrow] (case2.south) -- (end.north);
+\draw [arrow] (caseN.south) |- (end.north);
+
+\end{tikzpicture}
+    \caption{This is an example of a Switch-Case flowchart}
+    \label{fig:ifelse}
+\end{figure}
+
+\vspace{1cm}
+
+% FOR Loop Flowchart
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[node distance=2.5cm]
+
+\node (start) [startstop] {Start};
+\node (init) [process, below of=start] {Initialization};
+\node (decision) [decision, below of=init] {Condition?};
+\node (process) [process, right of=decision, xshift=5cm] {Process};
+\node (increment) [process, below of=process] {Increment};
+\node (end) [startstop, below of=decision, yshift=-6cm] {End};
+
+\draw [arrow] (start) -- (init);
+\draw [arrow] (init) -- (decision);
+\draw [arrow] (decision.east) -- node[anchor=south] {True} (process.west);
+\draw [arrow] (process.south) -- (increment.north);
+\draw [arrow] (increment.west) -| (decision.south);
+\draw [arrow] (decision.south) -- node[anchor=east] {False} (end.north);
+
+\end{tikzpicture}
+    \caption{This is an example of a For Loop flowchart}
+    \label{fig:forloop}
+\end{figure}
+
+\vspace{1cm}
+
+% WHILE Loop Flowchart
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[node distance=2.5cm]
+
+\node (start) [startstop] {Start};
+\node (decision) [decision, below of=start] {Condition?};
+\node (process) [process, below of=decision] {Process};
+\node (end) [startstop, right of=decision, xshift=4cm] {End};
+
+\draw [arrow] (start) -- (decision);
+\draw [arrow] (decision.south) -- node[anchor=east] {True} (process.north);
+\draw [arrow] (process.east) -| (decision.east);
+\draw [arrow] (decision.east) -- node[anchor=south] {False} (end.west);
+
+\end{tikzpicture}
+    \caption{This is an example of a While Loop flowchart}
+    \label{fig:While}
+\end{figure}
+
+\vspace{1cm}
+
+% DO-WHILE Loop Flowchart
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[node distance=2.5cm]
+
+\node (start) [startstop] {Start};
+\node (process) [process, below of=start] {Process};
+\node (decision) [decision, below of=process] {Condition?};
+\node (end) [startstop, right of=decision, xshift=5cm] {End};
+
+\draw [arrow] (start) -- (process);
+\draw [arrow] (process) -- (decision);
+\draw [arrow] (decision.west) -- ++(-5,0) |- (process.west);
+\draw [arrow] (decision.east) -- node[anchor=south] {False} (end.west);
+
+\end{tikzpicture}
+    \caption{This is an example of a Do-While Loop flowchart}
+    \label{fig:DoWhile}
+\end{figure}
+
+These flowcharts are a nicer, visual way of understanding the logic behind each of the control flow methods.  
+
+%----------------------------------------------------------------------------------------
+%	More Advanced Notes
+%----------------------------------------------------------------------------------------
+
+\newpage
+
+\section{Data Structures, Methods, Functions}
+
+\subsection{Arrays}\\
+
+They are the simplest data structure that we will use. You can think of them as pre-set blocks of memory which we will store items. Before we start, arrays in C and C++ are zero-based, meaning we will start the count at zero, and at the end of an array. Below, we will look at what we can do with arrays.
+
+\lstset{language=C}
+\begin{lstlisting}
+
+#include <stdio.h>
+
+int main() {
+    // One-dimensional array declaration and initialisation (1)
+    int numbers[5] = {10, 20, 30, 40, 50};
+    
+    // Accessing and modifying array elements (2)
+    printf("First element: %d\n", numbers[0]);  // Prints 10
+    numbers[2] = 35;  // Modify third element
+    
+    // Iterating through an array (3)
+    printf("Array contents: ");
+    for (int i = 0; i < 5; i++) {
+        printf("%d ", numbers[i]);
+    }
+    printf("\n");
+    
+    // Multidimensional array (matrix) (3)
+    int matrix[2][3] = {
+        {1, 2, 3},    // First row
+        {4, 5, 6}     // Second row
+    };
+    
+    // Nested loops for matrix traversal (4)
+    printf("Matrix contents:\n");
+    for (int row = 0; row < 2; row++) {
+        for (int col = 0; col < 3; col++) {
+            printf("%d ", matrix[row][col]);
+        }
+        printf("\n");
+    }
+    
+    return 0;
+}
+\end{lstlisting}
+
+We initialise the array (1) by using square brackets. In the square brackets, we specify how large the array will be, so \verb|int numbers[5]| means \textbf{An array of 5 integers}.\\
+
+We can access the array by typing the name and the position/index we want to see (2).\\
+
+We can also iterate through an array using a \textbf{for} loop, which I mentioned earlier.\\
+
+We can also create 2D matrices by adding another set of square brackets, to simulate a matrix. \\
+
+\newpage
+
+\subsection{Functions}
+
+Functions are really useful code 'snippets', which we can reuse in other parts of the code or in different classes (in C++). They work by 'interrupting' the compiler's process and completes the function half way through the main() function when it has been called. I have the code below to show some examples.
+
+\lstset{language=C}
+\begin{lstlisting}
+#include <stdio.h>
+    
+// Function with a single return type (1)
+int square(int x) {
+    // Pure function: always returns same output for same input
+    return x * x;
+}
+
+// Function demonstrating pass by value (2)
+void increment_value(int x) {
+    x = x + 1;  // This change does NOT affect the original variable
+}
+
+// Function demonstrating pass by reference (3)
+void swap_numbers(int *a, int *b) {
+    // Uses pointers to modify original variables
+    // We will get onto this later
+    int temp = *a;  // Dereference to get actual value
+    *a = *b;        // Modify first variable
+    *b = temp;      // Modify second variable
+}
+
+// Function with multiple return values (using pointers) (4)
+void calculate_stats(int arr[], int size, int *min, int *max) {
+    *min = arr[0];
+    *max = arr[0];
+    
+    for (int i = 1; i < size; i++) {
+        if (arr[i] < *min) *min = arr[i];
+        if (arr[i] > *max) *max = arr[i];
+    }
+}
+
+************************************************************************************
+
+int main() {
+    // Demonstrating function usage (5)
+    int result = square(4);  // result is 16
+    printf("Square of 4: %d\n", result);
+    
+    int num = 10;
+    increment_value(num);  // num remains 10
+    printf("Original number: %d\n", num);
+    
+    int x = 5, y = 10;
+    swap_numbers(&x, &y);  // Pass address of variables
+    printf("After swap: x = %d, y = %d\n", x, y);
+    
+    // Multiple return values example
+    int numbers[] = {5, 2, 9, 1, 7};
+    int minimum, maximum;
+    calculate_stats(numbers, 5, &minimum, &maximum);
+    printf("Min: %d, Max: %d\n", minimum, maximum);
+    
+    return 0;
+}
+\end{lstlisting}
+
+Lets go through this step by step.\\
+
+
+
+Example (1):\\
+This function squares an input value of x, and it is called a 'pure' function. This means the output will be constant for the input the function receives. 
+
+Example (2):\\
+This is a special type of function called 'void'. This is unique because there isn't a return. Why would you use something like this? We can use it when we want to create a function that doesn't need to return anything, we could use it to print a statement or modify an array or object when we call this function.
+
+Example (3):\\
+“passing by value” means that when a function is called with a variable as an argument, a copy of the variable’s value is created and passed to the function. The function operates on this copy, and any changes made to the variable within the function do not affect the original variable outside the function. This is OK when the program is small, but it uses a lot of memory if we have to keep regenerating values.
+
+Example (4):\\
+This is where pointers come in (the next section will focus on them). This is called "passing by reference" means that when a function is called with a variable as an argument, the function operates on the original variable itself, rather than a copy of its value. This means that any changes made to the variable within the function affect the original variable outside the function. We use much less memory and we can organise our code better rather than worry about local variables with the same name. 
+
+Example (5):\\
+
+We have combined all of the principles above to create a running program.
+
+Scope: \\
+We first mentioned this in example (4). What does it actually mean? \\
+
+Variables declared inside a block {} (e.g., inside a function) are local to that block. They cannot be accessed outside the block where they are defined.
+Local variables are stored in the stack and are created/destroyed when the block is entered/exited. There is an example below to show this.\\
+
+\lstset{language=C}
+\begin{lstlisting}
+#include <stdio.h>
+
+void exampleFunction() {
+    int x = 10; // Local to exampleFunction
+    printf("x inside exampleFunction: %d\n", x);
+}
+
+int main() {
+    exampleFunction();
+    // printf("%d", x); // Error: x is not accessible here
+    return 0;
+}
+
+\end{lstlisting}
+
+File Scope (Global Scope)\\
+Variables declared outside any function are global and can be accessed by all functions in the file. Global variables are stored in the data segment and retain their values throughout the program's execution. There is an example below. \\
+
+We need to think about scope as this could be the reason why certain functions or variables aren't found by the compiler.
+
+\lstset{language=C}
+\begin{lstlisting}
+#include <stdio.h>
+
+int globalVar = 100; // Global variable
+
+void exampleFunction() {
+    printf("Accessing globalVar in exampleFunction: %d\n", globalVar);
+}
+
+int main() {
+    printf("Accessing globalVar in main: %d\n", globalVar);
+    exampleFunction();
+    return 0;
+}
+
+\end{lstlisting}
+
+%---------------------------------------------------------------------------------------
+%   Work Experience
+\section{Pointers}
+
+Pointers are variables that store the memory address of other variables. We use them to make our program simpler, especially if we have a large program with lots of variables and functions. The key reason we use them is to create \textbf{dynamic programs}. Here's a simple example below.
+
+\lstset{language=C}
+\begin{lstlisting}
+
+#include <stdio.h>
+
+int main() {
+    int x = 10;
+    int *ptr = &x; // Pointer to x
+
+    printf("Value of x: %d\n", x);
+    printf("Address of x: %p\n", &x);
+    printf("Value stored in ptr: %p\n", ptr);
+    printf("Value pointed by ptr: %d\n", *ptr);
+
+    return 0;
+}
+
+\end{lstlisting}
+
+We use the star to \textbf{reference} AND \textbf{dereference} the pointers. The \& symbol is the address symbol, telling us what the address actually is to us, the people using the program and the computer. 
+
+\subsection{Pointer Arithmetic}
+
+Pointer Arithmetic and Operations in C
+Pointers are integral in C for memory manipulation and accessing data efficiently. Pointer arithmetic allows you to perform operations on pointers to traverse through memory addresses or manipulate them.
+
+Basic Pointer Arithmetic\\
+Increment (++): Moves the pointer to the next memory location of its type.\\
+Decrement (--): Moves the pointer to the previous memory location of its type.\\
+Addition/Subtraction (+, -): Adds or subtracts an integer to/from the pointer, moving it forward or backward by that many elements.\\
+Difference (-): The difference between two pointers gives the number of elements between them.\\ 
+
+\newpage
+
+Here are the examples below:
+
+\lstset{language=C}
+\begin{lstlisting}
+
+#include <stdio.h>
+
+int main() {
+    int arr[] = {10, 20, 30, 40, 50};
+    int *ptr = arr;
+
+    printf("Initial pointer address: %p\n", ptr);
+    printf("Value at pointer: %d\n", *ptr);
+
+    ptr++; // Move to the next element
+    printf("After increment, address: %p, value: %d\n", ptr, *ptr);
+
+    ptr--; // Move back to the previous element
+    printf("After decrement, address: %p, value: %d\n", ptr, *ptr);
+
+    return 0;
+}
+
+\end{lstlisting}
+
+And adding and subtracting values with pointers:\\
+
+\lstset{language=C}
+\begin{lstlisting}
+
+#include <stdio.h>
+
+int main() {
+    int arr[] = {10, 20, 30, 40, 50};
+    int *ptr = arr;
+
+    printf("Value at pointer: %d\n", *ptr);
+
+    ptr = ptr + 2; // Move forward by 2 elements
+    printf("After adding 2, value: %d\n", *ptr);
+
+    ptr = ptr - 1; // Move back by 1 element
+    printf("After subtracting 1, value: %d\n", *ptr);
+
+    return 0;
+}
+
+************************************************************************************
+
+#include <stdio.h>
+
+int main() {
+    int arr[] = {10, 20, 30, 40, 50};
+    int *ptr1 = &arr[1];
+    int *ptr2 = &arr[4];
+
+    printf("Address of ptr1: %p, ptr2: %p\n", ptr1, ptr2);
+    printf("Difference between ptr2 and ptr1: %ld\n", ptr2 - ptr1);
+
+    return 0;
+}
+
+\end{lstlisting}
+
+Below we can use pointers to iterate/traverse arrays. This is another example of pass-by-reference.
+
+\newpage
+\lstset{language=C}
+\begin{lstlisting}
+// We can also use a pointer to traverse an array
+
+#include <stdio.h>
+
+int main() {
+    int arr[] = {10, 20, 30, 40, 50};
+    int *ptr = arr;
+
+    printf("Array elements: ");
+    for (int i = 0; i < 5; i++) {
+        printf("%d ", *(ptr + i)); // Access elements using pointer arithmetic
+    }
+
+    return 0;
+}
+
+\end{lstlisting}
+
+Pointers are very useful and powerful, but we have to be careful when we use them. There are lots of ways in which pointer usage can go wrong. I have some examples below.
+
+\lstset{language=C}
+\begin{lstlisting}
+    //Accessing Memory Outside the Array Bounds
+
+#include <stdio.h>
+
+int main() {
+    int arr[] = {1, 2, 3, 4, 5};
+    int *ptr = arr;
+
+    for (int i = 0; i < 7; i++) { // Array size is 5, loop goes beyond bounds
+        printf("%d\n", *(ptr + i)); // Undefined behavior when i >= 5
+    }
+
+    return 0;
+}
+
+***********************************************************************************
+
+#include <stdio.h>
+
+int main() {
+    int *ptr; // Pointer is not initialized
+    printf("Value at uninitialized pointer: %d\n", *ptr); // Undefined behavior
+
+    return 0;
+}
+
+// Issue: Dereferencing an uninitialized pointer leads to garbage values or crashes.
+
+************************************************************************************
+
+// Pointer Arithmetic on NULL or Dangling Pointers
+
+#include <stdio.h>
+
+int main() {
+    int *ptr = NULL; // NULL pointer
+    ptr++;           // Invalid arithmetic on NULL pointer
+    printf("Value: %d\n", *ptr); // Undefined behavior
+
+    return 0;
+}
+
+// Issue: Performing arithmetic on a NULL pointer is invalid.
+\end{lstlisting}
+
+\subsection{Files}
+
+Open a file: fopen()\\
+Close a file: fclose()\\
+Write to a file: fprintf(), fputs(), fwrite()\\
+Read from a file: fscanf(), fgets(), fread()\\
+Move the file pointer: fseek(), ftell()\\
+
+Persistent data storage: Files allow you to store data permanently on disk, even after the program terminates. This is useful for applications that need to retain data between runs, such as databases, configuration files, or log files.\\
+
+Input/Output operations: Files provide a way to read and write data to/from external storage devices, such as hard drives, solid-state drives, or flash drives. This enables your program to interact with the outside world, reading input from files and writing output to files.\\
+
+Modularity and organization: By breaking down a large program into smaller, independent files, you can:\\
+Organize code into logical modules or components.
+Make it easier to maintain and update individual files without affecting the entire program.\\
+Allow multiple developers to work on different files simultaneously.\\
+
+Reusability: Files can be designed to be reusable across multiple programs or projects, making it easier to share code and reduce duplication.\\
+
+Portability: Files can be used to store platform-independent data, allowing your program to run on different operating systems or architectures without modification.\\
+
+Error handling and debugging: Files provide a way to log errors, debug information, or other relevant data, making it easier to diagnose and fix issues in your program.\\
+
+Configuration and settings: Files can be used to store configuration settings, user preferences, or other application-specific data, allowing your program to adapt to different environments or user preferences.
+
+\lstset{language=C}
+\begin{lstlisting}
+// Writing to a File
+
+#include <stdio.h>
+
+int main() {
+    FILE *file = fopen("example.txt", "w"); // Open file in write mode
+    if (file == NULL) {
+        printf("Error opening file.\n");
+        return 1;
+    }
+
+    fprintf(file, "This is a test file.\n");
+    fprintf(file, "Writing to files in C is simple!\n");
+
+    fclose(file); // Close the file
+    printf("Data written successfully.\n");
+
+    return 0;
+}
+\end{lstlisting}
+
+What if we want to read from a file?
+
+\lstset{language=C}
+\begin{lstlisting}
+    
+// Reading from a File
+
+#include <stdio.h>
+
+int main() {
+    FILE *file = fopen("example.txt", "r"); // Open file in read mode
+    if (file == NULL) {
+        printf("Error opening file.\n");
+        return 1;
+    }
+
+    char line[100];
+    while (fgets(line, sizeof(line), file)) { // Read lines from file
+        printf("%s", line);
+    }
+
+    fclose(file); // Close the file
+    return 0;
+}
+
+\end{lstlisting}
+
+Using fwrite and fread for Binary Files
+
+\lstset{language=C}
+\begin{lstlisting}
+    
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Person {
+    char name[50];
+    int age;
+    float height;
+};
+
+int main() {
+    struct Person p = {"John Doe", 30, 5.9};
+    FILE *file = fopen("person.dat", "wb"); // Open file in binary write mode
+    if (file == NULL) {
+        printf("Error opening file.\n");
+        return 1;
+    }
+
+    fwrite(&p, sizeof(struct Person), 1, file); // Write struct to file
+    fclose(file);
+
+    // Reading back the binary data
+    file = fopen("person.dat", "rb"); // Open file in binary read mode
+    if (file == NULL) {
+        printf("Error opening file.\n");
+        return 1;
+    }
+
+    struct Person readPerson;
+    fread(&readPerson, sizeof(struct Person), 1, file); // Read struct from file
+    fclose(file);
+
+    printf("Name: %s, Age: %d, Height: %.2f\n", readPerson.name, readPerson.age, readPerson.height);
+
+    return 0;
+}
+
+\end{lstlisting}
+
+\newpage
+
+
+
+%--------------------------------------------------------------------------------------
+% Projects
+%--------------------------------------------------------------------------------------
+\section{Basic Algorithms}
+
+\subsection{Understanding Pseudocode (Optional)}
+
+Pseudocode is a way of structuring your ideas, similar to flowcharts. It is completely optional, but I like to visualise what the code would look like in simpler terms. I decided to introduce it now as the search/sort algorithms can be tricky to code, so you can understand it better. I have also explained it without pseudocode. 
+
+\begin{algorithm}
+\caption{How to Read Pseudocode}
+\begin{algorithmic}[1]
+\Procedure{ReadPseudocode}{}
+    \State \textbf{Step 1:} Identify the structure of the algorithm
+    \State \quad Algorithms in pseudocode typically consist of procedures, loops, conditionals, and variables.
+    
+    \State \textbf{Step 2:} Understand the procedure declaration
+    \State \quad A procedure is often declared using \texttt{\textbackslash Procedure} or \texttt{Function}. 
+    \State \quad It defines the actions of the algorithm, with input parameters and output results.
+    
+    \State \textbf{Step 3:} Recognize loops and conditionals
+    \State \quad \texttt{For}, \texttt{While}, and \texttt{Repeat} represent loops in pseudocode.
+    \State \quad \texttt{If}, \texttt{ElseIf}, \texttt{Else} represent decision-making (conditionals).
+    
+    \State \textbf{Step 4:} Understand variable assignments
+    \State \quad Assignment operations are typically written as \texttt{variable $\gets$ value}.
+    
+    \State \textbf{Step 5:} Follow the flow of execution
+    \State \quad Pseudocode is executed line by line, following the logic defined by the algorithm.
+    \State \quad After understanding a loop or conditional, track how values change or decisions affect execution.
+    
+    \State \textbf{Step 6:} Consider edge cases and assumptions
+    \State \quad Think about what happens in the algorithm for special cases (e.g., empty lists or boundary values).
+    \State \quad Some pseudocode may omit details, so use your knowledge of the algorithm to fill in gaps.
+    
+\State \textbf{Example of pseudocode:}
+    \State \quad \texttt{For each element in a list}
+    \State \quad \texttt{If element is equal to target, return the index.}
+    \State \quad \texttt{Else, continue to next element.}
+\EndProcedure
+
+\end{algorithmic}
+\end{algorithm}
+
+\newpage
+
+\subsection{Linear Search}
+
+Linear search checks each element in an array sequentially until the desired element is found or the array ends, returning an error message. In the main() function, we have a function call, error handling and size checking script: sizeof(arr) gives the total size of the array in bytes. sizeof(arr[0]) gives the size of one element (in this case, int is typically 4 bytes). Dividing the total size by the size of one element gives the number of elements. We haven't used this inbuilt function before. \\
+
+Let's look at the actual search function. \\
+
+Function Header: \verb|int linearSearch(int arr[], int n, int target);|.\\ 
+arr[]: The array to search in.\\
+n: The size of the array.\\
+target: The value to search for.\\
+Returns the index of the target, or -1 if not found.\\
+
+
+\begin{algorithm}[H]
+\caption{Linear Search}
+\begin{algorithmic}[1]
+\Procedure{LinearSearch}{array, target}
+    \For{$i = 0$ \textbf{to} length(array) - 1}
+        \If{array[$i$] = target}
+            \State \textbf{Return} $i$ \Comment{Target found at index $i$}
+        \EndIf
+    \EndFor
+    \State \textbf{Return} -1 \Comment{Target not found}
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
+
+\lstset{language=C}
+\begin{lstlisting}
+#include <stdio.h>
+
+// Create a function that iterates through an array
+
+int linearSearch(int arr[], int size, int target) { // arr[] -> what we will search
+    for (int i = 0; i < size; i++) {               // int size -> How large our array is
+        if (arr[i] == target) {                   // Target -> The number we are looking for
+            return i; // Return the index of the target
+        }
+    }
+    return -1; // Return -1 if the target is not found
+}
+
+int main() {
+    int arr[] = {3, 5, 7, 9, 11};
+    int size = sizeof(arr) / sizeof(arr[0]);
+    int target = 7;
+
+    int result = linearSearch(arr, size, target);
+    if (result != -1) {
+        printf("Element found at index %d\n", result);
+    } else {
+        printf("Element not found\n");
+    }
+
+    return 0;
+}
+
+\end{lstlisting}
+
+\subsection{Binary Search}
+
+Binary search works by splitting a sorted array into two halves and checks if the target is in either half. It keeps repeating this process until we cannot halve any more or we reach the target value.\\
+The array [arr] \textbf{must} be sorted for binary search to work.\\
+Target Value: We search for 10 in this array.\\
+Function Call: Calls binarySearch with the array, its size, and the target.\\
+
+Let's look at the actual binary search function. We start by initialising two 'pointers'. In this case we will think of them as magnifying glasses, compared to actual pointers, which we learnt before:
+
+low = 0; high = n - 1; low starts at the first index. High starts at the last index.\\
+
+Midpoint Calculation:\\
+
+mid = low + (high - low) / 2;\\
+This avoids memory overflow compared to (low + high) / 2.\\
+
+Compare Midpoint:\\
+
+If arr[mid] == target, the target is found, and the index is returned.\\
+If arr[mid] $<$ target, update low = mid + 1 to search the right half.\\
+If arr[mid] $>$ target, update high = mid - 1 to search the left half.\\
+Repeat Until Found or Exhausted:\\
+
+The loop continues until low $>$ high. Pseudocode below for a better structure.\\
+
+
+\begin{algorithm}[H]
+\caption{Binary Search}
+\begin{algorithmic}[1]
+\Procedure{BinarySearch}{array, target}
+    \State low $\gets$ 0
+    \State high $\gets$ length(array) - 1
+    \While{low $\leq$ high}
+        \State mid $\gets$ \text{floor}((low + high) / 2)
+        \If{array[mid] = target}
+            \State \textbf{Return} mid \Comment{Target found at index [mid]}
+        \ElsIf{array[mid] < target}
+            \State low $\gets$ mid + 1
+        \Else
+            \State high $\gets$ mid - 1
+        \EndIf
+    \EndWhile
+    \State \textbf{Return} -1 \Comment{Target not found}
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
+
+C code on the next page.
+\newpage
+\lstset{language=C}
+\begin{lstlisting}
+/* Binary Search: 
+Concept
+Binary search is a faster searching technique that works on sorted arrays. It repeatedly divides the search interval in half.
+*/
+
+// Example
+
+#include <stdio.h>
+
+int binarySearch(int arr[], int size, int target) {
+    int left = 0, right = size - 1;
+
+    while (left <= right) {
+        int mid = left + (right - left) / 2;
+
+        if (arr[mid] == target) {
+            return mid; // Element found
+        } else if (arr[mid] < target) {
+            left = mid + 1;
+        } else {
+            right = mid - 1;
+        }
+    }
+    return -1; // Element not found
+}
+
+int main() {
+    int arr[] = {2, 4, 6, 8, 10, 12};
+    int size = sizeof(arr) / sizeof(arr[0]);
+    int target = 8;
+
+    int result = binarySearch(arr, size, target);
+    if (result != -1) {
+        printf("Element found at index %d\n", result);
+    } else {
+        printf("Element not found\n");
+    }
+
+    return 0;
+}
+\end{lstlisting}
+
+
+\subsection{Selection Sort}
+
+Start with the outer loop, and then look at the inner loop.
+
+Selection Sort Function:\\
+
+Outer Loop (Passes):\\
+
+\verb|for (int i = 0; i < n - 1; i++)|\\
+
+Iterates through the unsorted portion of the array.\\
+
+we then find the Minimum Element:\\
+
+\verb|int minIndex = i;|\\
+
+Assume the first unsorted element is the smallest. The inner loop finds the smallest element in the unsorted portion.\\
+
+Swapping: Swap the smallest element with the first unsorted element:\\
+
+Now let's look at the main() function, which is much simpler:\\
+
+Print original array. Then sort the array using selectionSort and print out the sorted array. I've also included the execution flow or trace, to show what it looks like:
+
+Execution Flow:
+For the array [29, 10, 14, 37, 13]:
+
+Pass 1:
+Minimum is 10, swap with 29 → [10, 29, 14, 37, 13].
+Pass 2:
+Minimum is 13, swap with 29 → [10, 13, 14, 37, 29].
+Repeat until fully sorted: [10, 13, 14, 29, 37].
+
+
+\lstset{language=C}
+\begin{lstlisting}
+
+
+/* Concept
+Selection sort repeatedly selects the smallest element from the unsorted portion and places it in the sorted portion.
+*/
+
+// Example
+
+#include <stdio.h>
+
+void selectionSort(int arr[], int size) {
+    for (int i = 0; i < size - 1; i++) {
+        int minIndex = i;
+        for (int j = i + 1; j < size; j++) {
+            if (arr[j] < arr[minIndex]) {
+                minIndex = j;
+            }
+        }
+        int temp = arr[minIndex];
+        arr[minIndex] = arr[i];
+        arr[i] = temp;
+    }
+}
+
+int main() {
+    int arr[] = {29, 10, 14, 37, 13};
+    int size = sizeof(arr) / sizeof(arr[0]);
+
+    selectionSort(arr, size);
+
+    printf("Sorted array: ");
+    for (int i = 0; i < size; i++) {
+        printf("%d ", arr[i]);
+    }
+
+    return 0;
+}
+\end{lstlisting}
+
+\subsection{Bubble Sort}
+
+Let's try and break it down, starting with the selection sort function. \\
+
+Start with the outer loop (Passes):\\
+
+\verb|for (int i = 0; i < n - 1; i++)|\\
+
+Each pass ensures the largest element in the unsorted portion "bubbles up" to its correct position. So the total number of passes is (n - 1) loops.\\
+
+Inner Loop (Comparisons):\\
+
+\verb|for (int j = 0; j < n - i - 1; j++)|\\
+
+Compares adjacent elements within the unsorted portion. It then decreases in size as the largest elements are sorted.\\
+
+Swapping Elements:
+
+\verb|if (arr[j] > arr[j + 1])|\\
+
+Swaps the elements if the left element is greater than the right.\\
+Temporary variable \verb|temp| is used to facilitate swapping.\\
+
+Now, let's look at the main() function.
+
+we start with an Array Declaration:
+\verb|int arr[] = {64, 34, 25, 12, 22, 11, 90};|\\
+
+(Better if it is an array with unsorted integers.)
+
+Next we can calculate size:\\
+
+\verb|int size = sizeof(arr) / sizeof(arr[0]);|\\
+
+it is the same logic as in previous examples.\\
+
+We then print out the original array:\\
+
+1. Calls printArray to display the unsorted array.\\
+2. Sort the Array:\\
+3. Calls bubbleSort to sort the array.\\
+4. Print Sorted Array:\\
+
+Displays the sorted array after sorting.\\
+
+\begin{algorithm}
+\caption{Bubble Sort}
+\begin{algorithmic}[1]
+\Procedure{BubbleSort}{array}
+    \For{$i = 0$ \textbf{to} length(array) - 1}
+        \For{$j = 0$ \textbf{to} length(array) - i - 2}
+            \If{array[$j$] > array[$j + 1$]}
+                \State Swap array[$j$] and array[$j + 1$]
+            \EndIf
+        \EndFor
+    \EndFor
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
+
+\lstset{language=C}
+\begin{lstlisting}
+// Bubble Sort
+
+/* Concept
+Bubble sort repeatedly steps through the list, compares adjacent elements, and swaps them if they are in the wrong order.
+*/
+
+// Example
+
+#include <stdio.h>
+
+void bubbleSort(int arr[], int size) {
+    for (int i = 0; i < size - 1; i++) {
+        for (int j = 0; j < size - i - 1; j++) {
+            if (arr[j] > arr[j + 1]) {
+                int temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
+            }
+        }
+    }
+}
+
+int main() {
+    int arr[] = {38, 27, 43, 3, 9, 82, 10};
+    int size = sizeof(arr) / sizeof(arr[0]);
+
+    bubbleSort(arr, size);
+
+    printf("Sorted array: ");
+    for (int i = 0; i < size; i++) {
+        printf("%d ", arr[i]);
+    }
+
+    return 0;
+}
+\end{lstlisting}
+
+\newpage
+
+\subsection{Merge Sort}
+
+We start with an array declaration:\\
+
+int arr[] = {38, 27, 43, 3, 9, 82, 10};
+An unsorted array has been declared.\\
+
+next we find Array Size:\\
+
+\verb|int size = sizeof(arr) / sizeof(arr[0]);|\\
+
+The number of elements in the array is calculated. Then, we have a function call to Merge Sort:
+
+mergeSort(arr, 0, n - 1);
+Passes the array, the leftmost index (0), and the rightmost index (n-1).
+Print Sorted Array:
+
+Calls printArray to display the array after sorting.
+
+\begin{algorithm}[H]
+\caption{Merge Sort}
+\begin{algorithmic}[1]
+\Procedure{MergeSort}{array}
+    \If{length(array) $>$ 1}
+        \State mid $\gets$ \text{floor}(length(array) / 2)
+        \State left $\gets$ array[0 ... mid]
+        \State right $\gets$ array[mid + 1 ... length(array) - 1]
+        
+        \State \Call{MergeSort}{left}
+        \State \Call{MergeSort}{right}
+        
+        \State \Call{Merge}{array, left, right}
+    \EndIf
+\EndProcedure
+
+\Procedure{Merge}{array, left, right}
+    \State i $\gets$ 0, j $\gets$ 0, k $\gets$ 0
+    \While{i < length(left) \textbf{and} j < length(right)}
+        \If{left[i] < right[j]}
+            \State array[k] $\gets$ left[i]
+            \State i $\gets$ i + 1
+        \Else
+            \State array[k] $\gets$ right[j]
+            \State j $\gets$ j + 1
+        \EndIf
+        \State k $\gets$ k + 1
+    \EndWhile
+    
+    \While{i < length(left)}
+        \State array[k] $\gets$ left[i]
+        \State i $\gets$ i + 1
+        \State k $\gets$ k + 1
+    \EndWhile
+    
+    \While{j < length(right)}
+        \State array[k] $\gets$ right[j]
+        \State j $\gets$ j + 1
+        \State k $\gets$ k + 1
+    \EndWhile
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
+
+\lstset{language=C}
+\newpage
+
+\begin{lstlisting}
+Explanation
+
+#include <stdio.h>
+
+void merge(int arr[], int left, int mid, int right) {
+    int n1 = mid - left + 1;
+    int n2 = right - mid;
+
+    int L[n1], R[n2];
+    for (int i = 0; i < n1; i++) {
+        L[i] = arr[left + i];
+    }
+    for (int j = 0; j < n2; j++) {
+        R[j] = arr[mid + 1 + j];
+    }
+
+    int i = 0, j = 0, k = left;
+    while (i < n1 && j < n2) {
+        if (L[i] <= R[j]) {
+            arr[k++] = L[i++];
+        } else {
+            arr[k++] = R[j++];
+        }
+    }
+    while (i < n1) {
+        arr[k++] = L[i++];
+    }
+    while (j < n2) {
+        arr[k++] = R[j++];
+    }
+}
+
+void mergeSort(int arr[], int left, int right) {
+    if (left < right) {
+        int mid = left + (right - left) / 2;
+        mergeSort(arr, left, mid);
+        mergeSort(arr, mid + 1, right);
+        merge(arr, left, mid, right);
+    }
+}
+
+int main() {
+    int arr[] = {38, 27, 43, 3, 9, 82, 10};
+    int size = sizeof(arr) / sizeof(arr[0]);
+
+    mergeSort(arr, 0, size - 1);
+
+    printf("Sorted array: ");
+    for (int i = 0; i < size; i++) {
+        printf("%d ", arr[i]);
+    }
+
+    return 0;
+}
+\end{lstlisting}
+
+
+\vfill
+\end{document}
