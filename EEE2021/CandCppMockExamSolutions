@@ -1,0 +1,327 @@
+\documentclass[a4paper,12pt]{article}
+
+%----------------------------------------------------------------------------------------
+%	FONT
+%----------------------------------------------------------------------------------------
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES
+%----------------------------------------------------------------------------------------
+\usepackage{url}
+\usepackage{parskip} 	
+\usepackage{tabularx}
+
+%other packages for formatting
+\RequirePackage{color}
+\RequirePackage{graphicx}
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage[scale=0.9]{geometry}
+\usepackage{amsmath}
+\usepackage{tikz}
+\usetikzlibrary{shapes,arrows}
+\usepackage{rotating}
+\usetikzlibrary{shapes.geometric, arrows}
+\usepackage{float}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
+\tikzstyle{startstop} = [rectangle, rounded corners, minimum width=3cm, minimum height=1cm,text centered, draw=black, fill=red!30]
+\tikzstyle{process} = [rectangle, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=blue!30]
+\tikzstyle{decision} = [diamond, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=green!30]
+\tikzstyle{arrow} = [thick,->,>=stealth]
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\usepackage{listings}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+
+
+%tabularx environment
+\usepackage{tabularx}
+
+%for lists within experience section
+\usepackage{enumitem}
+
+% centered version of 'X' col. type
+\newcolumntype{C}{>{\centering\arraybackslash}X} 
+
+%to prevent spillover of tabular into next pages
+\usepackage{supertabular}
+\usepackage{tabularx}
+\newlength{\fullcollw}
+\setlength{\fullcollw}{0.47\textwidth}
+
+%custom \section
+\usepackage{titlesec}				
+\usepackage{multicol}
+\usepackage{multirow}
+
+%CV Sections inspired by: 
+%http://stefano.italians.nl/archives/26
+\titleformat{\section}{\large\scshape\raggedright}{}{0em}{}[\titlerule]
+\titlespacing{\section}{0pt}{10pt}{10pt}
+
+%for publications
+\usepackage[style=authoryear,sorting=ynt, maxbibnames=2]{biblatex}
+
+%Setup hyperref package, and colours for links
+\usepackage[unicode, draft=false]{hyperref}
+\definecolor{linkcolour}{rgb}{0,0.2,0.6}
+\hypersetup{colorlinks,breaklinks,urlcolor=linkcolour,linkcolor=linkcolour}
+\addbibresource{citations.bib}
+\setlength\bibitemsep{1em}
+
+%for social icons
+\usepackage{fontawesome5}
+
+%debug page outer frames
+%\usepackage{showframe}
+%----------------------------------------------------------------------------------------
+%	BEGIN DOCUMENT
+%----------------------------------------------------------------------------------------
+\begin{document}
+
+% non-numbered pages
+\pagestyle{empty}
+
+\section{C Multi Choice Answers and Explanations}
+
+\begin{enumerate}
+    \item Answer C
+    \item Answer C
+    \item Answer: A\\
+    Explanation: The assignment \verb|x = 0| always evaluates to true (non-zero), making the condition true.
+    \item Answer: B, trying to access \textbf{index} 5 instead of \textbf{element} 5.
+    \item Answer: C
+    \item Answer: A
+    \item Answer: A\\
+    Explanation: Array indices in C start at 0, so \verb|arr[i]| is out-of-bounds when \verb|i = 5|.
+    \item Answer: B
+    \item Answer: A
+    \item Answer: A\\
+    Explanation: The file is opened in read mode, but writing is attempted.
+\end{enumerate}
+
+\section{C++ Multi Choice Answers and Explanations}
+
+\begin{enumerate}
+    \item Answer: D
+    \item Answer: A
+    \item Answer: A
+    \item Answer: A
+    \item Answer: B
+    \item Answer: A\\
+    Explanation: The correct syntax is \verb|delete[] ptr;| for arrays.
+    \item Answer: B
+    \item Answer: D
+    \item Answer: B \verb|delete[] ptr;|
+    \item Answer: B
+\end{enumerate}
+
+\newpage
+
+\section{C Creative Solution}
+
+\lstset{language=C}
+\begin{lstlisting}
+#include <stdio.h>
+
+// Function to perform linear search
+int linearSearch(int arr[], int size, int value) {
+    for (int i = 0; i < size; i++) {
+        if (arr[i] == value) {
+            return i; // Return index if found
+        }
+    }
+    return -1; // Return -1 if not found
+}
+
+// Function to find maximum and minimum in the array
+void findMaxAndMin(int arr[], int size, int *max, int *min) {
+    *max = arr[0];
+    *min = arr[0];
+    for (int i = 1; i < size; i++) {
+        if (arr[i] > *max) {
+            *max = arr[i];
+        }
+        if (arr[i] < *min) {
+            *min = arr[i];
+        }
+    }
+}
+
+// Function to calculate sum and average
+void calculateSumAndAverage(int arr[], int size, int *sum, float *average) {
+    *sum = 0;
+    for (int i = 0; i < size; i++) {
+        *sum += arr[i];
+    }
+    *average = (float)(*sum) / size;
+}
+
+int main() {
+    // Define and initialize the array
+    int arr[10] = {12, 45, 78, 34, 23, 56, 89, 90, 67, 33};
+    int size = 10;
+    int searchValue, index, max, min, sum;
+    float average;
+
+    // Print the array
+    printf("Array elements: ");
+    for (int i = 0; i < size; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+
+    // Perform linear search
+    printf("Enter a value to search: ");
+    scanf("%d", &searchValue);
+    index = linearSearch(arr, size, searchValue);
+    if (index != -1) {
+        printf("Value found at index %d.\n", index);
+    } else {
+        printf("Value not found in the array.\n");
+    }
+
+    // Continued on the next page
+
+    // Find and print the maximum and minimum values
+    findMaxAndMin(arr, size, &max, &min);
+    printf("Maximum value: %d\n", max);
+    printf("Minimum value: %d\n", min);
+
+    // Calculate and print the sum and average
+    calculateSumAndAverage(arr, size, &sum, &average);
+    printf("Sum of array elements: %d\n", sum);
+    printf("Average of array elements: %.2f\n", average);
+
+    return 0;
+}
+
+
+\end{lstlisting}
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{|l|c|p{8cm}|}
+\hline
+\textbf{Task} & \textbf{Marks} & \textbf{Explanation} \\ \hline
+Define and initialize the array & 4 & The array must contain the specified values and be printed correctly. \\ \hline
+Implement \texttt{linearSearch} function & 8 & Function must iterate through the array and return the correct index or \texttt{-1}. \\ \hline
+Use \texttt{linearSearch} in \texttt{main} and print results & 8 & User input must be handled, and results displayed correctly. \\ \hline
+Implement \texttt{findMaxAndMin} function & 6 & Function must calculate and return the correct maximum and minimum values. \\ \hline
+Implement sum and average calculation & 4 & Function must return and print the sum and average correctly. \\ \hline
+\end{tabular}
+\caption{Marking scheme for the C program question}
+\label{tab:marking_scheme_c}
+\end{table}
+
+
+\newpage
+
+\section{C++ Creative Solution}
+
+\begin{lstlisting}
+#include <iostream>
+#include <string>
+using namespace std;
+
+// Student class definition
+class Student {
+private:
+    string name;
+    float grades[5];
+    int rollNumber;
+
+public:
+    // Constructor to initialize attributes
+    Student(string studentName, float studentGrades[], int studentRollNumber) {
+        name = studentName;
+        rollNumber = studentRollNumber;
+        for (int i = 0; i < 5; i++) {
+            grades[i] = studentGrades[i];
+        }
+    }
+
+    // Function to calculate average grade
+    float calculateAverage() {
+        float sum = 0.0;
+        for (int i = 0; i < 5; i++) {
+            sum += grades[i];
+        }
+        return sum / 5;
+    }
+
+    // Function to check pass/fail
+    bool isPass() {
+        return calculateAverage() >= 50;
+    }
+
+    // Function to display student details
+    void displayDetails() {
+        cout << "Name: " << name << endl;
+        cout << "Roll Number: " << rollNumber << endl;
+        cout << "Grades: ";
+        for (int i = 0; i < 5; i++) {
+            cout << grades[i] << " ";
+        }
+        cout << endl;
+        cout << "Average: " << calculateAverage() << endl;
+        cout << (isPass() ? "Status: Pass" : "Status: Fail") << endl;
+    }
+};
+
+int main() {
+    float grades1[5] = {70, 80, 90, 60, 50};
+    Student student1("John Doe", grades1, 101);
+
+    // Display details and status
+    student1.displayDetails();
+
+    return 0;
+}
+
+\end{lstlisting}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|c|p{8cm}|}
+\hline
+\textbf{Task} & \textbf{Marks} & \textbf{Explanation} \\ \hline
+Define the class with required members & 5 & Class should include \texttt{name}, \texttt{grades}, \texttt{rollNumber}, and appropriate access. \\ \hline
+Implement \texttt{calculateAverage} function & 5 & Function must calculate the average of the grades correctly. \\ \hline
+Implement \texttt{isPass} function & 5 & Logic for checking if average is $\geq 50$ should be correct. \\ \hline
+Implement \texttt{displayDetails} function & 5 & Should display all required fields in a formatted manner. \\ \hline
+Correctly instantiate objects in \texttt{main} & 5 & Objects must be created with provided details. \\ \hline
+Call functions and test program & 5 & Program output should match the requirements. \\ \hline
+\end{tabular}
+\caption{Marking scheme for the C++ class question}
+\label{tab:marking_scheme_cpp}
+\end{table}
+
+
+\vfill
+\end{document}
