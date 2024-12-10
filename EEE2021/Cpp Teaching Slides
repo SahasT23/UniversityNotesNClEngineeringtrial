@@ -1,0 +1,1549 @@
+\documentclass[a4paper,12pt]{article}
+
+%----------------------------------------------------------------------------------------
+%	FONT
+%----------------------------------------------------------------------------------------
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES
+%----------------------------------------------------------------------------------------
+\usepackage{url}
+\usepackage{parskip} 	
+\usepackage{tabularx}
+
+%other packages for formatting
+\RequirePackage{color}
+\RequirePackage{graphicx}
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage[scale=0.9]{geometry}
+\usepackage{amsmath}
+\usepackage{tikz}
+\usetikzlibrary{shapes,arrows}
+\usepackage{rotating}
+\usetikzlibrary{shapes.geometric, arrows}
+\usepackage{float}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
+\tikzstyle{startstop} = [rectangle, rounded corners, minimum width=3cm, minimum height=1cm,text centered, draw=black, fill=red!30]
+\tikzstyle{process} = [rectangle, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=blue!30]
+\tikzstyle{decision} = [diamond, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=green!30]
+\tikzstyle{arrow} = [thick,->,>=stealth]
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\usepackage{listings}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+
+
+%tabularx environment
+\usepackage{tabularx}
+
+%for lists within experience section
+\usepackage{enumitem}
+
+% centered version of 'X' col. type
+\newcolumntype{C}{>{\centering\arraybackslash}X} 
+
+%to prevent spillover of tabular into next pages
+\usepackage{supertabular}
+\usepackage{tabularx}
+\newlength{\fullcollw}
+\setlength{\fullcollw}{0.47\textwidth}
+
+%custom \section
+\usepackage{titlesec}				
+\usepackage{multicol}
+\usepackage{multirow}
+
+%CV Sections inspired by: 
+%http://stefano.italians.nl/archives/26
+\titleformat{\section}{\large\scshape\raggedright}{}{0em}{}[\titlerule]
+\titlespacing{\section}{0pt}{10pt}{10pt}
+
+%for publications
+\usepackage[style=authoryear,sorting=ynt, maxbibnames=2]{biblatex}
+
+%Setup hyperref package, and colours for links
+\usepackage[unicode, draft=false]{hyperref}
+\definecolor{linkcolour}{rgb}{0,0.2,0.6}
+\hypersetup{colorlinks,breaklinks,urlcolor=linkcolour,linkcolor=linkcolour}
+\addbibresource{citations.bib}
+\setlength\bibitemsep{1em}
+
+%for social icons
+\usepackage{fontawesome5}
+
+%debug page outer frames
+%\usepackage{showframe}
+%----------------------------------------------------------------------------------------
+%	BEGIN DOCUMENT
+%----------------------------------------------------------------------------------------
+\begin{document}
+
+% non-numbered pages
+\pagestyle{empty}
+
+\section{Introduction}
+This will cover the more important parts of C++, mostly the object-oriented aspects. I will not do too much work on syntax as I will give you questions, so that you get used to writing C++ code.\\
+
+We will be going through the basics of Object-Oriented Programming, covering the four pillars and their purpose in programming. 
+
+\section{Syntax Differences}
+
+I've highlighted some of the differences between C and C++
+
+\lstset{language=C}
+\begin{lstlisting}
+
+#include <stdio.h>
+
+int main() {
+    int number;
+    printf("Enter a number: ");
+    scanf("%d", &number);
+    printf("You entered: %d\n", number);
+    return 0;
+}
+
+\end{lstlisting}
+
+And here is C++ below:
+
+\lstset{language=C++}
+\begin{lstlisting}
+
+#include <iostream>
+
+int main() {
+    int number;
+    std::cout << "Enter a number: ";
+    std::cin >> number;
+    std::cout << "You entered: " << number << std::endl;
+    return 0;
+}
+
+\end{lstlisting}
+
+2. Data Type Declarations\\
+C: Requires explicit struct keyword for structs.\\
+C++: Implicitly recognizes structs as types.\\
+
+\lstset{language=C}
+\begin{lstlisting}
+    
+#include <stdio.h>
+
+struct Point {
+    int x, y;
+};
+
+int main() {
+    struct Point p1 = {10, 20}; // Explicit use of `struct`
+    printf("Point is (%d, %d)\n", p1.x, p1.y);
+    return 0;
+}
+
+\end{lstlisting}
+
+and C++ below (I will explain what structs are later and why they are special)
+
+\newpage
+
+\lstset{language=C++}
+\begin{lstlisting}
+
+#include <iostream>
+
+struct Point {
+    int x, y;
+};
+
+int main() {
+    Point p1 = {10, 20}; // No need for `struct`
+    std::cout << "Point is (" << p1.x << ", " << p1.y << ")\n";
+    return 0;
+}
+
+\end{lstlisting}
+
+Dynamic memory management is different as well. I will also explain how this works in both C and C++.
+
+3. Memory Management\\
+C: Uses malloc (memory allocate) and free (frees up space).\\
+C++: Uses \verb|new| and \verb|delete| keywords.\\
+
+\lstset{language=C}
+\begin{lstlisting}
+    
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    int *arr = (int *)malloc(5 * sizeof(int));
+    if (arr == NULL) {
+        printf("Memory allocation failed\n");
+        return 1;
+    }
+
+    for (int i = 0; i < 5; i++) {
+        arr[i] = i * 10;
+    }
+
+    for (int i = 0; i < 5; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+
+    free(arr); // Deallocate memory
+    return 0;
+}
+
+\end{lstlisting}
+
+\lstset{language=C++}
+\begin{lstlisting}
+    
+#include <iostream>
+
+int main() {
+    int* arr = new int[5]; // Allocate memory
+    for (int i = 0; i < 5; i++) {
+        arr[i] = i * 10;
+    }
+
+    for (int i = 0; i < 5; i++) {
+        std::cout << arr[i] << " ";
+    }
+    std::cout << std::endl;
+
+    delete[] arr; // Deallocate memory
+    return 0;
+}
+
+\end{lstlisting}
+
+In C, two functions cannot have the same name, if they do, it is called overloading. This is not the case in C++. We can have two functions with the same name. Why? We will explore why in object-oriented programming, more specifically, \textbf{polymorphism}. C doesn't support object-oriented programming either.
+
+Macros and header file definitions are different as well. I have examples below to show a sneak peek into header files.
+
+\lstset{language=C}
+\begin{lstlisting}
+// Header File, allows us to split our program into separate files.
+// We can give it a name = math_utils.h
+
+#ifndef MATH_UTILS_H // Include guard, stops multiple inclusions
+#define MATH_UTILS_H
+
+int add(int a, int b);    // Function declaration
+int subtract(int a, int b);
+
+#endif // MATH_UTILS_H
+
+************************************************************************************ 
+
+Source File
+
+// Contains our functions and what they do
+// We can give it a name = math_utils.c
+
+#include "math_utils.h"
+
+int add(int a, int b) {
+    return a + b;
+}
+
+int subtract(int a, int b) {
+    return a - b;
+}
+
+************************************************************************************
+
+// Here is our main file, where we use the header and source files.
+
+#include <stdio.h>
+#include "math_utils.h"
+#include "math_utils.c"
+
+int main() {
+    int sum = add(3, 5);
+    printf("Sum: %d\n", sum);
+    return 0;
+}
+
+\end{lstlisting}
+
+\newpage
+
+\subsection{Consts, Structs and Exception Handling}
+
+Constants (const) are used to define variables whose values cannot be changed after initialization. This ensures immutability (can't change the value), helps prevent accidental modifications, and improves code safety.
+
+Declaring const Variables\\
+In C:
+\begin{lstlisting}
+const int x = 10; // 'x' is a constant and cannot be modified
+x = 20;          // ERROR: Assignment to read-only variable
+In C++:
+\end{lstlisting}
+
+In C++:\\
+
+\begin{lstlisting}
+const int y = 50; // 'y' is constant
+y = 100;          // ERROR
+\end{lstlisting}
+
+Pointer and const in C/C++\\
+The placement of const with pointers changes its meaning:\\
+
+Constant Pointer to a Variable:\\
+
+The pointer itself cannot change, but the value it points to can.\\
+
+\begin{lstlisting}
+int x = 10, y = 20;
+int* const ptr = &x; // 'ptr' cannot be reassigned, but *ptr can change
+*ptr = 15;           // OK
+ptr = &y;            // ERROR
+\end{lstlisting}
+
+Pointer to a Constant:\\
+
+The pointer can point to different locations, but the value at the location it points to cannot change.\\
+
+\begin{lstlisting}
+const int x = 10;
+const int* ptr = &x; // *ptr is immutable
+*ptr = 15;           // ERROR
+ptr = &y;            // OK
+\end{lstlisting}
+
+Constant Pointer to a Constant:\\
+
+Neither the pointer nor the value it points to can be changed.\\
+
+\begin{lstlisting}
+const int x = 10;
+const int* const ptr = &x;
+*ptr = 15;           // ERROR
+ptr = &y;            // ERROR
+\end{lstlisting}
+
+\newpage
+\subsubsection{Functions with const}
+
+Constant Parameters:\\
+
+Prevents modification of function arguments.\\
+
+\begin{lstlisting}
+    void printValue(const int value) {
+    // value cannot be modified here
+}
+\end{lstlisting}
+
+Constant Return Values:\\
+
+Ensures the returned value cannot be modified.\\
+
+\begin{lstlisting}
+    const int& getValue() {
+    static int x = 10;
+    return x;
+}
+\end{lstlisting}
+
+Member Functions:\\
+
+A const member function cannot modify the object it belongs to.\\
+
+\begin{lstlisting}
+class MyClass {
+    int data;
+public:
+    int getData() const { return data; } // 'data' cannot be modified
+};
+\end{lstlisting}
+
+\subsubsection{structs}
+
+A struct is a user-defined data type that groups related variables of different types under one name. Structures are the foundation of object-oriented programming in C++.\\
+
+In C:\\
+
+\begin{lstlisting}
+struct Point {
+    int x;
+    int y;
+};
+
+int main() {
+    struct Point p1 = {10, 20};
+    printf("x: %d, y: %d\n", p1.x, p1.y);
+    return 0;
+}
+\end{lstlisting}
+
+In C++:\\
+
+(The struct keyword is optional when declaring variables.)\\
+
+\begin{lstlisting}
+struct Point {
+    int x;
+    int y;
+};
+
+int main() {
+    Point p1 = {10, 20};
+    std::cout << "x: " << p1.x << ", y: " << p1.y << std::endl;
+    return 0;
+}
+\end{lstlisting}
+
+\subsubsection{Differences Between struct in C and C++}
+Access Control:\\
+
+In C, all members are public by default. In C++, struct members are public by default, but you can define private and protected members like in a class.
+Inheritance:\\
+
+In C++, struct can be inherited just like a class.\\
+
+\begin{lstlisting}
+struct Base {
+    int baseVar;
+};
+
+struct Derived : Base {
+    int derivedVar;
+};
+\end{lstlisting}
+
+Functions in Structures:\\
+
+C++ allows member functions inside a struct, unlike C.\\
+
+\begin{lstlisting}
+struct Point {
+    int x, y;
+    void print() { std::cout << "x: " << x << ", y: " << y << std::endl; }
+};
+\end{lstlisting}
+
+\subsubsection{Exception Handling}
+
+Exception Handling in C\\
+C does not have built-in support for exception handling like C++. Error handling is typically done using:\\
+
+Return Codes:\\
+
+\begin{lstlisting}
+int divide(int a, int b) {
+    if (b == 0) return -1; // Return error code
+    return a / b;
+}
+
+// -1 is commonly used in our algorithms as well, in case we get an index of 0 it can be confusing
+\end{lstlisting}
+
+\verb|setjmp| and \verb|longjmp| functions simulate exceptions but are cumbersome and not widely used.\\
+
+Exception Handling in C++\\
+C++ provides robust exception handling using try, catch, and throw constructs.\\
+
+Throwing an Exception:\\
+
+\begin{lstlisting}
+void divide(int a, int b) {
+    if (b == 0) throw std::invalid_argument("Division by zero!");
+    std::cout << "Result: " << a / b << std::endl;
+}
+\end{lstlisting}
+
+
+Catching Exceptions:\\
+
+\begin{lstlisting}
+int main() {
+    try {
+        divide(10, 0);
+    } catch (const std::invalid_argument& e) {
+        std::cerr << "Error: " << e.what() << std::endl;
+    }
+    return 0;
+}
+\end{lstlisting}
+
+Catching All Exceptions:\\
+
+\begin{lstlisting}
+try {
+    // Code that may throw exceptions
+} catch (...) {
+    std::cerr << "An unknown error occurred!" << std::endl;
+}
+\end{lstlisting}
+
+\subsection{lvalues, rvalues}
+lvalues\\
+Definition: An lvalue (locator value) refers to an object that persists beyond a single expression and has a memory address.\\
+
+Characteristics:\\
+\begin{itemize}
+    \item Can appear on the left-hand side or right-hand side of an assignment.
+    \item Represents objects stored in memory.
+\end{itemize}
+
+\begin{lstlisting}
+int x = 10;  // 'x' is an lvalue (stored in memory)
+x = 20;      // Valid: lvalue on the left-hand side
+int y = x;   // Valid: lvalue on the right-hand side
+\end{lstlisting}
+
+rvalues\\
+Definition: An rvalue (read value) refers to a temporary value that does not have a persistent memory address.\\
+
+\newpage
+Characteristics:\\
+\begin{itemize}
+    \item Can appear only on the right-hand side of an assignment.
+    \item Typically represents constants, literals, or temporary objects created by expressions.
+\end{itemize}
+
+\begin{lstlisting}
+int x = 10;   // '10' is an rvalue (temporary literal)
+int y = x + 5; // 'x + 5' is an rvalue (temporary expression result)
+\end{lstlisting}
+
+rvalue and lvalue operations:\\
+
+a. lvalue References
+A reference (\&) binds to an lvalue.\\
+Example:
+
+\begin{lstlisting}
+int x = 10;
+int& ref = x;  // ref is an lvalue reference to x
+ref = 20;      // Modifies x through ref
+\end{lstlisting}
+
+b. rvalue References
+Introduced in C++11, an rvalue reference (\&\&) allows you to bind to rvalues.
+
+Example:\\
+
+\begin{lstlisting}
+int x = 10;
+int&& rref = x + 5;  // rref binds to temporary result of x + 5
+cout << rref << endl; // Prints the temporary value
+
+\end{lstlisting}
+
+Why Use rvalue References?\\
+To implement move semantics (e.g., move constructors) and avoid unnecessary copying.
+
+Example:\\
+\begin{lstlisting}
+std::string str1 = "Hello";
+std::string str2 = std::move(str1); // Transfers ownership to str2
+\end{lstlisting}
+
+
+\section{Object Oriented Programming in C++}
+
+We will focus on object-oriented programming and cover classes, objects, constructors, destructors, the four principles of OOP and we will combine everything that we have learnt to create a program.
+
+Encapsulation: Combines data (attributes) and behavior (methods) into a single entity (class).\\
+Analogy: A car’s speed and fuel are internal properties; you only use the accelerator and brakes.\\
+
+Abstraction: Hides unnecessary details to simplify the interface.\\
+Analogy: You use an ATM without knowing its internal circuitry.\\
+
+Inheritance: Allows one class to acquire properties of another.\\
+Analogy: A child inherits traits from parents (hair color, height).\\
+
+Polymorphism: Enables entities to behave differently in different contexts.\\
+Analogy: A person can be a student, employee, or athlete depending on context.\\
+
+\subsection{The Four Pillars of OOP}
+
+We will look at creating classes and objects, whilst understanding what they are and what we can use them for.
+
+So what is \textbf{Object-Oriented Programming}? We have been using C for most of our work, which is a procedural language. This means that we only really think about functions and logic. Object oriented focuses on data and reusability, along with functions and logic.
+
+Classes and Objects:
+
+A class is a user-defined data type that bundles data and functions that operate on that data into a single logical unit. It provides a way to model real-world entities with attributes (data members) and actions (methods or member functions).
+
+An object is an instance of a class, meaning it is created based on the class definition and encapsulates the data and methods defined by the class.\\
+
+Class as a Blueprint: Think of a blueprint for a house. It describes the structure (data members) and functions (how the house can be used, e.g., opening doors, turning on lights).\\
+Object as the Real Instance: An actual house built from the blueprint is an object. Multiple houses (objects) can be built from the same blueprint (class).\\
+
+Access Specifiers:
+
+Public: Accessible everywhere.\\\
+Private: Accessible only within the class.\\\
+Protected: Accessible within the class and its subclasses.\\
+
+Here's an example of a typical class in C++:\\
+
+\lstset{language=C++}
+\begin{lstlisting}
+
+#include <iostream>
+
+class BankAccount {
+private:
+    double balance; // Encapsulated data
+
+public:
+    BankAccount(double initial_balance) : balance(initial_balance) {}
+
+    void deposit(double amount) {
+        balance += amount;
+    }
+
+    void withdraw(double amount) {
+        if (amount <= balance) {
+            balance -= amount;
+        } else {
+            std::cout << "Insufficient funds.\n";
+        }
+    }
+
+    void displayBalance() const {
+        std::cout << "Balance: $" << balance << std::endl;
+    }
+};
+
+int main() {
+    BankAccount myAccount(1000.0);
+    myAccount.deposit(500);
+    myAccount.withdraw(200);
+    myAccount.displayBalance(); // Balance: $1300
+    return 0;
+}
+
+\end{lstlisting}
+
+\subsubsection{Getter and Setter Methods}
+
+Getter Methods (Accessors): Getter methods, also known as accessors, allow public access to private data members of a class. They return the value of a private data member, providing a way to retrieve the data without directly accessing it. Getter methods typically start with the prefix “get” followed by the name of the data member.\\
+
+Setter Methods (Mutators): Setter methods, also known as mutators, allow public modification of private data members of a class. They set the value of a private data member, providing a way to update the data without directly modifying it. Setter methods typically start with the prefix “set” followed by the name of the data member.
+
+\lstset{language=C}
+\begin{lstlisting}
+class Student {
+private:
+    int age;
+
+public:
+    int getAge() const { return age; }
+};
+
+*************************************************************************************
+
+class Student {
+private:
+    int age;
+
+public:
+    void setAge(int newValue) { age = newValue; }
+};
+
+\end{lstlisting}
+
+\subsubsection{Constructors and Destructors}
+
+Constructors in C++
+A constructor is a special member function that is automatically called when an object is created. Its purpose is to initialize the object.
+
+Key Features:
+Has to be the same name as the class.\\
+No return type.\\
+Can be overloaded (multiple constructors with different parameter lists).\\
+Types of Constructors:\\
+Default Constructor: Takes no arguments.\\
+Parameterized Constructor: Takes arguments to initialise members.\\
+Copy Constructor: Creates a new object as a copy of an existing object.\\
+
+\begin{center}
+    Example on the next slide
+\end{center}
+
+\newpage
+\lstset{language=C}
+\begin{lstlisting}
+    
+#include <iostream>
+
+
+class Car {
+public:
+    string brand;
+    string model;
+    int year;
+
+    // Default constructor
+    Car() {
+        brand = "Unknown";
+        model = "Unknown";
+        year = 0;
+    }
+
+    // Parameterized constructor
+    Car(string b, string m, int y) {
+        brand = b;
+        model = m;
+        year = y;
+    }
+
+    void displayDetails() {
+        std::cout << "Brand: " << brand << ", Model: " << model << ", Year: " << year << std::endl;
+    }
+};
+
+int main() {
+    // Using default constructor
+    Car defaultCar;
+    defaultCar.displayDetails();
+
+    // Using parameterized constructor
+    Car myCar("Tesla", "Model 3", 2023);
+    myCar.displayDetails();
+
+    return 0;
+}
+
+\end{lstlisting}
+
+Move Constructors\\
+Move constructors are special constructors introduced in C++11 for handling resources in move semantics. They enable the transfer of resources from one object to another without copying.\\
+
+Why Do We Need Move Constructors?\\
+When large objects are passed or returned, copying them can be inefficient.
+Move semantics allow resources (like dynamic memory) to be transferred efficiently from one object to another.
+Move Constructor Syntax
+A move constructor takes an rvalue reference (ClassName\&\&) as its parameter:
+
+\begin{lstlisting}
+ClassName(ClassName&& other) noexcept;
+// ClassName&& other: Represents an rvalue reference, which is a temporary // object.
+// noexcept: Indicates that the move operation does not throw exceptions.
+\end{lstlisting}
+
+Example: Move Constructor (next page)\\
+
+\newpage
+
+\begin{lstlisting}
+#include <iostream>
+#include <utility> // For std::move
+
+
+class MyArray {
+private:
+    int* data; // Pointer to dynamically allocated array
+    size_t size;
+
+public:
+    // Constructor
+    MyArray(size_t s) : size(s), data(new int[s]) {
+        std::cout << "Array created with size " << size << std::endl;
+    }
+
+    // Destructor
+    ~MyArray() {
+        delete[] data;
+        std::cout << "Array destroyed" << std::endl;
+    }
+
+    // Copy Constructor (Deep Copy)
+    MyArray(const MyArray& other) : size(other.size), data(new int[other.size]) {
+        for (size_t i = 0; i < size; i++)
+            data[i] = other.data[i];
+        std::cout << "Copy Constructor called" << std::endl;
+    }
+
+    // Move Constructor
+    MyArray(MyArray&& other) noexcept
+        : size(other.size), data(other.data) {
+        other.data = nullptr; // Leave the moved-from object in a safe state
+        other.size = 0;
+        std::cout << "Move Constructor called" << std::endl;
+    }
+
+    // Display Array
+    void display() const {
+        if (data) {
+            for (size_t i = 0; i < size; i++)
+                std::cout << data[i] << " ";
+            std::cout << std::endl;
+        } else {
+            std::cout << "Array is empty!" << std::endl;
+        }
+    }
+};
+
+int main() {
+    MyArray arr1(5);         // Regular constructor
+    MyArray arr2 = std::move(arr1); // Move constructor
+
+    std::cout << "arr1 after move: ";
+    arr1.display();
+
+    std::cout << "arr2 after move: ";
+    arr2.display();
+
+    return 0;
+}
+\end{lstlisting}
+
+\newpage
+
+Key Points in the Code\\
+Move Constructor Logic:\\
+
+Transfers ownership of data to the new object \verb|(arr2)|.\\
+Sets the source object's \verb|(arr1)| data to \verb|nullptr| to prevent double deletion.
+
+Why Use \verb|std::move|?\\
+
+It explicitly converts an lvalue (arr1) to an rvalue to invoke the move constructor.
+
+Performance:\\
+Instead of deep copying the array, the move constructor simply transfers ownership of the pointer, which is faster.
+
+\subsubsection{Destructors}
+
+Destructors in C++
+A destructor is a special member function that is automatically called when an object goes out of scope or is explicitly deleted. It cleans up resources allocated by the object.
+
+Key Features:
+Same name as the class but prefixed with (\~).
+No arguments and no return type.\\
+Used to release memory or close files.\\
+
+\lstset{language=C}
+\begin{lstlisting}
+#include <iostream>
+class Car {
+public:
+    Car() {
+        std::cout << "Car created." << std::endl;
+    }
+    ~Car() {
+        std::cout << "Car destroyed." << std::endl;
+    }
+};
+
+int main() {
+    {
+        Car myCar; // Constructor called
+    } // Destructor automatically called when object goes out of scope
+    return 0;
+}
+
+\end{lstlisting}
+
+\subsubsection{Operator Overloading}
+Operator overloading in C++ lets you customise how operators (like \verb|+, -, *, <<,| etc.) work for your custom types (like classes or structs). It makes your code cleaner and more intuitive by allowing your objects to behave more like built-in types.
+
+For example, let's say you have a class Point to represent points in 2D space, and you want to add two points together using the $+$ operator. Normally, C++ doesn't know how to add two Point objects. By overloading the $+$ operator, you can tell C++ exactly what "adding" two points should do.
+
+\begin{center}
+    (Overloading Example on the next page)
+\end{center}
+
+\newpage
+\begin{lstlisting}
+#include <iostream>
+
+using namespace std;
+
+class Point {
+    int x, y;
+
+public:
+    Point(int x_val, int y_val) : x(x_val), y(y_val) {}
+
+    // Overload the + operator
+    Point operator+(const Point& other) {
+        return Point(x + other.x, y + other.y);
+    }
+
+    void display() {
+        cout << "(" << x << ", " << y << ")" << endl;
+    }
+};
+
+int main() {
+    Point p1(1, 2);
+    Point p2(3, 4);
+
+    Point p3 = p1 + p2; // Using the overloaded + operator
+    p3.display();       // Output: (4, 6)
+
+    return 0;
+}
+
+\end{lstlisting}
+
+\subsubsection{Encapsulation}
+
+Encapsulation is a fundamental concept in Object-Oriented Programming (OOP) that binds together the data and the methods that manipulate that data, and keeps both safe from outside interference and misuse. In other words, encapsulation is a mechanism that wraps data and its associated methods into a single unit, making it harder for other parts of the program to access or modify the data directly.
+
+Key Characteristics:
+Data Hiding: Encapsulation hides the internal implementation details of an object from the outside world, making it difficult for other parts of the program to access or modify the object’s internal state directly.\\
+
+Abstraction: Encapsulation provides a public interface through which other objects can interact with the encapsulated object, without knowing the internal details of how the object is implemented.\\
+
+Access Control: Encapsulation uses access modifiers (e.g., public, private, protected) to control access to the object’s internal state and methods.\\
+
+We will look at an example of a \verb|BankAccount| class on the next page.
+
+\newpage
+
+Consider a BankAccount class that encapsulates the account balance and methods to deposit and withdraw funds. The BankAccount class has a private balance variable and public methods deposit() and withdraw(). Other parts of the program can interact with the BankAccount object only through these public methods, without directly accessing the balance variable. This ensures that the internal state of the account is protected and consistent.\\
+
+\lstset{language=C}
+\begin{lstlisting}
+
+class BankAccount {
+
+private:
+    double balance;
+
+public:
+    BankAccount(double initialBalance) {
+        balance = initialBalance;
+    }
+
+    void deposit(double amount) {
+        balance += amount;
+    }
+
+    double getBalance() {
+        return balance;
+    }
+};
+
+\end{lstlisting}
+
+\subsubsection{Abstraction}
+
+Abstraction\\
+Definition: The process of hiding the implementation details while exposing only the essential features. 
+
+We have two types of abstraction.\\
+
+Data Abstraction: Abstraction of data structures and operations, allowing users to interact with data without knowing the internal representation.\\
+
+Process Abstraction: Abstraction of processes and methods, allowing users to interact with objects without knowing the internal implementation details.\\
+
+Purpose: Simplify complex systems by modeling classes based on real-world entities.\\
+
+Analogy: Driving a car without needing to know how the engine works.
+
+\lstset{language=C}
+\begin{lstlisting}
+
+class Shape {
+
+public:
+    virtual void draw() = 0; // Pure virtual function
+};
+
+class Circle : public Shape {
+public:
+    void draw() override {
+        cout << "Drawing a circle" << endl;
+    }
+};
+
+\end{lstlisting}
+
+\subsubsection{Inheritance}
+
+Is-a relationship: A subclass is a specialized version of its superclass. For example, a Dog is a type of Animal.\\
+
+Inheritance of attributes: A subclass inherits all the attributes (data members) of its superclass.\\
+
+Inheritance of methods: A subclass inherits all the methods (functions) of its superclass, including any overridden or overloaded methods.\\
+
+Method overriding: A subclass can override a method of its superclass by providing a new implementation.\\
+Method overloading: A subclass can overload a method of its superclass by providing multiple implementations with different parameter lists.\\
+
+Access modifiers: The access modifiers (public, private, protected) of the superclass’s attributes and methods are inherited by the subclass, unless explicitly changed.\\
+
+Constructor inheritance: A subclass inherits the constructor of its superclass, but can also define its own constructor.\\
+
+Types of inheritance:\\
+Single inheritance: A subclass inherits from a single superclass.\\
+Multiple inheritance: A subclass inherits from multiple superclasses.\\
+Multilevel inheritance: A subclass inherits from a superclass that itself inherits from another superclass.\\
+
+Suppose we have a Vehicle class with attributes color and wheels, and methods startEngine() and stopEngine(). We can create a Car subclass that inherits these attributes and methods, and then add its own specific attributes (e.g., numberOfDoors) and methods (e.g., openTrunk()).\\
+
+\lstset{language=C}
+\begin{lstlisting}
+class Vehicle {
+public:
+    string brand;
+    void honk() {
+        std::cout << "Beep beep!" << std::endl;
+    }
+};
+
+class Car : public Vehicle {
+public:
+    string model;
+    void display() {
+        std::cout << "Brand: " << brand << ", Model: " << model << std::endl;
+    }
+};
+
+int main() {
+    Car myCar;
+    myCar.brand = "Tesla";
+    myCar.model = "Model X";
+    myCar.honk();
+    myCar.display();
+
+    return 0;
+}
+
+\end{lstlisting}
+
+\subsubsection{Polymorphism}
+
+Polymorphism
+Definition: The ability of different objects to respond differently to the same function call.\\
+Types:\\
+Compile-time Polymorphism (Method Overloading)\\
+Run-time Polymorphism (Method Overriding)\\
+
+Method overloading, also known as compile-time polymorphism, is a feature in object-oriented programming (OOP) that allows multiple methods with the same name to be defined, as long as they have different parameter lists. This means that a class can have multiple methods with the same name, but with different numbers or types of parameters.\\
+
+For example, consider a Calculator class with two overloaded methods add(int, int) and add(double, double). Both methods have the same name add, but they differ in their parameter types and numbers. This allows you to call add(2, 3) for integer addition or add(3.5, 2.7) for decimal addition.\\
+
+The compiler resolves the correct method to call based on the number and types of arguments provided. This is done at compile-time, hence the term “compile-time polymorphism”.\\
+
+\begin{center}
+    (Example of polymorphism below)
+\end{center}
+
+\lstset{language=C}
+\begin{lstlisting}
+class Math {
+public:
+    int add(int a, int b) {
+        return a + b;
+    }
+
+    double add(double a, double b) {
+        return a + b;
+    }
+};
+
+\end{lstlisting}
+
+\subsubsection{Child and Friend Classes}
+
+Friend Classes and Functions, and Child Classes (Inheritance) in C++
+These concepts are part of Object-Oriented Programming (OOP) in C++ and help define relationships between classes. Let's explore them in detail.\\
+
+Friend Classes and Friend Functions\\
+Friendship allows a class to grant access to its private and protected members to another class or function. By default, private and protected members are accessible only within the class they are declared in.\\
+
+Friend Functions
+A friend function is a function declared with the keyword friend inside a class. It is not a member of the class but has access to the class's private and protected members.\\
+
+Example on next page:\\
+
+\newpage
+
+\begin{lstlisting}
+#include <iostream>
+
+class Box {
+private:
+    double width;
+
+public:
+    Box(double w) : width(w) {}
+
+    // Declare a friend function
+    friend void printWidth(const Box& b);
+};
+
+// Friend function definition
+void printWidth(const Box& b) {
+    // Access private member of Box
+    std::cout << "Width: " << b.width << std::endl;
+}
+
+int main() {
+    Box b(10.5);
+    printWidth(b); // Friend function has access to private member
+    return 0;
+}
+
+\end{lstlisting}
+
+Key Points:\\
+The function printWidth is not a member of the class Box.
+It is declared a friend inside Box, giving it access to Box's private data.\\
+
+Friend Classes\\
+A friend class is a class that is allowed to access the private and protected members of another class.\\
+
+Example:\\
+
+\begin{lstlisting}
+#include <iostream>
+
+class Engine {
+private:
+    int horsepower;
+
+public:
+    Engine(int hp) : horsepower(hp) {} 
+    friend class Car;  // Declare class Car as a friend
+};
+
+class Car {
+public:
+    void showEnginePower(const Engine& e) {
+        // Access private member of Engine
+        std::cout << "Engine horsepower: " << e.horsepower << std::endl;
+    }
+};
+
+int main() {
+    Engine e(300);
+    Car c;
+    c.showEnginePower(e); // Car can access private members of Engine
+    return 0;
+}
+\end{lstlisting}
+Key Points:\\
+
+The class Car is declared as a friend of Engine. Car class can access the private member horsepower of Engine.\\
+
+Child Classes (Inheritance)\\
+
+Inheritance allows a class (called the child or derived class) to inherit members (attributes and methods) from another class (called the parent or base class). This enables code reuse and promotes hierarchical relationships.
+
+Types of Inheritance
+Public Inheritance:\\
+Public members of the base class remain public in the derived class.
+Protected members of the base class remain protected.
+Private members are not accessible but can be inherited indirectly.
+
+\begin{lstlisting}
+class Base {
+
+public:
+    void display() { std::cout << "Base class display" << std::endl; }
+};
+
+class Derived : public Base {
+public:
+    void show() { std::cout << "Derived class show" << std::endl; }
+};
+
+int main() {
+    Derived d;
+    d.display(); // Accessing Base class method
+    d.show();    // Accessing Derived class method
+    return 0;
+}
+\end{lstlisting}
+
+Protected Inheritance:\\
+
+Public and protected members of the base class become protected in the derived class.\\
+
+\begin{lstlisting}
+class Base {
+
+public:
+    void display() { cout << "Base class display" << endl; }
+};
+
+class Derived : protected Base {
+public:
+    void show() {
+        display(); // Can access Base's public method as protected
+        cout << "Derived class show" << endl;
+    }
+};
+
+int main() {
+    Derived d;
+    d.show();    // Works
+    // d.display(); // ERROR: display is protected in Derived
+    return 0;
+}
+\end{lstlisting}
+
+Private Inheritance:\\
+
+Public and protected members of the base class become private in the derived class.\\
+
+\begin{lstlisting}
+class Base {
+
+public:
+    void display() { std::cout << "Base class display" << std::endl; }
+};
+
+class Derived : private Base {
+public:
+    void show() {
+        display(); // Can access Base's public method as private
+        std::cout << "Derived class show" << std::endl;
+    }
+};
+
+int main() {
+    Derived d;
+    d.show();    // Works
+    // d.display(); // ERROR: display is private in Derived
+    return 0;
+}
+\end{lstlisting}
+
+Overriding and Polymorphism\\
+The child class can override base class methods to provide a new implementation.\\
+
+\begin{lstlisting}
+#include <iostream>
+
+class Base {
+public:
+    virtual void display() { std::cout << "Base class display" << std::endl; }
+    virtual ~Base() = default; // Virtual destructor for proper cleanup
+};
+
+class Derived : public Base {
+public:
+    void display() override { std::cout << "Derived class display" << std::endl; }
+};
+
+int main() {
+    Base* obj = new Derived();
+    obj->display(); // Calls Derived's display method due to polymorphism
+    delete obj;     // Proper cleanup
+    return 0;
+}
+\end{lstlisting}
+
+Key Points:
+
+\begin{itemize}
+\item Friend Classes/Functions: Use when you need tightly coupled classes or helper functions that need access to private data but don't fit in a class hierarchy.
+\item Child Classes (Inheritance): Use to model hierarchical relationships and promote code reuse. Favor composition over inheritance when a class represents behavior rather than an "is-a" relationship.
+\end{itemize}
+
+\newpage
+
+\section{Dynamic Memory Management and Pointers in C++}
+
+When a program runs, it uses two main areas of memory: the \textbf{stack} and the \textbf{heap}. Understanding these is crucial for efficient memory management in C++. If we can understand what they do, we can start to look at \textbf{dynamic} memory management. This is the equivalent of going from mental additions to working out complex calculus questions using other items, like a calculator and your notes.
+
+\subsection{Stack}
+\begin{itemize}
+    \item Stores: local variables, function parameters, and return addresses.
+    \item Structure: Operates in a Last In, First Out (LIFO) manner.
+    \item Lifetime: Memory is automatically managed; variables are destroyed when they go out of scope.
+    \item Speed: Very fast to allocate and de-allocate.
+    \item Size: Limited in size, typically smaller than the heap.
+\end{itemize}
+
+\begin{lstlisting}
+void stackExample() {
+    int x = 10;  // Allocated on the stack
+    int y = 20;  // Also on the stack
+    // Memory for x and y is automatically freed when the function exits
+}
+\end{lstlisting}
+
+\subsection{Heap}
+
+\begin{itemize}
+    \item Stores: Dynamically allocated memory (using \verb|new| or \verb|malloc|).
+    \item Structure: Managed manually by the programmer (using \verb|delete| or \verb|free|).
+    \item Lifetime: Memory stays allocated until explicitly freed.
+    \item Speed: Slower than stack due to manual management.
+    \item Size: Typically much larger than the stack.
+\end{itemize}
+
+\begin{center}
+    Here's an example below:
+\end{center}
+
+\begin{lstlisting}
+void heapExample() {
+    int *ptr = new int(42); // Allocated on the heap
+    std::cout << *ptr << std::endl;
+    delete ptr;            // Memory must be freed manually
+}
+\end{lstlisting}
+
+\begin{center}
+    Here is a diagram to show the structure of memory in your computer.
+\end{center}
+
+\begin{center}
+    
+\begin{tikzpicture}[scale=1][H]
+
+% Memory block
+\draw[thick] (0, 0) rectangle (4, 8);
+
+% Sections
+\draw[thick] (0, 7) -- (4, 7);
+\draw[thick] (0, 5) -- (4, 5);
+\draw[thick] (0, 3) -- (4, 3);
+\draw[thick] (0, 1) -- (4, 1);
+
+% Labels
+\node at (2, 7.5) {Code Segment (Text)};
+\node at (2, 6) {Initialised Data};
+\node at (2, 4) {Uninitialised Data};
+\node at (2, 2) {Heap};
+\node at (2, 0.5) {Stack};
+
+% Heap and Stack arrows
+\draw[<->, thick] (4.5, 1.2) -- (4.5, 2.8) node[midway,right] {Heap Grows Up};
+\draw[<->, thick] (4.5, 0.8) -- (4.5, 0.2) node[midway,right] {Stack Grows Down};
+
+\end{tikzpicture}
+\end{center}
+
+\subsection{Using Dynamic Memory Structures}
+
+Dynamic memory allows you to allocate and manage memory during the program's runtime, offering flexibility for handling data structures, objects, or arrays whose size or lifespan cannot be determined at compile-time. This is achieved using the heap memory area, in contrast to the stack, which is used for static memory. 
+
+Why Use Dynamic Memory?
+Variable Size Data Structures:
+
+\begin{itemize}
+    \item If you don't know the size of an array or data structure at compile-time, dynamic memory lets you allocate only the memory you need.\\
+    Example: Storing user-input-based data like arrays or objects.\\
+
+    \item Control Over Object Lifetime:\\
+
+    Memory allocated dynamically persists until explicitly released, allowing objects to live beyond the scope of their creating function.
+
+    \item Efficient Use of Memory:\\
+
+    Allocate and de-allocate memory precisely as needed to avoid wastage.
+\end{itemize}
+
+We can do a lot of things with dynamic memory, but we have to be careful as there are a lot of things that we need to keep track of, or we could cause a lot of errors.\\
+
+Let's start with the key syntax:\\
+
+1. \verb|new| and \verb|new[]| for allocation.\\
+2. \verb|delete| and \verb|delete[]| for de-allocation.\\
+
+We can allocate anything from a single variable to an array (remember what an array means). Here is the code below:\\
+
+For single variables:\\
+
+\begin{lstlisting}
+int *ptr = new int; // Allocates memory for a single integer
+*ptr = 42;          // Assigns a value
+delete ptr;         // Frees memory
+\end{lstlisting}
+
+For arrays:\\
+
+\begin{lstlisting}
+int *arr = new int[5]; // Allocates memory for an array of 5 integers
+arr[0] = 10;           // Assign values
+delete[] arr;          // Frees memory for the array
+
+\end{lstlisting}
+
+Key Concepts in Dynamic Memory\\
+1. Heap Memory\\
+\begin{itemize}
+    \item Memory allocated using new resides in the heap.
+    \item Heap memory persists until you manually deallocate it with delete.
+    \item Excessive heap allocations without deallocation lead to memory leaks.
+\end{itemize}
+
+2. Lifetime\\
+\begin{itemize}
+\item Objects allocated dynamically remain in memory until explicitly deleted.
+\item They are not automatically destroyed when they go out of scope.
+\end{itemize}
+
+3. Dangling Pointers\\
+A pointer pointing to de-allocated memory is a dangling pointer. Dereferencing it leads to undefined behaviour. Here's an example below:\\
+
+\begin{lstlisting}
+int *ptr = new int(5);
+delete ptr; // Memory freed
+// Dereferencing ptr now is undefined behavior
+ptr = nullptr; // Prevents dangling pointer
+\end{lstlisting}
+
+4. Null Pointers\\
+A pointer with the value \verb|nullptr| does not point to any memory. Always check pointers for \verb|nullptr| before dereferencing. Here's an example of safe usage:
+
+\begin{lstlisting}
+int *ptr = nullptr;
+if (ptr) {
+    cout << *ptr; // Safe because we're checking first
+}
+\end{lstlisting}
+
+5. Memory Leaks\\
+Occur when allocated memory is not freed. Over time, this can exhaust the system's available memory, causing it to slow down and eventually crash. We can show this very simply:
+
+\begin{lstlisting}
+void memoryLeakExample() {
+    int *leak = new int(42); // Memory is never deleted
+}
+\end{lstlisting}
+
+We can apply everything we've learnt for a simple example below:
+
+\newpage
+
+\begin{lstlisting}
+// When the size of an array is determined at runtime, use dynamic memory:
+
+int n;
+std::cout << "Enter size: ";
+std::cin >> n;
+
+int *arr = new int[n]; // Allocate an array of size n
+for (int i = 0; i < n; ++i) {
+    arr[i] = i + 1; // Initialize array
+}
+
+for (int i = 0; i < n; ++i) {
+    std::cout << arr[i] << " "; // Print array
+}
+
+delete[] arr; // Free memory
+\end{lstlisting}
+
+\textbf{\subsection{Important Concepts Demonstrated}}
+\begin{enumerate}
+    \item Dynamic Memory Allocation:\\
+    \begin{itemize}
+        \item The new operator allocates memory for objects dynamically on the heap, allowing for flexibility in memory usage.
+        \item In this case, we dynamically allocate memory for a Book object in the main() function and free it using delete when done.
+    \end{itemize}
+
+    \item Object-Oriented Programming (OOP):
+    \begin{itemize}
+        \item The Book class is an example of OOP, encapsulating data (title, author, pages) and providing methods to manipulate that data (displayBookInfo()).
+        \item OOP principles like encapsulation and abstraction are demonstrated here, where the details of memory management (allocation and deallocation) are abstracted away from the user.
+    \end{itemize}
+
+    \item Manual Memory Management:
+    \begin{itemize}
+        \item The delete operator ensures the memory is freed when no longer needed. If you don't call delete, the memory remains allocated, leading to a memory leak.
+        \item You need to manually manage memory using new and delete when working with dynamic memory in C++.
+    \end{itemize}
+
+    \begin{itemize}
+        \item Without the delete call, the memory allocated for myBook would not be freed, leading to a memory leak. This would result in wasted memory, especially in larger programs with many objects allocated dynamically.
+    \end{itemize}
+\end{enumerate}
+
+\begin{center}
+    (Lets combine everything and create our own class below:)
+\end{center}
+
+\newpage
+
+This example uses a simple Book class to demonstrate creating objects dynamically, allocating memory, and properly managing that memory.\\
+
+\begin{lstlisting}
+#include <iostream>
+#include <string>
+
+class Book {
+private:
+    std::string title;    // Title of the book
+    std::string author;   // Author of the book
+    int pages;            // Number of pages in the book
+
+public:
+    // Constructor to initialize the Book object
+    Book(std::string t, std::string a, int p) 
+        : title(t), author(a), pages(p) {}
+
+    // Member function to display the book information
+    void displayBookInfo() {
+        std::cout << "Title: " << title << std::endl;
+        std::cout << "Author: " << author << std::endl;
+        std::cout << "Pages: " << pages << std::endl;
+    }
+
+    // Getter for the title
+    std::string getTitle() {
+        return title;
+    }
+
+    // Destructor to clean up resources (if needed)
+    ~Book() {
+        std::cout << "Book object '" << title << "' is being deleted!" << std::endl;
+    }
+};
+
+int main() {
+    // Dynamically allocate memory for a Book object using the `new` operator
+    Book* myBook = new Book("1984", "George Orwell", 328);
+
+    // Use the dynamically created object through the pointer
+    myBook->displayBookInfo();   // Access the object's method using the pointer
+
+    // Now delete the object to free memory manually
+    delete myBook;  // Frees the memory allocated for the `Book` object
+
+    // After this point, myBook is a dangling pointer, and it can't be used anymore.
+
+    return 0;
+}
+
+\end{lstlisting}
+
+\vfill
+
+\end{document}
