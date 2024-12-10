@@ -1,0 +1,504 @@
+\documentclass[a4paper,12pt]{article}
+
+%----------------------------------------------------------------------------------------
+%	FONT
+%----------------------------------------------------------------------------------------
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES
+%----------------------------------------------------------------------------------------
+\usepackage{url}
+\usepackage{parskip} 	
+\usepackage{tabularx}
+
+%other packages for formatting
+\RequirePackage{color}
+\RequirePackage{graphicx}
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage[scale=0.9]{geometry}
+\usepackage{amsmath}
+\usepackage{tikz}
+\usetikzlibrary{shapes,arrows}
+\usepackage{rotating}
+\usetikzlibrary{shapes.geometric, arrows}
+\usepackage{float}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
+\tikzstyle{startstop} = [rectangle, rounded corners, minimum width=3cm, minimum height=1cm,text centered, draw=black, fill=red!30]
+\tikzstyle{process} = [rectangle, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=blue!30]
+\tikzstyle{decision} = [diamond, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=green!30]
+\tikzstyle{arrow} = [thick,->,>=stealth]
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\usepackage{listings}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+
+
+%tabularx environment
+\usepackage{tabularx}
+
+%for lists within experience section
+\usepackage{enumitem}
+
+% centered version of 'X' col. type
+\newcolumntype{C}{>{\centering\arraybackslash}X} 
+
+%to prevent spillover of tabular into next pages
+\usepackage{supertabular}
+\usepackage{tabularx}
+\newlength{\fullcollw}
+\setlength{\fullcollw}{0.47\textwidth}
+
+%custom \section
+\usepackage{titlesec}				
+\usepackage{multicol}
+\usepackage{multirow}
+
+%CV Sections inspired by: 
+%http://stefano.italians.nl/archives/26
+\titleformat{\section}{\large\scshape\raggedright}{}{0em}{}[\titlerule]
+\titlespacing{\section}{0pt}{10pt}{10pt}
+
+%for publications
+\usepackage[style=authoryear,sorting=ynt, maxbibnames=2]{biblatex}
+
+%Setup hyperref package, and colours for links
+\usepackage[unicode, draft=false]{hyperref}
+\definecolor{linkcolour}{rgb}{0,0.2,0.6}
+\hypersetup{colorlinks,breaklinks,urlcolor=linkcolour,linkcolor=linkcolour}
+\addbibresource{citations.bib}
+\setlength\bibitemsep{1em}
+
+%for social icons
+\usepackage{fontawesome5}
+
+%debug page outer frames
+%\usepackage{showframe}
+%----------------------------------------------------------------------------------------
+%	BEGIN DOCUMENT
+%----------------------------------------------------------------------------------------
+\begin{document}
+
+\title{C and C++ Programming Assessment 1}
+\maketitle
+
+\newpage
+% non-numbered pages
+\pagestyle{empty}
+
+\section{C Multiple Choice}
+
+Each question will have four options, with each multiple choice question being worth \textbf{Two marks}.
+
+\begin{enumerate}
+    \item What is the size of an integer on most systems?
+    \begin{itemize}
+        \item A) 1 byte
+        \item B) 2 bytes
+        \item C) 4 bytes
+        \item D) 8 bytes
+    \end{itemize}
+
+    \item Which of the following is NOT a valid keyword in C?
+    \begin{itemize}
+        \item A) auto
+        \item B) struct
+        \item C) class
+        \item D) enum
+    \end{itemize}
+
+    \item What will this code output?
+
+    \lstset{language=C}
+    \begin{lstlisting}
+        int x = 10;
+        
+        if (x = 0) {
+            printf("Zero");
+            } else {
+    
+        printf("Non-Zero");
+    }
+    
+    \end{lstlisting}    
+    
+    \begin{itemize}
+        \item A) Zero
+        \item B) Non-Zero
+        \item C) Compilation Error
+        \item D) Undefined Behavior
+    \end{itemize}
+
+    \item What is wrong with the following code?
+
+    \lstset{language=C}
+    \begin{lstlisting}
+        int arr[5] = {1, 2, 3, 4, 5};
+        printf("%d", arr[5]);
+    \end{lstlisting}    
+    
+    \begin{itemize}
+        \item A) Array size is not specified
+        \item B) Out-of-bounds access of the array
+        \item C) Incorrect format specifier
+        \item D) Nothing is wrong
+    \end{itemize}
+
+    \item Which of the following loops executes at least once?
+    \begin{itemize}
+        \item A) for
+        \item B) while
+        \item C) do-while
+        \item D) None of the above
+    \end{itemize}
+
+    \item Which of these operations cannot be performed directly with arrays in C?
+    \begin{itemize}
+        \item A) Assignment
+        \item B) Accessing elements
+        \item C) Iteration
+        \item D) Indexing
+    \end{itemize}
+
+    \item What is wrong with the following logic for summing array elements?
+
+    \lstset{language=C}
+    \begin{lstlisting}
+        int arr[5] = {1, 2, 3, 4, 5};
+        int sum = 0;
+        
+        for (int i = 1; i <= 5; i++) {
+            sum += arr[i];
+        }
+    \end{lstlisting}
+
+    \begin{itemize}
+        \item A) Loop bounds are incorrect
+        \item B) Missing initialization of sum
+        \item C) Array is not declared properly
+        \item D) Nothing is wrong
+    \end{itemize}
+
+    \item What is the purpose of the \verb|auto| keyword in C?
+    \begin{itemize}
+        \item A) Allocate memory dynamically
+        \item B) Specify a variable's scope as local
+        \item C) Make a variable global
+        \item D) None of the above
+    \end{itemize}
+
+    \item Which of the following best describes pointers in C?
+    \begin{itemize}
+        \item A) Variables that store memory addresses
+        \item B) Variables that store the size of arrays
+        \item C) Variables used only in dynamic memory allocation
+        \item D) Variables that point to constants
+    \end{itemize}
+
+    \item What is wrong with this file-handling code?
+
+    \lstset{language=C}
+    \begin{lstlisting}
+    FILE *fp = fopen("data.txt", "r");
+    if (fp != NULL) {
+        fprintf(fp, "Writing to file.");    
+    }
+    \end{lstlisting}
+    
+    \begin{itemize}
+        \item A) File not opened in write mode
+        \item B) File pointer not checked correctly
+        \item C) Logical error in the condition
+        \item D) Nothing is wrong
+    \end{itemize}
+
+    
+\end{enumerate}
+
+\newpage
+
+\section{C++ Multiple Choice}
+
+\begin{enumerate}
+
+    \item Which is not a feature of OOP?
+    \begin{itemize}
+        \item A) Encapsulation
+        \item B) Inheritance
+        \item C) Polymorphism
+        \item D) Procedural coding 
+    \end{itemize}
+
+    \item What is missing in the following class definition?
+
+    \lstset{language=C}
+    \begin{lstlisting}
+    class Test {
+    
+        int x;
+        void show();
+    }
+    \end{lstlisting}
+    
+    \begin{itemize}
+        \item A) Missing semicolon after class declaration
+        \item B) Function show is not defined
+        \item C) Variable x not initialized
+        \item D) Nothing is missing
+    \end{itemize}
+
+    \item Which of these best describes polymorphism?
+    \begin{itemize}
+        \item A) One name, multiple forms
+        \item B) Ability to inherit properties
+        \item C) Hiding data
+        \item D) None of the above
+    \end{itemize}
+
+    \item What is wrong with the following destructor?
+
+    \lstset{language=C}
+    \begin{lstlisting}
+    class Example {
+    public:
+        ~Example(int x) {
+            cout << "Destructor called!";
+        }
+    };
+    \end{lstlisting}
+    
+    \begin{itemize}
+        \item A) Destructors cannot take arguments
+        \item B) Destructor name is incorrect
+        \item C) Destructor should not have a body
+        \item D) Nothing is wrong
+    \end{itemize}
+
+    \item What does the new operator do in C++?
+    \begin{itemize}
+        \item A) Allocates memory on the stack
+        \item B) Allocates memory on the heap
+        \item C) Allocates memory on both stack and heap
+        \item D) Does not allocate memory
+    \end{itemize}
+
+\newpage
+
+    \item What is the error in this code snippet?
+
+    \lstset{language=C}
+    \begin{lstlisting}
+    int* ptr = new int[10];
+    delete ptr;
+    \end{lstlisting}
+    
+    \begin{itemize}
+        \item A) Use of uninitialized pointer
+        \item B) Memory is not freed properly
+        \item C) Incorrect deletion of dynamically allocated array % Correct
+        \item D) Nothing is wrong
+    \end{itemize}
+
+    \item What is the purpose of encapsulation in OOP?
+    \begin{itemize}
+        \item A) To reduce code size
+        \item B) To hide implementation details and protect data % Correct
+        \item C) To allow multiple inheritance
+        \item D) To reuse existing classes
+    \end{itemize}
+
+    \item Which keyword is used for inheritance in C++?
+    \begin{itemize}
+        \item A) extends
+        \item B) implements
+        \item C) inherits
+        \item D) public/private/protected % Correct
+    \end{itemize}
+
+    \item What are the two types of Abstraction?
+    \begin{itemize}
+        \item A) Data, Control
+        \item B) Data, Restricted
+        \item C) Control, Public
+        \item D) Private, Public
+    \end{itemize}
+
+\begin{center}
+    (Last question on the next page)
+\end{center}
+
+    \newpage
+
+    \item Which class will be outputted by the following code?
+
+    \lstset{language=C}
+    \begin{lstlisting}
+    class Base {
+    public:
+        virtual void show() {
+        cout << "Base class";
+        }
+    };
+
+    class Derived : public Base {
+    public:
+        void show() {
+            cout << "Derived class";
+        }
+    };
+
+    int main() {
+        Base* b;
+        Derived d;
+        b = &d;
+        b->show();
+    }
+    \end{lstlisting}
+
+    \begin{itemize}
+        \item A) Base class
+        \item B) Derived class
+        \item C) Compilation Error
+        \item D) Undefined Behavior
+    \end{itemize}
+    
+\end{enumerate}
+
+\newpage
+
+\section{C Creative Question}
+
+C Programming
+Topic: Linear Search\\
+Add Dynamic Memory management to C++ slides,\\
+Add my solution to mock exam question on canvas\\
+Add another mock exam\\
+
+\begin{enumerate}
+    \item Define an integer array with the following specifications:\\
+
+    The array should contain 10 elements: \verb|{12, 45, 78, 34, 23, 56, 89, 90, 67, 33}|.
+    Declare this array in the main function and print all its elements to confirm the array initialization.\\
+
+    (4 marks)\\
+
+    \item Write a function named \verb|linearSearch| that performs the following tasks:\\
+
+    Accept the \verb|array|, its \verb|size|, and a search value as arguments.\\
+    Use a loop to iterate through the array and check if the search value exists.\\
+    Return the \verb|index| of the element if it is found. If not, return -1.\\
+    
+    (8 marks)
+
+    \item Modify the \verb|main| function to use the \verb|linearSearch| function:\\
+
+    Prompt the user to input a value to search.\\
+    Call the \verb|linearSearch| function and store the result.\\
+    Print a message indicating whether the value was found and at what index.\\
+
+    (8 marks)\\
+
+    \item Write a function named \verb|findMaxAndMin| that performs the following:\\
+
+    Accept the array and its size as arguments.\\
+    Find and return both the maximum and minimum values in the array.\\
+    Print these values in the main function after calling \verb|findMaxAndMin|.\\
+
+    (6 marks)\\
+
+    \item Write a function to calculate the sum and average of the array elements:\\
+
+    The function should accept the array and its size as arguments.\\
+    Calculate the sum and average of all elements in the array.\\
+    Return these values to the main function and print them.\\
+
+    (4 marks)\\
+
+\end{enumerate}
+
+\section{C++ Creative Question}
+
+Be careful with the way you have formatted your answer, it should be easy to read.
+
+\begin{enumerate}
+    \item Define a Student class with the following specifications:\\
+
+    Private member variables:\\
+        \verb|name| (a string) to store the student's name.\\
+        \verb|grades| (an array of 5 floats) to store the grades of 5 subjects.\\
+        \verb|rollNumber| (an integer) to store the student's roll number.\\
+        
+    Public member functions:\\
+        A constructor to initialise the name, grades, and rollNumber for each student.\\
+        
+    (5 marks)\\
+
+    \item Write a member function named \verb|calculateAverage| in the \verb|Student| class. This function should:\\
+
+        Compute the average of the grades stored in the \verb|grades| array.\\
+        Return the calculated average as a \verb|float|.\\
+        
+    (5 marks)\\
+    
+    \item Add another member function named \verb|isPass| to the \verb|Student class|. This function should:\\
+
+    Use the \verb|calculateAverage| function to determine if the student has passed.\\
+        A student passes if their average grade is 50 or higher.\\
+        Return \verb|true| if the student passes and \verb|false| otherwise.\\
+
+    (5 marks)\\
+    Write a member function named \verb|displayDetails| in the \verb|Student| class. This function should:\\
+
+    Display the student's name, roll number, grades, average grade, and pass/fail status in a formatted manner. Here it is below:\\
+
+    Name: John Doe\\
+    Roll Number: 101\\
+    Grades: 75.0 80.0 68.0 90.0 88.0\\
+    Average Grade: 80.2\\
+    Status: Pass\\
+
+    \begin{center}
+    Part 4 (final part) on the next page
+    \end{center}
+
+    \newpage
+    
+    \item In the main function, perform the following:
+
+    Create two Student objects using the constructor. For example:\\
+    
+    Student 1: Name: "John Doe", Roll Number: 101, Grades: {75.0, 80.0, 68.0, 90.0, 88.0}\\
+    Student 2: Name: "Jane Smith", Roll Number: 102, Grades: {40.0, 50.0, 45.0, 55.0, 60.0}\\
+
+    Call the displayDetails function for both students to test all the implemented functionalities.\\
+
+    (10 marks)
+    
+\end{enumerate}
+\vfill
+\end{document}
