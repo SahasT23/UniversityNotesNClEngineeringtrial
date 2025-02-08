@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36" version="26.0.10">
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36" version="26.0.10">
   <diagram name="Page-1" id="J4CJnYwnqYzhdIzYwqaj">
     <mxGraphModel dx="2220" dy="744" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -43,6 +43,11 @@
             <mxPoint x="30" y="190" as="targetPoint" />
           </mxGeometry>
         </mxCell>
+        <mxCell id="q7cFIyh5juUlVpsvlXoM-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="t-zZ-C6quUxlDi69plBM-35">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="150" y="520" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
         <mxCell id="t-zZ-C6quUxlDi69plBM-35" value="&lt;div&gt;PID Control (Subsystem 3)&lt;/div&gt;" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
           <mxGeometry x="70" y="340" width="160" height="110" as="geometry" />
         </mxCell>
@@ -55,7 +60,7 @@
         <mxCell id="t-zZ-C6quUxlDi69plBM-43" value="" style="verticalLabelPosition=bottom;verticalAlign=top;html=1;shape=mxgraph.basic.diag_round_rect;dx=6;whiteSpace=wrap;fillColor=#f8cecc;strokeColor=#b85450;" parent="1" vertex="1">
           <mxGeometry x="350" y="340" width="160" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="DpAuuyfNGyQYdHAmen4--15" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.75;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;curved=0;dashed=1;" edge="1" parent="1" target="DpAuuyfNGyQYdHAmen4--5">
+        <mxCell id="DpAuuyfNGyQYdHAmen4--15" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.75;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;curved=0;dashed=1;" parent="1" target="DpAuuyfNGyQYdHAmen4--5" edge="1">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="360" y="340" as="sourcePoint" />
             <Array as="points">
@@ -64,7 +69,7 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="DpAuuyfNGyQYdHAmen4--16" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.75;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;exitX=0.138;exitY=0;exitDx=0;exitDy=0;exitPerimeter=0;curved=0;dashed=1;" edge="1" parent="1" source="t-zZ-C6quUxlDi69plBM-43" target="DpAuuyfNGyQYdHAmen4--6">
+        <mxCell id="DpAuuyfNGyQYdHAmen4--16" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.75;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;exitX=0.138;exitY=0;exitDx=0;exitDy=0;exitPerimeter=0;curved=0;dashed=1;" parent="1" source="t-zZ-C6quUxlDi69plBM-43" target="DpAuuyfNGyQYdHAmen4--6" edge="1">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="372" y="330" as="sourcePoint" />
             <Array as="points">
@@ -102,21 +107,27 @@
         <mxCell id="lNO24yOVD0h_z-2jK7jt-5" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;strokeWidth=2;curved=0;dashed=1;" parent="1" source="t-zZ-C6quUxlDi69plBM-6" target="t-zZ-C6quUxlDi69plBM-43" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="DpAuuyfNGyQYdHAmen4--3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;strokeWidth=2;" edge="1" parent="1" source="t-zZ-C6quUxlDi69plBM-2">
+        <mxCell id="DpAuuyfNGyQYdHAmen4--3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;strokeWidth=2;" parent="1" source="t-zZ-C6quUxlDi69plBM-2" edge="1">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="-410" y="340" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="DpAuuyfNGyQYdHAmen4--4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;strokeWidth=2;" edge="1" parent="1" source="t-zZ-C6quUxlDi69plBM-3">
+        <mxCell id="DpAuuyfNGyQYdHAmen4--4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;strokeWidth=2;" parent="1" source="t-zZ-C6quUxlDi69plBM-3" edge="1">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="-130" y="340" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="DpAuuyfNGyQYdHAmen4--5" value="&lt;div&gt;Motor and Drive Control (Subsystem 1)&lt;/div&gt;" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+        <mxCell id="DpAuuyfNGyQYdHAmen4--5" value="&lt;div&gt;Motor and Drive Control (Subsystem 1)&lt;/div&gt;" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
           <mxGeometry x="-490" y="340" width="160" height="110" as="geometry" />
         </mxCell>
-        <mxCell id="DpAuuyfNGyQYdHAmen4--6" value="Sensor Design and Control (Subsystem 2)" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+        <mxCell id="DpAuuyfNGyQYdHAmen4--6" value="Sensor Design and Control (Subsystem 2)" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
           <mxGeometry x="-210" y="340" width="160" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="q7cFIyh5juUlVpsvlXoM-2" value="&lt;div&gt;PID Control (Subsystem 3)&lt;/div&gt;" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="70" y="340" width="160" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="q7cFIyh5juUlVpsvlXoM-3" value="Project Week 3:&lt;div&gt;Run the Simulink code and test it, checking how PID works. Finish adding the setup code to MPLABs.&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="70" y="520" width="160" height="80" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
